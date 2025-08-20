@@ -1,0 +1,12 @@
+1- Cadastro de Cardápio
+**Cadastrar pratos, bebidas, preço e tempo estimado de preparo.**
+
+1º estrutura do banco de dados (criar tabelas)
+    |- Tabela comida
+    |- Tabela bebidas
+    |- Tabela preço
+    |- Tempo estimado de preparo
+
+criar api 
+conecta com o banco 
+docker - dockercompose
