@@ -1,19 +1,21 @@
-import os
-from config import app, db
-# chamar as rotas
-from Swagger.swagger_config import configure_swagger
+from flask import Flask
+from config import Config
+from Cardapio.cardapioModels import db
+from Cardapio.cardapioRoutes import cardapio_bp
 
-# Registrar os blueprints
-app.register_blueprint(cardapio_bp)
-app.register_blueprint(professor_bp)
-app.register_blueprint(turma_bp)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-configure_swagger(app)
+    db.init_app(app)
 
-with app.app_context():
-    db.drop_all()
-    db.create_all()
-    
+    with app.app_context():
+        db.create_all()
 
-if __name__ == '__main__':
-    app.run(host=app.config["HOST"], port = app.config['PORT'],debug=app.config['DEBUG'])
+    app.register_blueprint(cardapio_bp)
+
+    return app
+
+if __name__ == "__main__":
+    app = create_app()
+    app.run(debug=True)

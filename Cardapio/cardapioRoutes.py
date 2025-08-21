@@ -1,45 +1,67 @@
 from flask import Blueprint, request, jsonify
-# chamar o model  cardapio
+from cardapioModels import db, Cardapio
 
-alunos_bp = Blueprint('cardapio', __name__) #Criando uma instância
+cardapio_bp = Blueprint("cardapio", __name__)
 
-#Create
-@alunos_bp.route('/alunos', methods=['POST'])
-def createAluno():
+@cardapio_bp.route("/cardapio", methods=["POST"])
+def create_item():
+    data = request.json
+    novo_item = Cardapio(
+        nome=data["nome"],
+        preco=data["preco"],
+        categoria=data["categoria"],
+        tempo_preparo=data["tempo_preparo"]
+    )
+    db.session.add(novo_item)
+    db.session.commit()
+    return jsonify({"msg": "Item adicionado com sucesso!"}), 200
+
+@cardapio_bp.route("/cardapio", methods=["GET"])
+def get_item():
+    itens = Cardapio.query.all()
+    return jsonify([
+        {
+            "id": item.id,
+            "nome": item.nome,
+            "preco": item.preco,
+            "categoria": item.categoria,
+            "tempo_preparo": item.tempo_preparo
+        }
+        for item in itens
+    ])
+ 
+@cardapio_bp.route("/cardapio/<int:item_id>", methods=["PUT"])
+def update_item(item_id):
     try:
         dados = request.json
-        return modelAluno.createAluno(dados)
+        item = Cardapio.query.get(item_id)
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
-#Get
-@alunos_bp.route('/alunos', methods=['GET'])
-def getAluno():
-    try:
-        return modelAluno.todosAlunos()
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
-@alunos_bp.route('/alunos/<int:idAluno>', methods=['GET'])
-def aluno_Id(idAluno):
-    try:
-        return modelAluno.alunoPorID(idAluno)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
-#Put
-@alunos_bp.route("/alunos/<int:idAluno>", methods=['PUT'])
-def updateAlunos(idAluno):
-    try:
-        dados = request.json
-        return modelAluno.updateAluno(idAluno, dados)
-    
+        if not item:
+            return jsonify({"msg": "Item não encontrado"}), 404
+
+        item.nome = dados.get("nome", item.nome)
+        item.preco = dados.get("preco", item.preco)
+        item.categoria = dados.get("categoria", item.categoria)
+        item.tempo_preparo = dados.get("tempo_preparo", item.tempo_preparo)
+
+        db.session.commit()
+
+        return jsonify({"msg": "Item atualizado com sucesso!"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
 #Delete
-@alunos_bp.route('/alunos/<int:idAluno>', methods=['DELETE'])
-def delete_aluno(idAluno):
-    return modelAluno.deleteAluno(idAluno)
-        
+@cardapio_bp.route('/cardapio/<int:item_id>', methods=['DELETE'])
+def delete_item(item_id):
+    try:
+        item = Cardapio.query.get(item_id)
+
+        if not item:
+            return jsonify({"msg": "Item não encontrado"}), 404
+
+        db.session.delete(item)
+        db.session.commit()
+
+        return jsonify({"msg": "Item excluído com sucesso!"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
