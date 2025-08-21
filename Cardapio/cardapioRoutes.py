@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from cardapioModels import db, Cardapio
+from Cardapio.cardapioModels import db, Cardapio
 
 cardapio_bp = Blueprint("cardapio", __name__)
 

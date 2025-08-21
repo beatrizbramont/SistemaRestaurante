@@ -13,3 +13,12 @@ class Cardapio(db.Model):
 
     def __repr__(self):
         return f"<Item {self.nome} - R${self.preco:.2f}>"
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "preco": self.preco,
+            "categoria": self.categoria,
+            "tempo_preparo": self.tempo_preparo
+        }
