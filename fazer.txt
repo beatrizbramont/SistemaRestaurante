@@ -6,3 +6,4 @@
 criar api 
 conecta com o banco 
 docker - dockercompose
+criar front e conectar com o back
