@@ -1,7 +1,7 @@
 from config import app, db, db_user, db_pass, db_host, db_name
 import os
-from Cardapio.cardapioModels import Cardapio
-from Cardapio.cardapioRoutes import cardapio_bp
+from cardapio.cardapioModels import Cardapio
+from cardapio.cardapioRoutes import cardapio_bp
 
 app.register_blueprint(cardapio_bp)
 
