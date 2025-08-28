@@ -5,7 +5,7 @@ from Cardapio.cardapioModels import Cardapio
 from Cardapio.cardapioRoutes import cardapio_bp, frontend_bp
 
 app.register_blueprint(frontend_bp)
-app.register_blueprint(cardapio_bp, url_prefix='/cardapio')
+app.register_blueprint(cardapio_bp)
 
 with app.app_context():
     db.create_all()  
