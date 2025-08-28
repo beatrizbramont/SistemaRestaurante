@@ -1,4 +1,4 @@
-from config import app, db, db_user, db_pass, db_host, db_name
+from config import app, db
 import os
 from flask import send_from_directory
 from Cardapio.cardapioModels import Cardapio
