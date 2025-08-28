@@ -1,8 +1,8 @@
 from config import app, db, db_user, db_pass, db_host, db_name
 import os
 from flask import send_from_directory
-from cardapio.cardapioModels import Cardapio
-from cardapio.cardapioRoutes import cardapio_bp, frontend_bp
+from Cardapio.cardapioModels import Cardapio
+from Cardapio.cardapioRoutes import cardapio_bp, frontend_bp
 
 app.register_blueprint(frontend_bp)
 app.register_blueprint(cardapio_bp, url_prefix='/cardapio')
