@@ -10,5 +10,10 @@ app.register_blueprint(cardapio_bp)
 with app.app_context():
     db.create_all()  
 
+    # TESTE: imprime o nome do banco e se há tabelas
+    engine = db.get_engine()
+    print("Banco conectado:", engine.url)
+    print("Tabelas existentes:", db.metadata.tables.keys())
+
 if __name__ == '__main__':
     app.run(host=app.config["HOST"], port=app.config['PORT'], debug=app.config['DEBUG'])
