@@ -13,5 +13,5 @@
                     list.appendChild(li);
                 });
             })
-            .catc
+            .catch(err => console.error(err));
     })
