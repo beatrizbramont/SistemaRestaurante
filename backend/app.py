@@ -7,7 +7,6 @@ from Mesas.mesasModels import Mesas, Comanda
 '''Blueprint - rotas'''
 from Cardapio.cardapioRoutes import cardapio_bp, frontend_bp
 
-
 app.register_blueprint(frontend_bp)
 app.register_blueprint(cardapio_bp)
 
