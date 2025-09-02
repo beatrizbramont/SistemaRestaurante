@@ -19,7 +19,6 @@ def serve_static(filename):
 def create_item():
     try:
         data = request.json
-        print("📩 Dados recebidos:", data)
 
         novo_item = Cardapio(
             nome=data["nome"],
@@ -29,15 +28,11 @@ def create_item():
         )
         db.session.add(novo_item)
         db.session.commit()
-        print("✅ Item salvo no banco:", novo_item)
 
         # Reconsultar para garantir
         items = Cardapio.query.all()
-        print("📋 Itens no banco após inserção:", [i.to_dict() for i in items])
-
         return jsonify({"msg": "Item adicionado com sucesso!"}), 200
     except Exception as e:
-        print("❌ Erro ao salvar:", str(e))
         return jsonify({"error": str(e)}), 500
 
 @cardapio_bp.route("/cardapio", methods=["GET"])
