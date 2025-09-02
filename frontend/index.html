@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <title>SistemProduct Frontend</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <title>SistemProduct Frontend</title>
 </head>
 <body>
-    <h1>Bem-vindo ao SistemProduct</h1>
-    <button id="load-data">Carregar Cardápio</button>
-    <ul id="cardapio-list"></ul>
-    <script src="./js/main.js"></script>
+  <h1>Bem-vindo ao SistemProduct</h1>
+
+  <!-- Formulário para cadastrar o cardápio -->
+  <form id="cardapio-form">
+    <input type="text" id="nome" placeholder="Nome do prato" required />
+    <input type="number" step="0.01" id="preco" placeholder="Preço" required />
+    <input type="text" id="categoria" placeholder="Categoria" required />
+    <input type="number" id="tempo_preparo" placeholder="Tempo de preparo (min)" required />
+    <button type="submit">Cadastrar Item</button>
+  </form>
+
+  <!-- Botão para carregar os itens -->
+  <button id="load-data">Carregar Cardápio</button>
+
+  <!-- Lista que exibirá os itens do cardápio -->
+  <ul id="cardapio-list"></ul>
+
+  <script src="./js/main.js"></script>
 </body>
 </html>
