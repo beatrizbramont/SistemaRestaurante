@@ -1,8 +1,12 @@
 from config import app, db
 import os
 from flask import send_from_directory
+'''Classes - models'''
 from Cardapio.cardapioModels import Cardapio
+from Mesas.mesasModels import Mesas, Comanda  
+'''Blueprint - rotas'''
 from Cardapio.cardapioRoutes import cardapio_bp, frontend_bp
+
 
 app.register_blueprint(frontend_bp)
 app.register_blueprint(cardapio_bp)
