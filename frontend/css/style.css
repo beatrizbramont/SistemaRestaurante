@@ -1,117 +1,162 @@
+/* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f8;
-    color: #333;
-    padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+  padding-top: 100px;
+  min-height: 100vh;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #2c3e50;
+/* Cabeçalho fixo */
+.cabecalho {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #2c3e50;
+  z-index: 1000;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-section {
-    max-width: 700px;
-    margin: 0 auto 3rem auto;
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+.cabecalho header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  background-color: #27ae60;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.cabecalho h1 {
+  color: #ecf0f1;
+  font-size: 1.4rem;
+  margin-left: 1rem;
+  flex-grow: 1;
+}
+
+/* Ícone do menu (placeholder) */
+.menu a {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url('./css/icon/cardapio.png');
+  background-size: cover;
+}
+
+/* Container principal */
+main {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* Formulário */
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin-bottom: 0.3rem;
-    font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 input {
-    padding: 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 form button {
-    padding: 0.8rem 1.5rem;
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
-    align-self: flex-start;
+  padding: 0.8rem 1.5rem;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
 }
 
 form button:hover {
-    background-color: #2471a3;
+  background-color: #2471a3;
 }
 
 /* Botão de carregar */
 #load-data {
-    display: block;
-    margin: 0 auto 1.5rem auto;
-    padding: 0.8rem 1.5rem;
-    background-color: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  display: block;
+  width: 100%;
+  margin: 1.5rem 0;
+  padding: 0.8rem 1.5rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #load-data:hover {
-    background-color: #219150;
+  background-color: #219150;
 }
 
 /* Lista de cardápio */
 #cardapio-list {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
 }
 
 #cardapio-list li {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-left: 5px solid #27ae60;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-left: 5px solid #27ae60;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, background-color 0.2s;
 }
 
 #cardapio-list li:hover {
-    transform: scale(1.01);
+  transform: scale(1.01);
+  background-color: #f9f9f9;
 }
 
+/* Responsivo */
 @media (max-width: 600px) {
-    body {
-        padding: 1rem;
-    }
+  main {
+    padding: 1rem;
+    margin: 1rem;
+  }
 
-    #load-data, form button {
-        width: 100%;
-    }
+  form button,
+  #load-data {
+    width: 100%;
+  }
+
+  .cabecalho header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cabecalho h1 {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
 }
