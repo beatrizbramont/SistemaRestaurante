@@ -1,30 +1,104 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Referências DOM
   const form = document.getElementById('cardapio-form');
   const list = document.getElementById('cardapio-list');
-  const loadBtn = document.getElementById('load-data');
+  const nomeInput = document.getElementById('nome');
+  const precoInput = document.getElementById('preco');
   const menuToggle = document.getElementById('menu-toggle');
   const sidebar = document.getElementById('sidebar');
+  const categoriaSelect = document.getElementById('categoria');
+  const tempoPreparoInput = document.getElementById('tempo_preparo');
+  const loadBtn = document.getElementById('load-data');
   const modal = document.getElementById('modal-cardapio');
   const closeModalBtn = document.getElementById('close-modal');
   const listaCategoriasDiv = document.getElementById('lista-categorias');
 
-  // Abrir/Fechar menu lateral
-  if (menuToggle && sidebar) {
-    menuToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      sidebar.classList.toggle('hidden');
-    });
+  // Função para mostrar/esconder sidebar
+  function toggleSidebar(e) {
+    e.preventDefault();
+    sidebar.classList.toggle('hidden');
   }
 
-  // Submit do formulário (salvar)
-  form.addEventListener('submit', (e) => {
+  // Função para criar o botão excluir com evento e estilo
+  function criarBotaoExcluir(item, categoria) {
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = 'Excluir';
+  deleteBtn.classList.add('delete-btn');
+  
+  // Força visibilidade
+  deleteBtn.style.marginLeft = '10px';
+  deleteBtn.style.backgroundColor = 'red';
+  deleteBtn.style.color = 'white';
+  deleteBtn.style.border = '2px solid yellow';
+  deleteBtn.style.fontWeight = 'bold';
+
+  deleteBtn.addEventListener('click', () => {
+    if (!confirm(`Deseja realmente excluir o item "${item.nome}"?`)) return;
+
+    fetch(`/cardapio/${item.id}`, { method: 'DELETE' })
+      .then(res => {
+        if (!res.ok) throw new Error('Erro ao excluir item.');
+        alert(`Item "${item.nome}" excluído com sucesso.`);
+        carregarItensPorCategoria(categoria); // atualiza lista
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Erro ao excluir item.');
+      });
+  });
+
+  return deleteBtn;
+}
+
+
+  function carregarItensPorCategoria(categoria) {
+  fetch('/cardapio')
+    .then(res => {
+      if (!res.ok) throw new Error('Erro ao buscar itens.');
+      return res.json();
+    })
+    .then(data => {
+      const filtrados = data.filter(item => item.categoria === categoria);
+
+      if (!filtrados.length) {
+        alert(`Nenhum item encontrado para categoria "${categoria}".`);
+        list.innerHTML = '';
+        list.style.display = 'none';
+        return;
+      }
+
+      list.style.display = 'flex';
+      list.innerHTML = '';
+
+      filtrados.forEach(item => {
+        const li = document.createElement('li');
+
+        // Insere texto separado para não apagar o botão
+        const textoSpan = document.createElement('span');
+        textoSpan.textContent = `${item.nome} - R$ ${parseFloat(item.preco).toFixed(2)} - ${item.tempo_preparo} min`;
+        li.appendChild(textoSpan);
+
+
+        const deleteBtn = criarBotaoExcluir(item, categoria);
+        li.appendChild(deleteBtn);
+
+        list.appendChild(li);
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Erro ao carregar itens da categoria.');
+    });
+}
+  // Função para cadastrar novo item
+  function cadastrarItem(e) {
     e.preventDefault();
 
     const data = {
-      nome: form.nome.value.trim(),
-      preco: parseFloat(form.preco.value),
-      categoria: form.categoria.value,
-      tempo_preparo: parseInt(form.tempo_preparo.value)
+      nome: nomeInput.value.trim(),
+      preco: parseFloat(precoInput.value),
+      categoria: categoriaSelect.value,
+      tempo_preparo: parseInt(tempoPreparoInput.value)
     };
 
     if (!data.nome || isNaN(data.preco) || !data.categoria || isNaN(data.tempo_preparo)) {
@@ -44,16 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         alert(data.msg || 'Item cadastrado.');
         form.reset();
-        form.classList.add('hidden');
-        // NÃO chama carregarCardapio aqui
       })
       .catch(err => {
         console.error(err);
         alert('Erro ao cadastrar item.');
       });
-  });
+  }
 
-  // Função para abrir o modal com itens agrupados
+  // Função para abrir modal mostrando itens agrupados por categoria
   function abrirModalCategorias() {
     fetch('/cardapio')
       .then(res => {
@@ -66,16 +138,14 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        listaCategoriasDiv.innerHTML = ''; // limpa conteúdo anterior
+        listaCategoriasDiv.innerHTML = '';
 
-        // Agrupar por categoria
         const agrupados = data.reduce((acc, item) => {
           if (!acc[item.categoria]) acc[item.categoria] = [];
           acc[item.categoria].push(item);
           return acc;
         }, {});
 
-        // Criar as seções por categoria
         for (const categoria in agrupados) {
           const section = document.createElement('div');
           section.classList.add('categoria-section');
@@ -95,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
           listaCategoriasDiv.appendChild(section);
         }
 
-        modal.classList.remove('hidden'); // mostra o modal
+        modal.classList.remove('hidden');
       })
       .catch(err => {
         console.error(err);
@@ -103,25 +173,35 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // Evento para abrir modal ao clicar no botão
-  if (loadBtn) {
-    loadBtn.addEventListener('click', abrirModalCategorias);
+  // Fechar modal
+  function fecharModal() {
+    modal.classList.add('hidden');
   }
 
-  // Fechar modal com o botão X
-  if (closeModalBtn) {
-    closeModalBtn.addEventListener('click', () => {
-      modal.classList.add('hidden');
-    });
-  }
-
-  // Fechar modal ao clicar fora do conteúdo
-  window.addEventListener('click', (e) => {
+  // Fechar modal clicando fora do conteúdo
+  function clickForaModal(e) {
     if (e.target === modal) {
-      modal.classList.add('hidden');
+      fecharModal();
     }
+  }
+
+  // Eventos
+  menuToggle.addEventListener('click', toggleSidebar);
+
+  // Adiciona evento nos links do sidebar para carregar categoria
+  const categoryLinks = sidebar.querySelectorAll('a[data-categoria]');
+  categoryLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const categoria = link.getAttribute('data-categoria');
+      carregarItensPorCategoria(categoria);
+      sidebar.classList.add('hidden');
+    });
   });
 
-  // REMOVIDO para evitar mostrar cardápio automaticamente
-  // carregarCardapio();
+  form.addEventListener('submit', cadastrarItem);
+  loadBtn.addEventListener('click', abrirModalCategorias);
+  closeModalBtn.addEventListener('click', fecharModal);
+  window.addEventListener('click', clickForaModal);
+
 });

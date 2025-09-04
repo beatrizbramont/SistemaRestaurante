@@ -72,7 +72,6 @@ body {
   padding: 1rem;
   box-shadow: 2px 0 8px rgba(0,0,0,0.1);
   overflow-y: auto;
-  transform: translateX(-260px);
   transition: transform 0.3s ease;
   z-index: 1000;
 }
