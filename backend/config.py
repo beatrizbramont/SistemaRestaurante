@@ -12,8 +12,6 @@ db_user = os.getenv("DB_USER")
 db_pass = os.getenv("DB_PASSWORD")  
 db_host = os.getenv("DB_HOST")
 db_name = os.getenv("DB_NAME")
-if db_pass is None:
-    raise ValueError("A variável de ambiente DB_PASSWORD não está definida!")
 db_pass_encoded = quote_plus(db_pass)
 
 app.config['HOST'] = '0.0.0.0'
