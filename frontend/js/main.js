@@ -1,99 +1,140 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Referências DOM
   const form = document.getElementById('cardapio-form');
-  const list = document.getElementById('cardapio-list');
   const nomeInput = document.getElementById('nome');
   const precoInput = document.getElementById('preco');
   const menuToggle = document.getElementById('menu-toggle');
   const sidebar = document.getElementById('sidebar');
   const categoriaSelect = document.getElementById('categoria');
   const tempoPreparoInput = document.getElementById('tempo_preparo');
-  const loadBtn = document.getElementById('load-data');
-  const modal = document.getElementById('modal-cardapio');
-  const closeModalBtn = document.getElementById('close-modal');
-  const listaCategoriasDiv = document.getElementById('lista-categorias');
+  atualizarContadoresCategorias();
 
-  // Função para mostrar/esconder sidebar
-  function toggleSidebar(e) {
-    e.preventDefault();
-    sidebar.classList.toggle('hidden');
+
+  const modalCategoria = document.getElementById('modal-categoria');
+  const closeModalCategoriaBtn = document.getElementById('close-modal-categoria');
+  const modalCategoriaTitulo = document.getElementById('modal-categoria-titulo');
+  const modalCategoriaLista = document.getElementById('modal-categoria-lista');
+  const loadBtn = document.getElementById('load-data');
+
+  // Função genérica de fetch
+  async function apiFetch(url, options = {}) {
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error(`Erro ${res.status}`);
+    return res.json();
   }
 
-  // Função para criar o botão excluir com evento e estilo
-  function criarBotaoExcluir(item, categoria) {
-  const deleteBtn = document.createElement('button');
-  deleteBtn.textContent = 'Excluir';
-  deleteBtn.classList.add('delete-btn');
-  
-  // Força visibilidade
-  deleteBtn.style.marginLeft = '10px';
-  deleteBtn.style.backgroundColor = 'red';
-  deleteBtn.style.color = 'white';
-  deleteBtn.style.border = '2px solid yellow';
-  deleteBtn.style.fontWeight = 'bold';
-
-  deleteBtn.addEventListener('click', () => {
-    if (!confirm(`Deseja realmente excluir o item "${item.nome}"?`)) return;
-
-    fetch(`/cardapio/${item.id}`, { method: 'DELETE' })
-      .then(res => {
-        if (!res.ok) throw new Error('Erro ao excluir item.');
-        alert(`Item "${item.nome}" excluído com sucesso.`);
-        carregarItensPorCategoria(categoria); // atualiza lista
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Erro ao excluir item.');
-      });
+  // Sidebar toggle
+  menuToggle.addEventListener('click', e => {
+    e.preventDefault();
+    sidebar.classList.toggle('hidden');
   });
 
-  return deleteBtn;
-}
+  // Abrir modal de categoria com itens
+  async function abrirModalCategoria(categoria, titulo = null) {
+    try {
+      const data = await apiFetch('/cardapio');
+      let itens = categoria ? data.filter(item => item.categoria === categoria) : data;
 
+      modalCategoriaTitulo.textContent = titulo || categoria || 'Todos os Itens';
+      modalCategoriaLista.innerHTML = '';
 
-  function carregarItensPorCategoria(categoria) {
-  fetch('/cardapio')
-    .then(res => {
-      if (!res.ok) throw new Error('Erro ao buscar itens.');
-      return res.json();
-    })
-    .then(data => {
-      const filtrados = data.filter(item => item.categoria === categoria);
+      if (!itens.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Nenhum item cadastrado.';
+        li.classList.add('empty-item');
+        modalCategoriaLista.appendChild(li);
+      } else {
+        // Agrupa por categoria se for modal geral
+        const agrupados = categoria ? { [categoria]: itens } : itens.reduce((acc, item) => {
+          if (!acc[item.categoria]) acc[item.categoria] = [];
+          acc[item.categoria].push(item);
+          return acc;
+        }, {});
 
-      if (!filtrados.length) {
-        alert(`Nenhum item encontrado para categoria "${categoria}".`);
-        list.innerHTML = '';
-        list.style.display = 'none';
-        return;
+        for (const cat in agrupados) {
+          if (!categoria) {
+            const h4 = document.createElement('h4');
+            h4.textContent = cat;
+            h4.classList.add('categoria-titulo');
+            modalCategoriaLista.appendChild(h4);
+          }
+
+          agrupados[cat].forEach(item => {
+            const li = document.createElement('li');
+            li.classList.add('item-cardapio-modal');
+            li.innerHTML = `
+              <div class="item-info">
+                <span class="item-nome">${item.nome} - </span>
+                <span class="item-preco">R$ ${parseFloat(item.preco).toFixed(2)} - </span>
+                <span class="item-tempo">${item.tempo_preparo} min</span>
+              </div>
+              <div class="item-actions">
+                <i class="fas fa-pen-to-square edit-icon" title="Editar"></i>
+                <i class="fas fa-trash delete-icon" title="Excluir"></i>
+              </div>
+            `;
+
+            // Editar item
+            li.querySelector('.edit-icon').addEventListener('click', () => {
+              nomeInput.value = item.nome;
+              precoInput.value = item.preco;
+              categoriaSelect.value = item.categoria;
+              tempoPreparoInput.value = item.tempo_preparo;
+              form.dataset.editingId = item.id;
+              form.querySelector('button[type="submit"]').textContent = 'Atualizar';
+              modalCategoria.classList.add('hidden');
+            });
+
+            // Excluir item
+            li.querySelector('.delete-icon').addEventListener('click', async () => {
+              if (!confirm(`Deseja excluir "${item.nome}"?`)) return;
+              try {
+                await apiFetch(`/cardapio/${item.id}`, { method: 'DELETE' });
+                console.log(`"${item.nome}" excluído.`);
+                abrirModalCategoria(categoria, titulo); // Recarrega lista
+                atualizarContadoresCategorias();
+              } catch {
+                alert('Erro ao excluir item.');
+              }
+            });
+
+            modalCategoriaLista.appendChild(li);
+          });
+        }
       }
 
-      list.style.display = 'flex';
-      list.innerHTML = '';
-
-      filtrados.forEach(item => {
-        const li = document.createElement('li');
-
-        // Insere texto separado para não apagar o botão
-        const textoSpan = document.createElement('span');
-        textoSpan.textContent = `${item.nome} - R$ ${parseFloat(item.preco).toFixed(2)} - ${item.tempo_preparo} min`;
-        li.appendChild(textoSpan);
-
-
-        const deleteBtn = criarBotaoExcluir(item, categoria);
-        li.appendChild(deleteBtn);
-
-        list.appendChild(li);
-      });
-    })
-    .catch(err => {
+      modalCategoria.classList.remove('hidden');
+    } catch (err) {
       console.error(err);
       alert('Erro ao carregar itens da categoria.');
-    });
-}
-  // Função para cadastrar novo item
-  function cadastrarItem(e) {
-    e.preventDefault();
+    }
+  }
 
+  // Fechar modal
+  closeModalCategoriaBtn.addEventListener('click', () => {
+    modalCategoria.classList.add('hidden');
+  });
+
+  window.addEventListener('click', e => {
+    if (e.target === modalCategoria) modalCategoria.classList.add('hidden');
+  });
+
+  // Links do sidebar
+  sidebar.querySelectorAll('a[data-categoria]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const categoria = link.getAttribute('data-categoria');
+      abrirModalCategoria(categoria);
+      sidebar.classList.add('hidden');
+    });
+  });
+
+  // Botão “Carregar Cardápio” → mostra todos os itens agrupados
+  loadBtn.addEventListener('click', () => abrirModalCategoria(null, 'Todos os Itens'));
+
+  // Cadastrar ou atualizar item
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
     const data = {
       nome: nomeInput.value.trim(),
       preco: parseFloat(precoInput.value),
@@ -106,102 +147,59 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    fetch('/cardapio', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Erro ao cadastrar.');
-        return res.json();
-      })
-      .then(data => {
-        alert(data.msg || 'Item cadastrado.');
-        form.reset();
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Erro ao cadastrar item.');
-      });
-  }
-
-  // Função para abrir modal mostrando itens agrupados por categoria
-  function abrirModalCategorias() {
-    fetch('/cardapio')
-      .then(res => {
-        if (!res.ok) throw new Error('Erro ao buscar itens.');
-        return res.json();
-      })
-      .then(data => {
-        if (!data.length) {
-          alert('Nenhum item cadastrado.');
-          return;
-        }
-
-        listaCategoriasDiv.innerHTML = '';
-
-        const agrupados = data.reduce((acc, item) => {
-          if (!acc[item.categoria]) acc[item.categoria] = [];
-          acc[item.categoria].push(item);
-          return acc;
-        }, {});
-
-        for (const categoria in agrupados) {
-          const section = document.createElement('div');
-          section.classList.add('categoria-section');
-
-          const h3 = document.createElement('h3');
-          h3.textContent = categoria;
-          section.appendChild(h3);
-
-          const ul = document.createElement('ul');
-          agrupados[categoria].forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = `${item.nome} - R$ ${parseFloat(item.preco).toFixed(2)} - ${item.tempo_preparo} min`;
-            ul.appendChild(li);
-          });
-
-          section.appendChild(ul);
-          listaCategoriasDiv.appendChild(section);
-        }
-
-        modal.classList.remove('hidden');
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Erro ao carregar categorias.');
-      });
-  }
-
-  // Fechar modal
-  function fecharModal() {
-    modal.classList.add('hidden');
-  }
-
-  // Fechar modal clicando fora do conteúdo
-  function clickForaModal(e) {
-    if (e.target === modal) {
-      fecharModal();
+    try {
+      if (form.dataset.editingId) {
+        const res = await apiFetch(`/cardapio/${form.dataset.editingId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        alert(res.msg || 'Item atualizado com sucesso.');
+        delete form.dataset.editingId;
+        form.querySelector('button[type="submit"]').textContent = 'Salvar';
+      } else {
+        const res = await apiFetch('/cardapio', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        alert(res.msg || 'Item cadastrado com sucesso.');
+      }
+      form.reset();
+      atualizarContadoresCategorias();
+    } catch {
+      alert('Erro ao salvar item.');
     }
-  }
-
-  // Eventos
-  menuToggle.addEventListener('click', toggleSidebar);
-
-  // Adiciona evento nos links do sidebar para carregar categoria
-  const categoryLinks = sidebar.querySelectorAll('a[data-categoria]');
-  categoryLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const categoria = link.getAttribute('data-categoria');
-      carregarItensPorCategoria(categoria);
-      sidebar.classList.add('hidden');
-    });
   });
-
-  form.addEventListener('submit', cadastrarItem);
-  loadBtn.addEventListener('click', abrirModalCategorias);
-  closeModalBtn.addEventListener('click', fecharModal);
-  window.addEventListener('click', clickForaModal);
-
 });
+
+async function atualizarContadoresCategorias() {
+  try {
+    const data = await fetch('/cardapio').then(res => res.json());
+
+    // Conta os itens por categoria
+    const contadores = data.reduce((acc, item) => {
+      acc[item.categoria] = (acc[item.categoria] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Atualiza os links do sidebar
+    document.querySelectorAll('#sidebar a[data-categoria]').forEach(link => {
+      const cat = link.getAttribute('data-categoria');
+      const total = contadores[cat] || 0;
+
+      // Remove contador antigo, se houver
+      const oldSpan = link.querySelector('.contador');
+      if (oldSpan) oldSpan.remove();
+
+      // Cria novo contador
+      const span = document.createElement('span');
+      span.classList.add('contador');
+      span.textContent = `(${total})`;
+      link.appendChild(span);
+    });
+
+  } catch (err) {
+    console.error('Erro ao atualizar contadores:', err);
+  }
+}
