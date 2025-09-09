@@ -14,7 +14,11 @@ class Mesas(db.Model):
     capacidade = db.Column(db.Integer, nullable=False)  
     status = db.Column(db.String(20), nullable=False, default='livre')  
 
-    comanda = db.relationship("Comanda", backref="mesa", lazy=True, uselist=False)
+    comandas = db.relationship("Comanda", backref="mesa", lazy=True)
+
+    @property
+    def comanda_aberta(self):
+        return next((c for c in self.comandas if c.aberta), None)
 
     def to_dict(self):
         return {
@@ -22,7 +26,7 @@ class Mesas(db.Model):
             "numero": self.numero,
             "capacidade": self.capacidade,
             "status": self.status,
-            "comanda_aberta": self.comanda.aberta if self.comanda and self.comanda.aberta else False
+            "comanda_aberta": self.comanda_aberta.aberta if self.comanda_aberta else False
         }
 
 

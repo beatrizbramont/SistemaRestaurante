@@ -20,28 +20,8 @@ def serve_static(filename):
 @mesa_bp.route("/mesas", methods=["GET"])
 def listar_mesas():
     mesas = Mesas.query.all()
-    return jsonify([
-        {
-            "id": mesa.id,
-            "numero": mesa.numero,
-            "status": mesa.status,
-            "comanda_aberta": mesa.comanda.aberta if mesa.comanda and mesa.comanda.aberta else False
-        }
-        for mesa in mesas
-    ])
+    return jsonify([mesa.to_dict() for mesa in mesas])
 
-@mesa_bp.route("/mesas", methods=["POST"])
-def criar_mesa():
-    data = request.json
-    numero = data.get("numero")
-
-    if not numero:
-        return jsonify({"error": "Número da mesa é obrigatório"}), 400
-
-    nova_mesa = Mesas(numero=numero, status="livre")
-    db.session.add(nova_mesa)
-    db.session.commit()
-    return jsonify({"msg": "Mesa criada com sucesso", "mesa_id": nova_mesa.id}), 200
 
 @mesa_bp.route("/mesa/<int:mesa_id>/abrir_comanda", methods=["POST"])
 def abrir_comanda(mesa_id):
@@ -64,11 +44,13 @@ def abrir_comanda(mesa_id):
 def fechar_comanda(mesa_id):
     mesa = Mesas.query.get(mesa_id)
 
-    if not mesa or not mesa.comanda or not mesa.comanda.aberta:
+    comanda = mesa.comanda_aberta if mesa else None
+
+    if not mesa or not comanda:
         return jsonify({"error": "Mesa ou comanda não encontrada"}), 404
 
-    mesa.comanda.aberta = False
-    mesa.comanda.data_fechamento = datetime.utcnow()
+    comanda.aberta = False
+    comanda.data_fechamento = datetime.utcnow()
     mesa.status = "livre"
     db.session.commit()
 

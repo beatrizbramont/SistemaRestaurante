@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8" />
     <title>Gerenciamento de Mesas</title>
-    <link rel="stylesheet" href="./css/mesa.css" />
+    <link rel="stylesheet" href="../css/mesa.css" />
 </head>
 <body>
-    <h1>Gerenciamento de Mesas</h1>
+    <section class="cabecalho">
+        <header>
+            <h1>Gerenciamento de Mesas</h1>
+            <div class="right-header">
+                <div class="logo">
+                    <img src="../css/icon/logobranca.png" alt="Logo" />
+                </div>
+            </div>
+        </header>
+    </section>
+    <table id="mesas-table" aria-label="Lista de mesas">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Capacidade</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- js  -->
+        </tbody>
+    </table>
 
-    <div id="mesas-container"></div>
-
-    <script src="./js/mesa.js"></script>
+    <script src="../js/mesa.js"></script>
 </body>
 </html>
