@@ -41,7 +41,7 @@ def criar_mesa():
     nova_mesa = Mesas(numero=numero, status="livre")
     db.session.add(nova_mesa)
     db.session.commit()
-    return jsonify({"msg": "Mesa criada com sucesso", "mesa_id": nova_mesa.id}), 201
+    return jsonify({"msg": "Mesa criada com sucesso", "mesa_id": nova_mesa.id}), 200
 
 @mesa_bp.route("/mesa/<int:mesa_id>/abrir_comanda", methods=["POST"])
 def abrir_comanda(mesa_id):

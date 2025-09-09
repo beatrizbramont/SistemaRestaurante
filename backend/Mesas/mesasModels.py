@@ -10,9 +10,9 @@ class Mesas(db.Model):
     __tablename__ = "mesas"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    numero = db.Column(db.Integer, nullable=False, unique=True)  # Número da mesa
-    capacidade = db.Column(db.Integer, nullable=False)  # Quantas pessoas cabem
-    status = db.Column(db.String(20), nullable=False, default='livre')  # Livre, ocupada, reservada
+    numero = db.Column(db.Integer, nullable=False, unique=True) 
+    capacidade = db.Column(db.Integer, nullable=False)  
+    status = db.Column(db.String(20), nullable=False, default='livre')  
 
     comanda = db.relationship("Comanda", backref="mesa", lazy=True, uselist=False)
 
