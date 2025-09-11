@@ -155,29 +155,6 @@ document.getElementById('abrirComandaBtn').addEventListener('click', async () =>
     }
 });
 
-// Fechar comanda
-document.getElementById('fecharComandaBtn').addEventListener('click', async () => {
-    const mesaId = parseInt(document.getElementById('mesaIdInput').value);
-
-    try {
-        const res = await fetch(`/mesa/${mesaId}/fechar_comanda`, {
-            method: 'POST'
-        });
-        const data = await res.json();
-        if (!res.ok) {
-            alert(data.error || "Erro ao fechar comanda");
-            return;
-        }
-
-        alert("Comanda fechada com sucesso");
-        fecharModal();
-        renderMesas(); // Atualiza tabela
-    } catch (error) {
-        console.error("Erro ao fechar comanda:", error);
-        alert("Erro ao fechar comanda.");
-    }
-});
-
 // Filtro por capacidade
 document.getElementById('filtroCapacidadeForm').addEventListener('submit', (event) => {
     event.preventDefault();
