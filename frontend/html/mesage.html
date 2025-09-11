@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gerenciamento de Mesas</title>
+    <link rel="stylesheet" href="../css/mesa.css" />
+</head>
+<body>
+    <section class="cabecalho">
+        <header>
+            <h1>Gerenciamento de Mesas</h1>
+            
+            <form id="filtroCapacidadeForm" class="filtro-capacidade">
+                <label for="filtroCapacidadeInput">Capacidade mínima:</label>
+                <input type="number" id="filtroCapacidadeInput" min="1" placeholder="Ex: 4" />
+                <button type="submit">Filtrar</button>
+                <button type="button" onclick="limparFiltro()">Limpar</button>
+            </form>
+            <div class="right-header">
+                <div class="logo">
+                    <img src="../css/icon/logobranca.png" alt="Logo" />
+                </div>
+            </div>
+        </header>
+    </section>
+
+    <table id="mesas-table" aria-label="Lista de mesas">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Capacidade</th>
+                <th>Comandas</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JS preencherá -->
+        </tbody>
+    </table>
+
+    <div id="comandaModal" class="modal">
+        <div class="modal-content">
+            <h2>Gerenciar Comandas</h2>
+
+            <input type="hidden" id="mesaIdInput">
+
+            <label for="quantidadeComandasInput">Quantidade de pessoas:</label>
+            <input type="number" id="quantidadeComandasInput" min="1" placeholder="Digite a quantidade" />
+
+            <div class="modal-buttons">
+                <button id="abrirComandaBtn">Abrir Comanda</button>
+                <button id="fecharComandaBtn">Fechar Comanda</button>
+                <button onclick="fecharModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/mesa.js"></script>
+</body>
+</html>
