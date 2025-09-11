@@ -3,7 +3,7 @@ import sys
 from flask import jsonify
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from config import app, db
-from Mesas.mesasModels import Mesas
+from Mesas.mesasModels import Mesas, Status
 
 mesas_cadastradas = [
     {"numero": 1, "capacidade": 4},
@@ -28,16 +28,26 @@ mesas_cadastradas = [
     {"numero": 20, "capacidade": 2},
 ]
 
+def seed_status():
+    with app.app_context():
+        for nome in ["livre", "ocupada", "reservada"]:
+            if not Status.query.filter_by(nome=nome).first():
+                db.session.add(Status(nome=nome))
+        db.session.commit()
+
 def seed_mesas():
     with app.app_context():
+        status_livre = Status.query.filter_by(nome="livre").first()
         for mesa_data in mesas_cadastradas:
             numero = mesa_data["numero"]
             capacidade = mesa_data["capacidade"]
 
-            mesa_existente = Mesas.query.filter_by(numero=numero).first()
-            if not mesa_existente:
-                nova_mesa = Mesas(numero=numero, capacidade=capacidade)
+            if not Mesas.query.filter_by(numero=numero).first():
+                nova_mesa = Mesas(
+                    numero=numero,
+                    capacidade=capacidade,
+                    status_id=status_livre.id
+                )
                 db.session.add(nova_mesa)
-                db.session.commit()
-
         db.session.commit()
+
