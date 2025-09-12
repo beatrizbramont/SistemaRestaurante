@@ -145,9 +145,9 @@ document.getElementById('abrirComandaBtn').addEventListener('click', async () =>
 
         fecharModal();
 
-        // Redireciona para comandas.html
+        // comandas.html
         const comandaIds = data.comandas.join(',');
-        window.location.href = `/frontend/html/comandas.html?mesa=${mesaId}&comandas=${comandaIds}`;
+        window.location.href = `/html/comandas.html?mesa=${mesaId}&comandas=${comandaIds}`;
 
     } catch (error) {
         console.error("Erro ao abrir comandas:", error);
