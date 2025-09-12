@@ -109,12 +109,36 @@ function abrirModalComandas(mesaId, capacidade) {
     document.getElementById('comandaModal').style.display = 'flex';
 }
 
-// Fecha modal
 function fecharModal() {
-    document.getElementById('comandaModal').style.display = 'none';
+  document.getElementById('comandaModal').style.display = 'none';
 }
 
-// Abrir comanda com verificação de capacidade
+// Visualizar comandas já abertas
+document.getElementById('visualizarComandasBtn').addEventListener('click', async () => {
+  const mesaId = parseInt(document.getElementById('mesaIdInput').value);
+  try {
+    const res = await fetch(`/mesa/${mesaId}/comandas`);
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.error || "Erro ao carregar comandas");
+      return;
+    }
+
+    if (!data.comandas || data.comandas.length === 0) {
+      alert("Não existe nenhuma comanda anexada a esta mesa.");
+      return;
+    }
+
+    fecharModal();
+
+    const comandaIds = data.comandas.join(',');
+    window.location.href = `/html/comandas.html?mesa=${mesaId}&comandas=${comandaIds}`;
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao buscar comandas existentes.");
+  }
+});
+
 document.getElementById('abrirComandaBtn').addEventListener('click', async () => {
     const quantidade = parseInt(document.getElementById('quantidadeComandasInput').value);
     const mesaId = parseInt(document.getElementById('mesaIdInput').value);
@@ -131,6 +155,7 @@ document.getElementById('abrirComandaBtn').addEventListener('click', async () =>
     }
 
     try {
+        // Abre as novas comandas
         const res = await fetch(`/mesa/${mesaId}/comandas`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -143,10 +168,19 @@ document.getElementById('abrirComandaBtn').addEventListener('click', async () =>
             return;
         }
 
+        // Busca todas as comandas abertas (novas + antigas)
+        const resTodas = await fetch(`/mesa/${mesaId}/comandas`);
+        const todasComandas = await resTodas.json();
+        if (!resTodas.ok) {
+            alert(todasComandas.error || "Erro ao carregar todas as comandas");
+            return;
+        }
+
         fecharModal();
 
-        // comandas.html
-        const comandaIds = data.comandas.join(',');
+        await renderMesas();
+
+        const comandaIds = todasComandas.comandas.join(',');
         window.location.href = `/html/comandas.html?mesa=${mesaId}&comandas=${comandaIds}`;
 
     } catch (error) {
@@ -169,6 +203,38 @@ document.getElementById('filtroCapacidadeForm').addEventListener('submit', (even
     }
 
     renderMesas(capacidade);
+});
+
+document.getElementById('fecharComandasBtn').addEventListener('click', async () => {
+    const mesaId = parseInt(document.getElementById('mesaIdInput').value);
+
+    if (!mesaId) {
+        alert('Mesa não encontrada ou não selecionada.');
+        return;
+    }
+
+    if (!confirm('Deseja fechar todas as comandas abertas dessa mesa?')) return;
+
+    try {
+        const res = await fetch(`/mesa/${mesaId}/comandas`, {
+            method: 'DELETE',
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error || 'Erro ao fechar comandas.');
+            return;
+        }
+
+        alert(data.msg || 'Comandas fechadas com sucesso!');
+        fecharModal(); 
+        renderMesas(); 
+
+    } catch (error) {
+        console.error('Erro ao fechar comandas:', error);
+        alert('Erro na comunicação com o servidor.');
+    }
 });
 
 // Botão de limpar filtro

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <title>Gerenciamento de Mesas</title>
     <link rel="stylesheet" href="../css/mesa.css" />
+    <!-- Font Awesome para o ícone X -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
     <section class="cabecalho">
@@ -34,12 +36,16 @@
             </tr>
         </thead>
         <tbody>
-            <!-- JS preencherá -->
+            <!-- JS -->
         </tbody>
     </table>
 
     <div id="comandaModal" class="modal">
         <div class="modal-content">
+            <button class="close-btn" onclick="fecharModal()" aria-label="Fechar">
+                <i class="fa fa-times"></i>
+            </button>
+
             <h2>Gerenciar Comandas</h2>
 
             <input type="hidden" id="mesaIdInput">
@@ -49,10 +55,12 @@
 
             <div class="modal-buttons">
                 <button id="abrirComandaBtn">Abrir Comanda</button>
-                <button onclick="fecharModal()">Cancelar</button>
+                <button type="button" id="visualizarComandasBtn">Visualizar</button>
+                <button id="fecharComandasBtn">Fechar Comandas</button>
             </div>
         </div>
     </div>
+
     <script src="../js/mesa.js"></script>
 </body>
 </html>
