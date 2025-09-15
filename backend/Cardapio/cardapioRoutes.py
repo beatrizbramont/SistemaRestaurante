@@ -21,6 +21,7 @@ def create_item():
         data = request.json
         novo_item = Cardapio(
             nome=data["nome"],
+            ingredientes=data["ingredientes"],
             preco=data["preco"],
             categoria=data["categoria"],
             tempo_preparo=data["tempo_preparo"]
@@ -39,6 +40,7 @@ def get_item():
             {
                 "id": item.id,
                 "nome": item.nome,
+                "ingredientes": item.ingredientes,
                 "preco": item.preco,
                 "categoria": item.categoria,
                 "tempo_preparo": item.tempo_preparo
@@ -58,6 +60,7 @@ def update_item(item_id):
             return jsonify({"msg": "Item não encontrado"}), 404
 
         item.nome = dados.get("nome", item.nome)
+        item.ingredientes = dados.get("ingredientes", item.ingredientes)
         item.preco = dados.get("preco", item.preco)
         item.categoria = dados.get("categoria", item.categoria)
         item.tempo_preparo = dados.get("tempo_preparo", item.tempo_preparo)
@@ -67,6 +70,7 @@ def update_item(item_id):
         return jsonify({"msg": "Item atualizado com sucesso!"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
     
 #Delete
 @cardapio_bp.route('/cardapio/<int:item_id>', methods=['DELETE'])

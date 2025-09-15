@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('menu-toggle');
   const sidebar = document.getElementById('sidebar');
   const categoriaSelect = document.getElementById('categoria');
+  const ingredientesInput = document.getElementById('ingredientes');
   const tempoPreparoInput = document.getElementById('tempo_preparo');
   atualizarContadoresCategorias();
 
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             li.innerHTML = `
               <div class="item-info">
                 <span class="item-nome">${item.nome} - </span>
+                <span class="item-ingredientes">${item.ingredientes} - </span>
                 <span class="item-preco">R$ ${parseFloat(item.preco).toFixed(2)} - </span>
                 <span class="item-tempo">${item.tempo_preparo} min</span>
               </div>
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Editar item
             li.querySelector('.edit-icon').addEventListener('click', () => {
               nomeInput.value = item.nome;
+              ingredientesInput.value = item.ingredientes;
               precoInput.value = item.preco;
               categoriaSelect.value = item.categoria;
               tempoPreparoInput.value = item.tempo_preparo;
@@ -137,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const data = {
       nome: nomeInput.value.trim(),
+      ingredientes: ingredientesInput.value.trim(),
       preco: parseFloat(precoInput.value),
       categoria: categoriaSelect.value,
       tempo_preparo: parseInt(tempoPreparoInput.value)
