@@ -237,6 +237,27 @@ document.getElementById('fecharComandasBtn').addEventListener('click', async () 
     }
 });
 
+document.getElementById('encerrarDiaBtn').addEventListener('click', async () => {
+    if (!confirm('Tem certeza que deseja encerrar o dia?')) return;
+
+    try {
+        const res = await fetch('/encerrar_dia', { method: 'POST' });
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error || 'Erro ao encerrar o dia.');
+            return;
+        }
+
+        alert(data.msg);
+        location.reload();
+    } catch (err) {
+        console.error(err);
+        alert('Erro ao conectar com o servidor.');
+    }
+});
+
+
 // Botão de limpar filtro
 function limparFiltro() {
     document.getElementById('filtroCapacidadeInput').value = '';
