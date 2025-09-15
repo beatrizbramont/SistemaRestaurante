@@ -4,8 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from flask import Blueprint, request, jsonify, send_from_directory
 from Mesas.mesasModels import db, Mesas, Status
 from Comandas.comandasModels import Comanda, ComandaHistorico
-from datetime import datetime
-
+from datetime import datetime, timedelta
 comandas_bp = Blueprint("comandas", __name__)
 frontend_bp = Blueprint('frontend', __name__)
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend')
