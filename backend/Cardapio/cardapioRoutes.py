@@ -21,7 +21,6 @@ def create_item():
         db.session.add(novo_item)
         db.session.commit()
 
-        # Reconsultar para garantir
         items = Cardapio.query.all()
         return jsonify({"msg": "Item adicionado com sucesso!"}), 200
     except Exception as e:

@@ -1,7 +1,14 @@
+let comandaAtivaId = null;
+
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const mesaId = urlParams.get('mesa');
     const container = document.getElementById('comandasContainer');
+
+    if (!container) {
+        console.error('Elemento #comandasContainer não encontrado no HTML.');
+        return;
+    }
 
     if (!mesaId) {
         container.innerHTML = "<p>ID da mesa não encontrado.</p>";
@@ -12,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     adicionarEventosGlobais(container, mesaId);
 });
 
-// Função para carregar comandas da mesa
 async function carregarComandas(mesaId, container) {
     try {
         const res = await fetch(`/mesa/${mesaId}/comandas`);
@@ -30,10 +36,12 @@ async function carregarComandas(mesaId, container) {
             return;
         }
 
-        comandas.forEach((comanda, index) => {
-            const comandaDiv = criarComandaDiv(comanda, index);
+        container.innerHTML = ''; // limpa antes
+
+        for (const [index, comanda] of comandas.entries()) {
+            const comandaDiv = await criarComandaDiv(comanda, index);
             container.appendChild(comandaDiv);
-        });
+        }
 
     } catch (error) {
         console.error('Erro ao buscar comandas:', error);
@@ -41,8 +49,7 @@ async function carregarComandas(mesaId, container) {
     }
 }
 
-// Função para criar o elemento da comanda
-function criarComandaDiv(comanda, index) {
+async function criarComandaDiv(comanda, index) {
     const comandaDiv = document.createElement('div');
     comandaDiv.classList.add('comanda');
     comandaDiv.setAttribute('data-id', comanda.id);
@@ -51,22 +58,125 @@ function criarComandaDiv(comanda, index) {
         <h2>Comanda #${index + 1}</h2>
         <p>ID: ${comanda.id}</p>
         <p>Nome: <input type="text" class="nomeInput" value="${comanda.nome || ''}"></p>
-        <button class="fecharComandaBtn">Fechar esta Comanda</button>
+
+        <ul class="lista-itens-comanda"></ul>
+
+        <div class="adicionar-item-container">
+            <select class="select-produto"></select>
+            <input type="number" class="quantidade-item" value="1" min="1" />
+            <button class="adicionar-item-comanda-btn">Adicionar Item</button>
+            <p class="total-comanda">Total: ${comanda.total}</p>
+        </div>
+
+        <button class="fecharComandaBtn">Fechar Comanda</button>
     `;
 
-    // Adiciona evento de salvar nome ao sair do input
-    const nomeInput = comandaDiv.querySelector('.nomeInput');
-    nomeInput.addEventListener('blur', () => {
-        const novoNome = nomeInput.value.trim();
+    //Total
+    comandaDiv.querySelector('.total-comanda').addEventListener('blur', () => {
+        const total = comandaDiv.querySelector('.total-comanda').value.trim();
+        atualizarNomeComanda(comanda.id, total);
+    });
+    // Criar uma function igual ao novoNome
+
+    // Editar nome
+    comandaDiv.querySelector('.nomeInput').addEventListener('blur', () => {
+        const novoNome = comandaDiv.querySelector('.nomeInput').value.trim();
         atualizarNomeComanda(comanda.id, novoNome);
     });
+
+    // Preencher produtos
+    await preencherProdutosCardapio(comandaDiv);
+
+    // Adicionar item
+    comandaDiv.querySelector('.adicionar-item-comanda-btn').addEventListener('click', async () => {
+        const produtoId = comandaDiv.querySelector('.select-produto').value;
+        const quantidade = parseInt(comandaDiv.querySelector('.quantidade-item').value);
+
+        if (!produtoId || quantidade < 1) {
+            alert('Selecione um produto e uma quantidade válida.');
+            return;
+        }
+
+        try {
+            const res = await fetch(`/Cp/${comanda.id}/itens`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ produto_id: produtoId, quantidade })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.error || 'Erro ao adicionar item');
+            } else {
+                alert('Item adicionado com sucesso');
+                await carregarItensComanda(comanda.id, comandaDiv);
+            }
+        } catch (error) {
+            console.error('Erro ao adicionar item:', error);
+            alert('Erro ao adicionar item');
+        }
+    });
+
+    // Carregar itens já existentes
+    await carregarItensComanda(comanda.id, comandaDiv);
 
     return comandaDiv;
 }
 
-// Função para adicionar eventos globais ao container
+async function preencherProdutosCardapio(comandaDiv) {
+    const select = comandaDiv.querySelector('.select-produto');
+    if (!select) return;
+
+    try {
+        const res = await fetch('/cardapio');
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert('Erro ao carregar cardápio');
+            return;
+        }
+
+        select.innerHTML = '';
+        data.forEach(prod => {
+            const opt = document.createElement('option');
+            opt.value = prod.id;
+            opt.textContent = `${prod.nome} — R$ ${parseFloat(prod.preco).toFixed(2)}`;
+            select.appendChild(opt);
+        });
+    } catch (error) {
+        console.error('Erro ao carregar cardápio:', error);
+    }
+}
+
+async function carregarItensComanda(comandaId, comandaDiv) {
+    const listaItens = comandaDiv.querySelector('.lista-itens-comanda');
+    const totalEl = comandaDiv.querySelector('.total-comanda');
+
+    try {
+        const res = await fetch(`/Cp/${comandaId}/itens`);
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error || 'Erro ao carregar itens da comanda');
+            return;
+        }
+
+        listaItens.innerHTML = '';
+        data.itens.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.quantidade} x ${item.nome} — R$ ${item.preco_unitario.toFixed(2)} cada — Subtotal: R$ ${item.subtotal.toFixed(2)}`;
+            listaItens.appendChild(li);
+        });
+
+        totalEl.textContent = `Total: R$ ${data.total.toFixed(2)}`;
+
+    } catch (error) {
+        console.error('Erro ao carregar itens da comanda:', error);
+    }
+}
+
 function adicionarEventosGlobais(container, mesaId) {
-    // Fechar comanda individual
     container.addEventListener('click', async (event) => {
         if (!event.target.classList.contains('fecharComandaBtn')) return;
 
@@ -83,95 +193,69 @@ function adicionarEventosGlobais(container, mesaId) {
         await fecharComanda(comandaId, comandaDiv, container);
     });
 
-    // Criar botão "Fechar todas as comandas"
-    const fecharTodasBtn = document.createElement('button');
-    fecharTodasBtn.textContent = 'Fechar comandas';
-    fecharTodasBtn.id = 'fecharTodasBtn';
-    fecharTodasBtn.style.marginTop = '20px';
-    container.appendChild(fecharTodasBtn);
+    // Botão para fechar todas
+    let fecharTodasBtn = document.getElementById('fecharTodasBtn');
+    if (!fecharTodasBtn) {
+        fecharTodasBtn = document.createElement('button');
+        fecharTodasBtn.textContent = 'Fechar todas as comandas';
+        fecharTodasBtn.id = 'fecharTodasBtn';
+        fecharTodasBtn.style.marginTop = '20px';
+        container.appendChild(fecharTodasBtn);
 
-    // Evento para fechar todas
-    fecharTodasBtn.addEventListener('click', () => {
-        if (confirm('Tem certeza que deseja fechar TODAS as comandas desta mesa?')) {
-            fecharTodasAsComandas(mesaId);
-        }
-    });
-}
-
-// Função para fechar comanda individual
-async function fecharComanda(comandaId, comandaDiv, container) {
-    try {
-        const res = await fetch(`/comanda/${comandaId}/fechar`, {
-            method: 'POST',
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            if (res.status === 404) {
-                alert('Comanda não encontrada. Ela já pode ter sido fechada.');
-                comandaDiv.remove();
-            } else {
-                alert(data.error || 'Erro ao fechar comanda.');
+        fecharTodasBtn.addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja fechar TODAS as comandas desta mesa?')) {
+                fecharTodasAsComandas(mesaId);
             }
-            return;
-        }
-
-        alert(data.msg || 'Comanda fechada com sucesso!');
-        comandaDiv.remove();
-
-        const comandasRestantes = container.querySelectorAll('.comanda');
-        if (comandasRestantes.length === 0) {
-            window.location.href = '/html/mesapage.html';
-        }
-
-    } catch (error) {
-        console.error('Erro ao fechar comanda:', error);
-        alert('Erro na comunicação com o servidor.');
+        });
     }
 }
 
-// Função para atualizar o nome da comanda
 async function atualizarNomeComanda(comandaId, novoNome) {
     try {
-        const res = await fetch(`/comanda/${comandaId}/nome`, {
+        await fetch(`/comanda/${comandaId}/nome`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ nome: novoNome })
         });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            alert(data.error || 'Erro ao salvar o nome da comanda.');
-        }
     } catch (error) {
         console.error('Erro ao atualizar nome da comanda:', error);
-        alert('Erro ao tentar salvar o nome da comanda.');
     }
 }
 
-// Função para fechar todas as comandas
-async function fecharTodasAsComandas(mesaId) {
+async function atualizarTotalComanda(comandaId, total) {
     try {
-        const res = await fetch(`/mesa/${mesaId}/comandas`, {
-            method: 'DELETE'
+        await fetch(`/cardapio/${comandaId}/preco`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ preco: total })
         });
+    } catch (error) {
+        console.error('Erro ao atualizar total da comanda:', error);
+    }
+}
 
+async function fecharComanda(comandaId, comandaDiv, container) {
+    try {
+        const res = await fetch(`/comanda/${comandaId}/fechar`, { method: 'POST' });
         const data = await res.json();
 
         if (!res.ok) {
-            alert(data.error || 'Erro ao fechar todas as comandas.');
+            alert(data.error || 'Erro ao fechar comanda.');
             return;
         }
 
-        alert(data.msg || 'Todas as comandas foram fechadas!');
-        window.location.href = '/html/mesapage.html';
+        comandaDiv.remove();
+    } catch (error) {
+        console.error('Erro ao fechar comanda:', error);
+        alert('Erro ao fechar comanda');
+    }
+}
 
+async function fecharTodasAsComandas(mesaId) {
+    try {
+        await fetch(`/mesa/${mesaId}/comandas`, { method: 'DELETE' });
+        location.reload();
     } catch (error) {
         console.error('Erro ao fechar todas as comandas:', error);
-        alert('Erro na comunicação com o servidor.');
     }
 }
