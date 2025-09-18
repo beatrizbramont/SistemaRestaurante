@@ -1,22 +1,128 @@
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+/* Layout geral das comandas */
+.comanda {
+  background-color: #ffffff;            /* branco */
+  border: 1px solid #ddd;
+  border-left: 6px solid #f57c00;        /* faixa laranja */
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Título da comanda */
+.comanda h2 {
+  margin: 0 0 8px 0;
+  color: #f57c00;
+  font-size: 1.3rem;
+}
+
+/* Input do nome da comanda */
+.comanda .nomeInput {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px 6px;
+  width: 200px;
+}
+
+/* Container de adicionar item */
+.adicionar-item-container {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
   align-items: center;
+  margin-top: 10px;
 }
 
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+/* Select com optgroup */
+.select-produto {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 240px;
+  background-color: #f5f5f5; /* cinza claro */
 }
 
-.comanda.ativa {
-  border: 2px solid green;
-  background-color: #f0fff0;
+.select-produto optgroup {
+  font-weight: bold;
+  color: #f57c00; /* nome da categoria laranja */
+}
+
+/* Quantidade */
+.quantidade-item {
+  width: 60px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Botão adicionar item */
+.adicionar-item-comanda-btn {
+  background-color: #f57c00;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.adicionar-item-comanda-btn:hover {
+  background-color: #e46f00;
+}
+
+/* Total */
+.total-comanda {
+  font-weight: bold;
+  color: #333;
+  margin-left: auto;
+}
+
+/* Lista de itens */
+.lista-itens-comanda {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.item-comanda {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
+
+/* Ícones de editar/excluir */
+.item-actions i {
+  cursor: pointer;
+  margin-left: 8px;
+  color: #555;
+  transition: color .2s;
+}
+
+.item-actions i.edit-icon:hover {
+  color: #f57c00; /* laranja */
+}
+
+.item-actions i.delete-icon:hover {
+  color: #cc0000; /* vermelho para exclusão */
+}
+
+/* Botões fechar comanda */
+.fecharComandaBtn,
+#fecharTodasBtn {
+  background-color: #ccc; /* cinza */
+  color: #333;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.fecharComandaBtn:hover,
+#fecharTodasBtn:hover {
+  background-color: #bbb;
 }

@@ -10,7 +10,7 @@ h1 {
     margin-bottom: 40px;
 }
 .btn {
-    background-color: #007bff;
+    background-color: #e07204;
     border: none;
     color: white;
     padding: 15px 30px;
@@ -25,5 +25,5 @@ h1 {
     transition: background-color 0.3s ease;
 }
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #ff9429;
 }

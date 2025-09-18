@@ -194,7 +194,7 @@ def encerrar_dia():
 def limpar_historico_antigo():
     try:
         limite = datetime.utcnow() - timedelta(days=2)
-        antigas = ComandaHistorico.query.filter(ComandaHistorico.data_fechamento < limite).all()
+        antigas = ComandaHistorico.query.filter(func.strftime('%Y-%m-%d %H:%M:%S', ComandaHistorico.data_fechamento) < limite.strftime('%Y-%m-%d %H:%M:%S')).all()
 
         for c in antigas:
             db.session.delete(c)

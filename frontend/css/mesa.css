@@ -5,9 +5,9 @@
 }
 
 :root {
-  --azul-escuro: #0d47a1;
-  --azul: #1976d2;
-  --azul-claro: #e3f2fd;
+  --laranja-escuro: #e07204;
+  --azul: #c26100;
+  --azul-claro: #ffd1a2;
   --branco: #ffffff;
   --cinza: #e0e0e0;
   --cinza-escuro: #455a64;
@@ -42,7 +42,7 @@ table {
 }
 
 thead {
-    background-color: #3498db;
+    background-color: #c26100;
     color: white;
 }
 
@@ -125,7 +125,7 @@ select:focus {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--azul-escuro);
+  background-color: var(--laranja-escuro);
   z-index: 1001;
   padding: 0.5rem 1rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);

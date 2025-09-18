@@ -7,20 +7,20 @@
 
 /* Paleta de cores */
 :root {
-  --azul-escuro: #0d47a1;
-  --azul: #1976d2;
-  --azul-claro: #e3f2fd;
+  --laranja-escuro: #e07204;
+  --laranja: #c26100;
+  --laranja-claro: #ffd1a2;
   --branco: #ffffff;
   --cinza: #e0e0e0;
   --cinza-escuro: #455a64;
-  --vermelho: #e53935;
+  --vermelho: #c26100;
   --vermelho-escuro: #c62828;
   --preto: #2c3e50;
 }
 
 body {
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-  background-color: var(--azul-claro);
+  background-color: var(--laranja-claro);
   color: var(--preto);
   padding-top: 60px;
   min-height: 100vh;
@@ -33,7 +33,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--azul-escuro);
+  background-color: var(--laranja-escuro);
   z-index: 1001;
   padding: 0.5rem 1rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -83,7 +83,7 @@ body {
   right: 0;
   width: 250px;
   height: calc(100vh - 60px);
-  background-color: var(--azul-escuro);
+  background-color: var(--laranja-escuro);
   padding: 1rem;
   box-shadow: -4px 0 12px rgba(0,0,0,0.2);
   overflow-y: auto;
@@ -132,7 +132,7 @@ body {
 }
 
 #sidebar ul ul li a:hover {
-  color: var(--azul-claro);
+  color: var(--laranja-claro);
   text-decoration: underline;
 }
 
@@ -159,7 +159,7 @@ main {
   display: block;
   margin-bottom: 1.5rem;
   padding: 0.8rem 1.2rem;
-  background-color: var(--azul);
+  background-color: var(--laranja);
   color: var(--branco);
   border: none;
   border-radius: 6px;
@@ -172,7 +172,7 @@ main {
 }
 
 #toggle-form:hover {
-  background-color: var(--azul-escuro);
+  background-color: var(--laranja-escuro);
 }
 
 form {
@@ -200,7 +200,7 @@ input, select {
 
 form button {
   padding: 0.8rem;
-  background-color: var(--azul);
+  background-color: var(--laranja);
   color: var(--branco);
   border: none;
   border-radius: 6px;
@@ -214,7 +214,7 @@ form button {
 }
 
 form button:hover {
-  background-color: var(--azul-escuro);
+  background-color: var(--laranja-escuro);
 }
 
 .titulo-cardapio {
@@ -234,7 +234,7 @@ form button:hover {
 #cardapio-list li {
   background-color: var(--branco);
   border-radius: 8px;
-  border-left: 6px solid var(--azul);
+  border-left: 6px solid var(--laranja);
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -315,9 +315,9 @@ form button:hover {
 #modal-categoria h2 {
   font-size: 1.4rem;
   font-weight: bold;
-  color: var(--azul);
+  color: var(--laranja);
   margin-bottom: 15px;
-  border-bottom: 2px solid var(--azul);
+  border-bottom: 2px solid var(--laranja);
   padding-bottom: 5px;
 }
 
@@ -346,7 +346,7 @@ form button:hover {
 }
 
 #modal-categoria-lista .item-actions i:hover {
-  color: var(--azul);
+  color: var(--laranja);
 }
 
 .close {
@@ -373,7 +373,7 @@ form button:hover {
 }
 
 .item-actions .edit-icon:hover {
-  color: var(--azul);
+  color: var(--laranja);
 }
 
 .item-actions .delete-icon:hover {
@@ -388,7 +388,7 @@ form button:hover {
 .categoria-section h3 {
   margin-bottom: 0.5rem;
   color: var(--preto);
-  border-bottom: 2px solid var(--azul-escuro);
+  border-bottom: 2px solid var(--laranja-escuro);
   padding-bottom: 0.3rem;
 }
 

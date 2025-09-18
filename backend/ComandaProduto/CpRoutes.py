@@ -75,3 +75,41 @@ def adicionar_item_comanda(comanda_id):
     db.session.commit()
 
     return jsonify({"msg": "Item adicionado à comanda com sucesso!"}), 200
+
+@cp_bp.route("/Cp/<int:comanda_id>/itens/<int:item_id>", methods=["DELETE"])
+def deletar_item_comanda(comanda_id, item_id):
+    try:
+        item = ComandaProduto.query.filter_by(comanda_id=comanda_id, id=item_id).first()
+
+        if not item:
+            return jsonify({"msg": "Item da comanda não encontrado"}), 404
+
+        db.session.delete(item)
+        db.session.commit()
+
+        return jsonify({"msg": "Item excluído com sucesso!"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@cp_bp.route("/Cp/<int:comanda_id>/itens/<int:item_id>", methods=["PUT"])
+def atualizar_item_comanda(comanda_id, item_id):
+    try:
+        data = request.get_json()
+        nova_quantidade = data.get("quantidade")
+
+        if nova_quantidade is None or int(nova_quantidade) < 1:
+            return jsonify({"error": "quantidade deve ser pelo menos 1"}), 400
+
+        item = ComandaProduto.query.filter_by(comanda_id=comanda_id, id=item_id).first()
+        if not item:
+            return jsonify({"error": "Item da comanda não encontrado"}), 404
+
+        item.quantidade = int(nova_quantidade)
+        db.session.commit()
+
+        return jsonify({"msg": "Item atualizado com sucesso!"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
