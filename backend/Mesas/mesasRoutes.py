@@ -70,4 +70,3 @@ def atualizar_status_mesa(mesa_id):
     return jsonify({"msg": f"Status da mesa {mesa.numero} atualizado para {status_obj.nome}"}), 200
 
 
-

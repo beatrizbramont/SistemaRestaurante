@@ -50,4 +50,3 @@ def seed_mesas():
                 )
                 db.session.add(nova_mesa)
         db.session.commit()
-

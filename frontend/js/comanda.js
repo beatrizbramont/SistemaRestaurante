@@ -316,4 +316,3 @@ async function fecharTodasAsComandas(mesaId) {
         alert('Erro na comunicação com o servidor.');
     }
 }
-
