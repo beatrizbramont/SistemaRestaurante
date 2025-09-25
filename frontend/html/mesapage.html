@@ -8,23 +8,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-    <section class="cabecalho">
-        <header>
-            <h1>Gerenciamento de Mesas</h1>
-            
-            <form id="filtroCapacidadeForm" class="filtro-capacidade">
-                <label for="filtroCapacidadeInput">Capacidade mínima:</label>
-                <input type="number" id="filtroCapacidadeInput" min="1" placeholder="Ex: 4" />
-                <button type="submit">Filtrar</button>
-                <button type="button" onclick="limparFiltro()">Limpar</button>
-            </form>
-            <div class="right-header">
-                <div class="logo">
-                    <img src="../css/icon/LogoEscuro-removebg-preview.png" alt="Logo" />
-                </div>
-            </div>
-        </header>
-    </section>
+<section class="cabecalho">
+  <header>
+    <h1>Gerenciamento de Mesas</h1>
+
+    <div class="right-header">
+      <div class="logo">
+        <img src="../css/icon/tabletrack_logopreta.png" alt="Logo" />
+      </div>
+    </div>
+  </header>
+
+  <!-- NOVO BLOCO DE BOTÕES -->
+  <div class="acoes-topo">
+    <button id="encerrarDiaBtn">Encerrar o dia</button>
+    <a href="../index.html" id="voltarBtn">Voltar</a>
+  </div>
+
+  <form id="filtroCapacidadeForm" class="filtro-capacidade">
+    <label for="filtroCapacidadeInput">Capacidade mínima:</label>
+    <input type="number" id="filtroCapacidadeInput" min="1" placeholder="Ex: 4" />
+    <button type="submit">Filtrar</button>
+    <button type="button" onclick="limparFiltro()">Limpar</button>
+  </form>
+</section>
+
 
     <table id="mesas-table" aria-label="Lista de mesas">
         <thead>
@@ -60,7 +68,6 @@
             </div>
         </div>
     </div>
-    <button id="encerrarDiaBtn">Encerrar o dia</button>
     <script src="../js/mesa.js"></script>
 </body>
 </html>
