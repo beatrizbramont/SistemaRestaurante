@@ -20,6 +20,15 @@
 
 /* BODY */
 
+.acoes {
+  margin-top: 90px; /* espaço para não grudar no cabeçalho fixo */
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 1rem;
+  padding: 0 2rem;
+}
+
 .acoes-topo {
   display: flex;
   justify-content: flex-end; /* joga pra direita */
@@ -30,6 +39,7 @@
 body {
   background: var(--cinza-fundo);
   padding: 0;
+  padding-top: 30px;
   color: var(--preto);
 }
 
@@ -82,7 +92,7 @@ body {
 
 /* LOGO */
 .logo img {
-  height: 45px;
+  height: 75px;
   width: auto;
   object-fit: contain;
 }
@@ -92,8 +102,8 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--cinza-fundo);
-  padding: 0.5rem 1rem;
+  background: #EAEEF0;
+  padding: 1rem 1rem;
   border-radius: 30px;
 }
 
@@ -121,10 +131,6 @@ body {
 
 .filtro-capacidade button[type="button"] {
   background: #bbb;
-}
-
-body {
-  padding-top: 100px; /* espaço pro cabeçalho */
 }
 
 /* TABELA */
@@ -198,6 +204,7 @@ select {
 }
 
 /* BOTÃO ENCERRAR DIA */
+
 #encerrarDiaBtn {
   background: var(--vermelho);
   border: none;
@@ -215,6 +222,7 @@ select {
 }
 
 /* MODAL */
+
 .modal {
   position: fixed;
   top: 0;
@@ -230,22 +238,57 @@ select {
 
 .modal-content {
   background: #fff;
-  padding: 2rem;
+  padding: 2rem 3rem;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   min-width: 320px;
   max-width: 500px;
+  position: relative; /* necessário para posicionar o botão de fechar */
+  text-align: center;
 }
 
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: var(--laranja-escuro);
+}
+
+.modal-content input[type="number"] {
+  width: 25%;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* espaço entre os botões */
+  margin-top: 1.5rem; /* afasta os botões do input */
+  flex-wrap: wrap; /* quebra linha se a tela for pequena */
+}
 
 .modal-buttons button {
   background: var(--laranja-escuro);
   border: none;
   border-radius: 8px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
   color: white;
   font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .modal-buttons button:hover {
