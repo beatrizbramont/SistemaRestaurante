@@ -5,6 +5,7 @@ from flask import Blueprint, request, jsonify, send_from_directory
 from Mesas.mesasModels import db, Mesas, Status
 from Comandas.comandasModels import Comanda, ComandaHistorico
 from datetime import datetime, timedelta
+from sqlalchemy import text
 comandas_bp = Blueprint("comandas", __name__)
 frontend_bp = Blueprint('frontend', __name__)
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend')
@@ -163,15 +164,14 @@ def atualizar_nome_comanda(comanda_id):
 
     return jsonify({"msg": "Nome da comanda atualizado com sucesso."}), 200
 
-# Deleta após 2 dias
 @comandas_bp.route("/encerrar_dia", methods=["POST"])
 def encerrar_dia():
     try:
-        # Comandas fechadas até hoje
         comandas_fechadas = Comanda.query.filter_by(aberta=False).all()
         historico = []
 
         for comanda in comandas_fechadas:
+            print(f"[DEBUG] Movendo comanda: {comanda.id}")
             hist = ComandaHistorico(
                 id=comanda.id,
                 mesa_id=comanda.mesa_id,
@@ -179,22 +179,33 @@ def encerrar_dia():
                 data_fechamento=comanda.data_fechamento
             )
             historico.append(hist)
-            db.session.delete(comanda)
 
+        # Salva histórico primeiro
         db.session.bulk_save_objects(historico)
         db.session.commit()
 
-        return jsonify({"msg": f"{len(historico)} comandas movidas para o histórico."}), 200
+        # Agora deleta comanda_produto e comandas
+        for comanda in comandas_fechadas:
+            db.session.execute(
+                text("DELETE FROM comanda_produto WHERE comanda_id = :comanda_id"),
+                {"comanda_id": comanda.id}
+            )
+            db.session.delete(comanda)
+
+        db.session.commit()
+
+        return jsonify({"msg": f"{len(historico)} comandas movidas"}), 200
 
     except Exception as e:
         db.session.rollback()
+        print(f"[ERRO AO ENCERRAR O DIA] {str(e)}")
         return jsonify({"error": f"Erro ao encerrar o dia: {str(e)}"}), 500
 
 @comandas_bp.route("/historico/limpar", methods=["DELETE"])
 def limpar_historico_antigo():
     try:
         limite = datetime.utcnow() - timedelta(days=2)
-        antigas = ComandaHistorico.query.filter(func.strftime('%Y-%m-%d %H:%M:%S', ComandaHistorico.data_fechamento) < limite.strftime('%Y-%m-%d %H:%M:%S')).all()
+        antigas = ComandaHistorico.query.filter(ComandaHistorico.data_fechamento < limite).all()
 
         for c in antigas:
             db.session.delete(c)
