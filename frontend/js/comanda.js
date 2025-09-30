@@ -296,6 +296,8 @@ async function fecharComanda(comandaId, comandaDiv, mesaId) {
 }
 
 async function fecharTodasAsComandas(mesaId) {
+    const container = document.getElementById('comandasContainer'); // pega o container
+
     try {
         const res = await fetch(`/mesa/${mesaId}/comandas`, { method: 'DELETE' });
         const data = await res.json();
@@ -307,6 +309,11 @@ async function fecharTodasAsComandas(mesaId) {
 
         alert(data.msg || 'Comandas fechadas com sucesso!');
 
+        // Atualiza lista das comandas na tela
+        if (container) {
+            await carregarComandas(mesaId, container);
+        }
+
         if (typeof renderMesas === 'function') {
             renderMesas();
         }
@@ -316,3 +323,4 @@ async function fecharTodasAsComandas(mesaId) {
         alert('Erro na comunicação com o servidor.');
     }
 }
+

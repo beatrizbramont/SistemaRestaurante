@@ -90,7 +90,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   margin: 20px auto;
-  max-width: 500px;
+  max-width: 850px;
   font-family: Arial, sans-serif;
   border: none;
   overflow: hidden;
@@ -210,4 +210,101 @@ body {
 }
 .fecharComandaBtn:hover {
   background: #c62828;
+}
+
+/* Para telas até 768px (tablets e mobiles médios) */
+@media (max-width: 768px) {
+  .cabecalho header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .logo img {
+    height: 3rem; /* reduz o tamanho do logo */
+  }
+
+  #voltarBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  #comandasContainer {
+    margin-top: 20px;
+    padding: 0 10px;
+  }
+
+  .comanda {
+    max-width: 100%;
+    margin: 10px auto;
+    padding: 12px;
+  }
+
+  .adicionar-item-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .select-produto,
+  .quantidade-item,
+  .adicionar-item-comanda-btn {
+    width: 100%;
+  }
+
+  .quantidade-item {
+    width: 100%;
+    text-align: left;
+  }
+
+  .fecharComandaBtn {
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+}
+
+/* Para telas até 480px (celulares pequenos) */
+@media (max-width: 480px) {
+  .cabecalho h1 {
+    font-size: 1.4rem;
+  }
+
+  .logo img {
+    height: 2.5rem;
+  }
+
+  #voltarBtn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+  }
+
+  .comanda h2 {
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
+
+  .nomeInput,
+  .select-produto,
+  .quantidade-item {
+    font-size: 0.9rem;
+    padding: 6px 8px;
+  }
+
+  .adicionar-item-comanda-btn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .item-comanda {
+    font-size: 0.9rem;
+    padding: 5px 8px;
+  }
+
+  .total-comanda {
+    font-size: 0.9rem;
+  }
 }

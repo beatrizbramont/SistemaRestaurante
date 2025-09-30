@@ -433,3 +433,86 @@ form button:hover {
     transform: translateY(0);
   }
 }
+
+/* Responsivo geral */
+@media (max-width: 900px) {
+  /* Sidebar fica overlay full width na direita */
+  #sidebar {
+    width: 100%;
+    height: calc(100vh - 60px);
+    top: 60px;
+    right: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: none;
+  }
+
+  #sidebar.visible {
+    transform: translateX(0);
+    box-shadow: 0 0 15px rgba(0,0,0,0.25);
+    background-color: var(--branco);
+  }
+
+  /* Conteúdo principal se adapta */
+  main {
+    margin: 1rem;
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  /* Cabeçalho empilha verticalmente */
+  .cabecalho header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .logo img {
+    margin-left: 0;
+    height: 50px;
+  }
+
+  .cabecalho h1 {
+    font-size: 1.4rem;
+    color: var(--laranja-escuro);
+  }
+
+  .right-header {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Para telas bem pequenas */
+@media (max-width: 480px) {
+  /* Botões e inputs ocupam largura total */
+  form button,
+  #toggle-form,
+  input,
+  select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #sidebar {
+    height: calc(100vh - 60px);
+    padding: 1rem 0.5rem;
+  }
+
+  #sidebar ul > li {
+    font-size: 1rem;
+  }
+
+  #sidebar ul ul li a {
+    font-size: 0.85rem;
+  }
+
+  /* Ajusta título */
+  .cabecalho h1 {
+    font-size: 1.2rem;
+  }
+
+  .logo img {
+    height: 40px;
+  }
+}
