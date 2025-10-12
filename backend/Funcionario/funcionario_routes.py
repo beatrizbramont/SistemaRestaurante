@@ -36,3 +36,20 @@ def criar_funcionario():
         'email': funcionario_criado.email
     }), 201
 
+
+@funcionarios_bp.route('/funcionarios', methods=['GET'])
+def listar_funcionarios():
+    funcionarios = Funcionario.query.all()
+    lista = []
+    for f in funcionarios:
+        lista.append({
+            'id': f.id,
+            'nome': f.nome,
+            'cargo': f.cargo,
+            'email': f.email
+        })
+    return jsonify(lista), 200
+
+
+
+
