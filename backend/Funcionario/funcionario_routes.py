@@ -51,5 +51,20 @@ def listar_funcionarios():
     return jsonify(lista), 200
 
 
+@funcionarios_bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
 
+        email = request.form['email']
+        senha = request.form['pwd']
+
+        funcionario_bd = listar_usuario_email(email)
+
+        if funcionario_bd and funcionario_bd.senha == senha:
+            return redirect(url_for('funcionarios.painel_page'))
+
+        else:
+            return jsonify({"erro": "Email ou senha inválidos"}), 401
+        
+    return send_from_directory(os.path.join(STATIC_DIR, "html"), "login.html")
 
