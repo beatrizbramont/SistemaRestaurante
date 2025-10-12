@@ -14,3 +14,6 @@ def cadastrar_funcionario(funcionario):
 
     return funcionario_bd
 
+def listar_usuario_email(email):
+    return Funcionario.query.filter_by(email=email).first()
+
