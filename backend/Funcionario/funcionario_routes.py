@@ -1,0 +1,37 @@
+import sys
+import os
+from flask import Blueprint, request, jsonify, send_from_directory, redirect, url_for
+from Funcionario.funcionario_service import cadastrar_funcionario
+from Funcionario.funcionario_model import Funcionario
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'frontend')
+
+
+funcionarios_bp = Blueprint('funcionarios', __name__)
+frontend_bp = Blueprint('frontend', __name__)
+
+
+@funcionarios_bp.route("/register") 
+def register_page(): 
+    return send_from_directory(os.path.join(STATIC_DIR, "html"), "register.html")
+
+@funcionarios_bp.route("/funcionarios",  methods=['POST'])
+def criar_funcionario():
+    dados = request.json
+
+    funcionario = Funcionario(
+        nome=dados['nome'],
+        cargo=dados['cargo'],
+        email=dados['email'],
+        senha=dados['senha']
+    )
+
+    funcionario_criado = cadastrar_funcionario(funcionario)
+
+    return jsonify({
+        'id': funcionario_criado.id,
+        'nome': funcionario_criado.nome,
+        'cargo': funcionario_criado.cargo,
+        'email': funcionario_criado.email
+    }), 201
