@@ -6,12 +6,14 @@ from Mesas.mesasRoutes import mesa_bp
 from Comandas.comandasRoutes import comandas_bp
 from ComandaProduto.CpRoutes import cp_bp
 from Cardapio.cardapioRoutes import cardapio_bp
+from Funcionario.funcionario_routes import funcionarios_bp
 
 app.register_blueprint(frontend_bp)
 app.register_blueprint(cardapio_bp)
 app.register_blueprint(mesa_bp)
 app.register_blueprint(comandas_bp)
 app.register_blueprint(cp_bp)
+app.register_blueprint(funcionarios_bp)
 
 with app.app_context():
     db.create_all()
