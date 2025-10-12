@@ -1,18 +1,53 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <title>Home - Sistema Restaurante</title>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Table Track</title>
+    <link rel="icon" type="image/png" sizes="64x64" href="../css/icon/tabletrack_logobranca.png">
+    <link rel="stylesheet" href="../css/painel.css">
 </head>
+
 <body>
+    <header class="cabecalho">
+        <div class="logo">
+            <img src="../css/icon/tabletrack_logopreta.png" alt="Logo TableTrack" width="130">
+        </div>
+    </header>
 
-    <h1>Bem-vindo ao TableTrack</h1>
+    <main>
+        <section class="menu-opcoes">
+            <div class="opcao">
+                <a href="../html/cardapio.html">
+                    <div class="opcao-header">
+                        <h2>Cardápio</h2>
+                    </div>
+                    <img src="../css/icon/icon-cardapio.svg" width="180" alt="Ícone de cardápio">
+                </a>
+            </div>
 
-    <a href="./html/cardapio.html" class="btn">Cadastro de Cardápio</a>
-    <a href="./html/mesapage.html" class="btn">Cadastro de Mesas</a>
+            <!-- MESAS -->
+            <div class="opcao">
+                <a href="../html/mesapage.html">
+                    <div class="opcao-header">
+                        <h2>Mesas</h2>
+                    </div>
+                    <img src="../css/icon/icon-mesas.svg" width="180" alt="Ícone de mesas">
+                </a>
+            </div>
 
+            <!-- FUNCIONÁRIOS -->
+            <div class="opcao">
+                <a href="/funcionarios">
+                    <div class="opcao-header">
+                        <h2>Funcionários</h2>
+                    </div>
+                    <img src="../css/icon/icon-funcionarios.svg" width="180" alt="Ícone de funcionários">
+                </a>
+            </div>
+        </section>
+    </main>
 </body>
+
 </html>
