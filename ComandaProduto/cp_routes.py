@@ -2,9 +2,9 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Blueprint, request, jsonify, send_from_directory
-from Cardapio.cardapioModels import db, Cardapio
+from Cardapio.cardapio_model import db, Cardapio
 from Comandas.comandasModels import Comanda
-from ComandaProduto.CpModels import ComandaProduto
+from ComandaProduto.cp_models import ComandaProduto
 from datetime import datetime, timedelta
 cp_bp = Blueprint("Cp", __name__)
 frontend_bp = Blueprint('frontend', __name__)
