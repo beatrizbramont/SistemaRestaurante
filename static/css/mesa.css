@@ -1,0 +1,419 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  --laranja: #f9a825;
+  --laranja-escuro: #f57c00;
+  --cinza-fundo: #f3f3f3;
+  --cinza-borda: #ddd;
+  --verde: #388e3c;
+  --vermelho: #c62828;
+  --amarelo: #fbc02d;
+  --branco: #ffffff;
+  --preto: #333;
+}
+
+/* BODY */
+
+.acoes {
+  margin-top: 90px; /* espaço para não grudar no cabeçalho fixo */
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 1rem;
+  padding: 0 2rem;
+}
+
+.acoes-topo {
+  display: flex;
+  justify-content: flex-end; /* joga pra direita */
+  gap: 1rem;
+  padding: 0.8rem 2rem;
+}
+
+body {
+  background: var(--cinza-fundo);
+  padding: 0;
+  padding-top: 30px;
+  color: var(--preto);
+}
+
+/* CABEÇALHO */
+.cabecalho {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--branco);
+  border-bottom: 2px solid var(--cinza-borda);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.cabecalho header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.cabecalho h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--laranja-escuro);
+}
+
+#voltarBtn {
+  background: var(--laranja);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+#voltarBtn:hover {
+  background: var(--laranja-escuro);
+}
+
+
+/* LOGO */
+.logo img {
+  height: 75px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* FORM FILTRO */
+.filtro-capacidade {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #EAEEF0;
+  padding: 1rem 1rem;
+  border-radius: 30px;
+}
+
+.filtro-capacidade input {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  outline: none;
+}
+
+.filtro-capacidade button {
+  background: var(--laranja-escuro);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.filtro-capacidade button:hover {
+  background: var(--laranja);
+}
+
+.filtro-capacidade button[type="button"] {
+  background: #bbb;
+}
+
+/* TABELA */
+table {
+  width: 90%;
+  max-width: 950px;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  border-radius: 15px;
+  overflow: hidden;
+  background: var(--branco);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+thead {
+  background: var(--laranja-escuro);
+  color: var(--branco);
+  font-size: 1.1rem;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--cinza-borda);
+}
+
+tbody tr:hover {
+  background: #fff8e1;
+}
+
+/* BOTÃO COMANDAS */
+.btn-comanda {
+  background: var(--branco);
+  border: 2px solid var(--laranja-escuro);
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--laranja-escuro);
+  transition: 0.3s;
+}
+
+.btn-comanda:hover {
+  background: var(--laranja-escuro);
+  color: var(--branco);
+}
+
+/* STATUS */
+select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.status-livre {
+  background: var(--verde);
+  color: white;
+}
+
+.status-ocupada {
+  background: var(--vermelho);
+  color: white;
+}
+
+.status-reservada {
+  background: var(--amarelo);
+  color: white;
+}
+
+/* BOTÃO ENCERRAR DIA */
+
+#encerrarDiaBtn {
+  background: var(--vermelho);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#encerrarDiaBtn:hover {
+  background: #a82323;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none; /* fica oculta até abrir */
+  align-items: center;   /* centraliza na vertical */
+  justify-content: center; /* centraliza na horizontal */
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  min-width: 320px;
+  max-width: 500px;
+  position: relative; /* necessário para posicionar o botão de fechar */
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: var(--laranja-escuro);
+}
+
+.modal-content input[type="number"] {
+  width: 25%;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* espaço entre os botões */
+  margin-top: 1.5rem; /* afasta os botões do input */
+  flex-wrap: wrap; /* quebra linha se a tela for pequena */
+}
+
+.modal-buttons button {
+  background: var(--laranja-escuro);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modal-buttons button:hover {
+  background: var(--laranja);
+}
+
+/* ===== Responsividade até 768px (tablets e mobiles médios) ===== */
+@media (max-width: 768px) {
+
+  /* Cabeçalho fixo: deixa mais compacto e empilha itens */
+  .cabecalho header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0.5rem 1rem;
+  }
+
+  .cabecalho h1 {
+    font-size: 1.4rem;
+  }
+
+  #voltarBtn {
+    width: 100%;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+
+  .logo img {
+    height: 50px;
+  }
+
+  /* Form filtro empilha e ocupa toda largura */
+  .filtro-capacidade {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+
+  .filtro-capacidade button,
+  .filtro-capacidade input {
+    width: 100%;
+  }
+
+  /* Tabela ocupa toda largura com scroll horizontal */
+  table {
+    width: 100%;
+    max-width: 100%;
+    margin: 1rem 0;
+    display: block;
+    overflow-x: auto;
+  }
+
+  th, td {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Botões de comandas e encerramento dia mais largos */
+  .btn-comanda,
+  #encerrarDiaBtn {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1rem;
+  }
+
+  /* Modal menor e mais adaptado */
+  .modal-content {
+    padding: 1.5rem 2rem;
+    min-width: auto;
+    max-width: 90%;
+  }
+
+  .modal-content input[type="number"] {
+    width: 50%;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+  }
+}
+
+/* ===== Responsividade até 480px (celulares pequenos) ===== */
+@media (max-width: 480px) {
+  
+  .cabecalho h1 {
+    font-size: 1.2rem;
+  }
+
+  .logo img {
+    height: 40px;
+  }
+
+  #voltarBtn {
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
+
+  /* Tabela com fontes menores */
+  th, td {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  /* Botões com fonte menor */
+  .btn-comanda,
+  #encerrarDiaBtn {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  /* Modal inputs e botões menores */
+  .modal-content input[type="number"] {
+    width: 70%;
+    font-size: 0.9rem;
+  }
+
+  .modal-buttons button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
