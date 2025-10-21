@@ -1,8 +1,5 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from datetime import datetime
 from config import db
+from datetime import datetime
 
 class Comanda(db.Model):
     __tablename__ = "comanda"

@@ -1,9 +1,5 @@
-import os
-import sys
-from flask import jsonify
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from config import app, db
-from Mesas.mesas_model import Mesas, Status
+from Mesas import Mesas, Status
 
 mesas_cadastradas = [
     {"numero": 1, "capacidade": 4},

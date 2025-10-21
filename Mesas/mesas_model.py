@@ -1,10 +1,3 @@
-
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from flask import jsonify
-from datetime import datetime
-from Comandas.comandas_models import Comanda
 from config import db
 
 class Status(db.Model):
@@ -44,6 +37,3 @@ class Mesas(db.Model):
             "status": self.status_nome,   # <--- Aqui
             "comanda_aberta": self.comanda_aberta.aberta if self.comanda_aberta else False
         }
-
-
-    

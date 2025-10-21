@@ -1,14 +1,11 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from flask import Blueprint, request, jsonify, send_from_directory
-from Cardapio.cardapio_model import db, Cardapio
-from Comandas.comandasModels import Comanda
-from ComandaProduto.cp_models import ComandaProduto
-from datetime import datetime, timedelta
+from flask import Blueprint, request, jsonify
+from Cardapio import Cardapio
+from config import db
+from Comandas import Comanda
+from ComandaProduto import ComandaProduto
+from datetime import datetime
+
 cp_bp = Blueprint("Cp", __name__)
-frontend_bp = Blueprint('frontend', __name__)
-STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend')
 
 @cp_bp.route('/Cp/<int:comanda_id>/itens', methods=['GET'])
 def listar_itens_comanda(comanda_id):

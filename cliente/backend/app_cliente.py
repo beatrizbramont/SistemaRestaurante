@@ -1,6 +1,6 @@
 from config import app, db
 '''Blueprint - rotas'''
-from frontendRoutes import frontend_bp
+from index_route import frontend_bp
 from QtdMesas.quantidadeMesasRoutes import quantidade_bp
 from Resultado.esperaRoutes import espera_bp
 

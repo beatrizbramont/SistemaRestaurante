@@ -1,14 +1,12 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from flask import Blueprint, request, jsonify, send_from_directory
-from Mesas.mesas_model import db, Mesas, Status
-from Comandas.comandas_models import Comanda, ComandaHistorico
+from flask import Blueprint, request, jsonify
+from Mesas import Mesas, Status
+from config import db
+from Comandas import Comanda, ComandaHistorico
 from datetime import datetime, timedelta
 from sqlalchemy import text
+
 comandas_bp = Blueprint("comandas", __name__)
-frontend_bp = Blueprint('frontend', __name__)
-STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend')
+
 
 @comandas_bp.route("/mesa/<int:mesa_id>/comandas", methods=["GET"])
 def listar_comandas(mesa_id):

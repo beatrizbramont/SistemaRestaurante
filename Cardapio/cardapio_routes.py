@@ -1,10 +1,12 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template, url_for
 from Cardapio.cardapio_model import db, Cardapio
 
 cardapio_bp = Blueprint("cardapio", __name__)
+
+@cardapio_bp.route("/cardapiopg")
+def cardapio_page():
+    return render_template('cardapio.html')
+
 
 @cardapio_bp.route("/cardapio", methods=["POST"])
 def create_item():

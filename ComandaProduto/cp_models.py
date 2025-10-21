@@ -1,7 +1,6 @@
 from config import db
 from datetime import datetime
-from Comandas.comandasModels import Comanda
-from Cardapio.cardapio_model import Cardapio
+
 
 class ComandaProduto(db.Model):
     __tablename__ = "comanda_produto"
