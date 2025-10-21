@@ -2,8 +2,8 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Blueprint, request, jsonify, send_from_directory
-from Mesas.mesasModels import db, Mesas, Status
-from Comandas.comandasModels import Comanda, ComandaHistorico
+from Mesas.mesas_model import db, Mesas, Status
+from Comandas.comandas_models import Comanda, ComandaHistorico
 from datetime import datetime, timedelta
 from sqlalchemy import text
 comandas_bp = Blueprint("comandas", __name__)
