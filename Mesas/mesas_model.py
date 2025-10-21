@@ -4,7 +4,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import jsonify
 from datetime import datetime
-from Comandas.comandasModels import Comanda
+from Comandas.comandas_models import Comanda
 from config import db
 
 class Status(db.Model):

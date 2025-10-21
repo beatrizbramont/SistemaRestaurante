@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Blueprint, request, jsonify, send_from_directory
-from Mesas.mesasModels import db, Mesas, Status
+from Mesas.mesas_model import db, Mesas, Status
 from datetime import datetime
 
 mesa_bp = Blueprint("mesa", __name__)
