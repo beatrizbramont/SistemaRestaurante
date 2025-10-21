@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Blueprint, request, jsonify
-from Cardapio.cardapioModels import db, Cardapio
+from Cardapio.cardapio_model import db, Cardapio
 
 cardapio_bp = Blueprint("cardapio", __name__)
 
