@@ -4,9 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
 
+TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend')
+
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__ , template_folder=TEMPLATE_DIR)
+
+app.config['SECRET_KEY'] = 'w3nd3r_t3st3_123!@#'
 
 db_user = os.getenv("DB_USER")
 db_pass = os.getenv("DB_PASSWORD")  
