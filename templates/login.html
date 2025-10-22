@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Funcionário table track</title>
-    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 
 <body>
 
     <header>
-        <img class="logo_table" src="{{ url_for('frontend.static', filename='images/tabletrack_logopreta.png') }}" alt="Logo Table track">
+        <img class="logo_table" src="{{ url_for('static', filename='images/tabletrack_logopreta.png') }}" alt="Logo Table track">
     </header>
 
     <main>

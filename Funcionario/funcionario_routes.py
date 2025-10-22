@@ -1,14 +1,9 @@
-import sys
-import os
 from flask import Blueprint, request, jsonify, redirect, url_for, render_template
-from Funcionario.funcionario_service import cadastrar_funcionario, listar_usuario_email
-from Funcionario.funcionario_model import Funcionario
-from Funcionario.funcionario_forms import LoginForm
+from .funcionario_service  import cadastrar_funcionario, listar_usuario_email
+from .funcionario_model  import Funcionario
+from .funcionario_forms  import LoginForm
 
-
-
-
-funcionarios_bp = Blueprint('funcionarios', __name__,template_folder='../frontend',static_folder='../frontend',  static_url_path='/frontend_static')    
+funcionarios_bp = Blueprint('funcionarios', __name__)   
 
 
 @funcionarios_bp.route("/funcionarios",  methods=['POST'])
@@ -33,17 +28,10 @@ def criar_funcionario():
 
 
 @funcionarios_bp.route('/funcionarios', methods=['GET'])
-def listar_funcionarios():
+def funcionarios_page():
     funcionarios = Funcionario.query.all()
-    lista = []
-    for f in funcionarios:
-        lista.append({
-            'id': f.id,
-            'nome': f.nome,
-            'cargo': f.cargo,
-            'email': f.email
-        })
-    return jsonify(lista), 200
+
+    return render_template('funcionarios.html', funcionarios=funcionarios)
 
 
 @funcionarios_bp.route("/login", methods=["GET", "POST"])
@@ -57,10 +45,10 @@ def login():
         funcionario_bd = listar_usuario_email(email)
 
         if funcionario_bd and funcionario_bd.senha == senha:
-            return redirect(url_for('frontend.serve_frontend'))
+            return redirect(url_for('index.index'))
 
         else:
             return jsonify({"erro": "Email ou senha inválidos"}), 401
         
-    return render_template("html/login.html", form=form)
+    return render_template("login.html", form=form)
 
