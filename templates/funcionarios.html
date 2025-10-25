@@ -5,17 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Funcionários</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/funcionarios.css') }}">
 </head>
 
 <body>
-    <h1>TableTrack</h1>
-    <h2>Gerenciamento de Funcionários</h2>
+    <aside>
+        <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="TableTrack">
 
-    {% for funcionario in funcionarios %}
-    <p>Nome: {{ funcionario.nome }}</p>
-    <p>Cargo: {{ funcionario.cargo }}</p>
-    <hr>
-    {% endfor %}
+        <nav>
+            <ul>
+                <li>
+                    <a href=""><img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio">
+                    </a>
+                </li>
+                <li><a href="">
+                        <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="">
+                        <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+
+
+
+
+    <main>
+        <div class="tabletrack-topo">
+            <h3>Table Track</h3>
+            <h2>Gerenciamento de Funcionários</h2>
+        </div>
+        <div class="funcionarios-infos">
+            <h2><span class="funcionario-qnt">{{ funcionarios | length }}</span> Funcionários</h2>
+            <button class="funcionarios-topo-botao">
+                <span class="icon-plus">+</span>
+                <span>Adicionar</span>
+            </button>
+        </div>
+        <div class="lista-funcionarios">
+            {% for funcionario in funcionarios %}
+            <div class="card-funcionario">
+                <div class="card-funcionario-header">
+
+                    <img src="https://i.pinimg.com/736x/59/74/d0/5974d04323d9efbaf170c72cfdb07b44.jpg"
+                        alt="{{ funcionario.nome }}" width="55" class="card-funcionario-imagem">
+                    <div class="card-funcionario-acoes">
+                        <div class="card-funcionario-acoes-img">
+                            <img src="{{ url_for('static', filename='images/icon-edit.svg') }}" alt="Editar">
+                        </div>
+                        <div class="card-funcionario-acoes-img">
+                            <img src="{{ url_for('static', filename='images/icon-delete.svg') }}" alt="Deletar">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-funcionario-info">
+
+                    <h4> {{funcionario.nome }} </h4>
+                    <h5> {{funcionario.cargo}} </h5>
+
+                </div>
+
+                <div class="card-funcionario-contatos"><!-- icon-cellphone.svg -->
+
+                    <div class="card-funcionario-contato-icon">
+                        <img src="{{ url_for('static', filename='images/icon-email.svg') }}" alt="email">
+                        <p>{{ funcionario.email }}</p>
+                    </div>
+
+                    <div class="card-funcionario-contato-icon">
+                        <img src="{{ url_for('static', filename='images/icon-cellphone.svg') }}" alt="telefone">
+                        <p>+55 (11) 4002-8922</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+    </main>
 
 </body>
 
