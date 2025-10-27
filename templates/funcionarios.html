@@ -136,6 +136,54 @@
                     </div>
                 </div>
 
+                <form method="POST" enctype="multipart/form-data"
+                    action="{{ url_for('funcionarios.criar_funcionario_form') }}"
+                    style="display: flex; gap: 32px; align-items: center;">
+                    {{ form_cadastro.hidden_tag() }}
+
+                    <div class="formulario">
+                        <div class="input-group">
+                            <label for="nome">Nome</label>
+                            {{ form_cadastro.nome(placeholder="Nome") }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="cargo">Cargo</label>
+                            {{ form_cadastro.cargo() }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="telefone">Telefone</label>
+                            {{ form_cadastro.telefone(placeholder="Telefone") }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            {{ form_cadastro.email(placeholder="Email") }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="senha">Senha</label>
+                            {{ form_cadastro.senha(placeholder="Senha") }}
+                        </div>
+
+                        <div class="input-group">
+                            {{ form_cadastro.enviar(class="botao-login") }}
+                        </div>
+                    </div>
+
+                    <div class="upload-container">
+                        <img id="preview-img" src="https://cdn-icons-png.flaticon.com/512/66/66779.png" width="120px"
+                            alt="uploadimg">
+
+                        <label for="imagem" class="upload-label">Carregar imagem</label>
+                        {{ form_cadastro.imagem(class="upload-input", id="imagem") }}
+                        <span id="file-name">Nenhum arquivo selecionado</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </main>
 
     <script src="{{ url_for('static', filename='js/funcionarios.js') }}"></script>
