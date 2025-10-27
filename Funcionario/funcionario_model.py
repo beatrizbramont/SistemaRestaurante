@@ -5,6 +5,8 @@ class Funcionario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
     cargo = db.Column(db.String(50), nullable=False)
+    telefone = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha = db.Column(db.String(150), nullable=False)
+    imagem = db.Column(db.String(255))
 
