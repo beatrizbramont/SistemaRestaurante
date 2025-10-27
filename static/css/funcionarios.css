@@ -1,3 +1,6 @@
+/* =========================
+   Reset & Global Styles
+========================= */
 * {
     margin: 0;
     padding: 0;
@@ -14,10 +17,13 @@ html {
 
 body {
     background-color: #DDDDDD;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Instrument Sans", sans-serif;
     display: flex;
 }
 
+/* =========================
+   Sidebar
+========================= */
 aside {
     position: fixed;
     top: 0;
@@ -34,105 +40,119 @@ aside {
     z-index: 100;
 }
 
-nav {
-    & ul {
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-        justify-content: center;
-        align-items: center;
-    }
-
-    & li {
-        padding: 16px 18px;
-        text-align: center;
-        border-radius: 10px;
-
-        & a {
-            color: #ffffff;
-
-        }
-
-        &.active {
-            background-color: #D58A33;
-
-        }
-    }
-
-
+nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    justify-content: center;
+    align-items: center;
 }
 
+nav li {
+    padding: 16px 18px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+nav li a {
+    color: #ffffff;
+}
+
+nav li.active {
+    background-color: #D58A33;
+}
+
+/* =========================
+   Main Content
+========================= */
 main {
     margin-left: 90px;
     padding: 48px;
     width: 100%;
 }
 
+/* =========================
+   Page Header
+========================= */
 .tabletrack-topo {
     margin-bottom: 100px;
-
-    & h3 {
-        font-size: 24px;
-        color: #D58A33;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-
-    & h2 {
-        font-size: 32px;
-        color: #000000;
-        font-weight: 400;
-    }
 }
 
+.tabletrack-topo h3 {
+    font-size: 24px;
+    color: #D58A33;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.tabletrack-topo h2 {
+    font-size: 32px;
+    color: #000;
+    font-weight: 400;
+}
+
+/* =========================
+   Funcionários Header
+========================= */
 .funcionarios-infos {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 400;
     margin-bottom: 64px;
-
-    & .funcionario-qnt {
-        margin-right: 8px;
-        color: #D58A33;
-    }
-
-    & h2 {
-        margin-left: 8px;
-        font-size: 32px;
-    }
-
-    & .funcionarios-topo-botao {
-        padding: 12px 20px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-
-        background-color: #D58A33;
-        color: #ffffff;
-
-        font-size: 20px;
-        font-weight: 500;
-        border-radius: 12px;
-
-        & .icon-plus {
-            font-size: 20px;
-        }
-    }
-
 }
 
+.funcionarios-infos .funcionario-qnt {
+    margin-right: 8px;
+    color: #D58A33;
+}
+
+.funcionarios-infos h2 {
+    margin-left: 8px;
+    font-size: 32px;
+}
+
+.funcionarios-topo-botao {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background-color: #D58A33;
+    color: #fff;
+
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 12px;
+    transition: all .3s ease-in-out;
+}
+
+.funcionarios-topo-botao .icon-plus {
+    font-size: 20px;
+}
+
+.funcionarios-topo-botao:hover {
+    background: linear-gradient(45deg, #fc8e10, #ffb347);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(252, 142, 16, 0.3);
+}
+
+/* =========================
+   Lista de Funcionários
+========================= */
 .lista-funcionarios {
     display: grid;
     gap: 32px;
-    grid-template-columns: repeat(auto-fit, min(310px));
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
 }
 
+/* =========================
+   Card de Funcionário
+========================= */
 .card-funcionario {
     padding: 32px 24px;
     background-color: #fff;
     border-radius: 16px;
-
 }
 
 .card-funcionario-header {
@@ -140,46 +160,51 @@ main {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
 
-    & .card-funcionario-imagem {
-        width: 100px;
-        height: 100px;
-        border-radius: 72px;
-    }
+.card-funcionario-imagem {
+    width: 100px;
+    height: 100px;
+    border-radius: 72px;
+}
 
-    & .card-funcionario-acoes {
-        display: flex;
-        gap: 8px;
+.card-funcionario-acoes {
+    display: flex;
+    gap: 8px;
+}
 
-        & .card-funcionario-acoes-img {
-            width: 40px;
-            height: 40px;
-            background-color: #D58A33;
-            border-radius: 4px;
+.card-funcionario-acoes-img {
+    width: 40px;
+    height: 40px;
+    background-color: #ee9937;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s ease-in-out;
+}
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-    }
+.card-funcionario-acoes-img:hover {
+    background: linear-gradient(45deg, #fc8e10, #ffb347);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(252, 142, 16, 0.3);
 }
 
 .card-funcionario-info {
     margin-bottom: 24px;
+}
 
-    & h4 {
-        font-size: 20px;
-        color: #1C1C1C;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
+.card-funcionario-info h4 {
+    font-size: 20px;
+    color: #1C1C1C;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
 
-    & h5 {
-        font-size: 16px;
-        color: #818181;
-        font-weight: 400;
-    }
+.card-funcionario-info h5 {
+    font-size: 16px;
+    color: #818181;
+    font-weight: 400;
 }
 
 .card-funcionario-contatos {
@@ -187,58 +212,52 @@ main {
     padding: 16px 24px;
     background-color: #EFEFEF;
     border-radius: 24px;
-
-    & .card-funcionario-contato-icon {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 16px;
-
-        & p {
-            font-size: 12px;
-            font-weight: 300;
-        }
-    }
 }
 
+.card-funcionario-contato-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.card-funcionario-contato-icon p {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+/* =========================
+   Mobile Navigation
+========================= */
 .nav-mobile {
     display: none;
 }
 
 @media (max-width: 838px) {
+    .funcionarios-infos h2 {
+        font-size: 24px;
+    }
 
-
-    .funcionarios-infos {
-        & h2 {
-            font-size: 24px;
-        }
-
-        & .funcionarios-topo-botao {
-            padding: 8px 16px;
-            font-size: 16px;
-        }
+    .funcionarios-topo-botao {
+        padding: 8px 16px;
+        font-size: 16px;
     }
 
     main {
         padding: 32px 16px;
         width: 100vw;
-
-        & h2 {
-            font-size: 20px;
-        }
     }
 
     .tabletrack-topo {
         margin-bottom: 60px;
+    }
 
-        & h2 {
-            font-size: 24px;
-        }
+    .tabletrack-topo h2 {
+        font-size: 24px;
+    }
 
-        & h3 {
-            font-size: 20px;
-        }
-
+    .tabletrack-topo h3 {
+        font-size: 20px;
     }
 }
 
@@ -254,18 +273,15 @@ main {
         padding: 32px 16px 80px 16px;
     }
 
-
     .lista-funcionarios {
         justify-content: center;
     }
 
     .nav-mobile {
         display: block;
-
         position: fixed;
         bottom: 0;
         left: 0;
-
         width: 100%;
         background-color: #1C1C1C;
         box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
@@ -278,24 +294,22 @@ main {
         align-items: center;
     }
 
-    .nav-mobile ul li {
-
-        &.active {
-            background-color: transparent;
-            border-bottom: 3px solid #D58A33;
-            display: flex;
-            align-items: center;
-        }
+    .nav-mobile ul li.active {
+        background-color: transparent;
+        border-bottom: 3px solid #D58A33;
+        display: flex;
+        align-items: center;
     }
 
     .nav-mobile ul li img {
         width: 24px;
         height: 24px;
     }
-
-
 }
 
+/* =========================
+   Modal
+========================= */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -304,47 +318,24 @@ main {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-
 }
 
 .modal-content {
-    width: 637px;
-    background-color: white;
+    background-color: #fff;
     padding: 30px;
     border-radius: 10px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
 
-    & .modal-content-topo {
-        display: flex;
-        align-items: center;
-        gap: 32px;
-
-        & .tabletrack-topo {
-            margin-bottom: 0;
-
-
-            & h2 {
-                font-size: 24px;
-            }
-
-            & h3 {
-                font-size: 20px;
-                margin-bottom: 0;
-            }
-
-            & p {
-                margin-left: 2px;
-                font-size: 16px;
-                color: #767676;
-            }
-        }
-    }
+.modal-content-topo {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 48px;
 }
 
 .modal-close {
