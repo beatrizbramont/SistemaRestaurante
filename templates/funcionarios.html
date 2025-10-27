@@ -70,7 +70,7 @@
             <div class="card-funcionario">
                 <div class="card-funcionario-header">
 
-                    <img src="https://i.pinimg.com/736x/59/74/d0/5974d04323d9efbaf170c72cfdb07b44.jpg"
+                    <img src="{{ url_for('static', filename='uploads/' + funcionario.imagem) }}"
                         alt="{{ funcionario.nome }}" width="55" class="card-funcionario-imagem">
                     <div class="card-funcionario-acoes">
                         <div class="card-funcionario-acoes-img">
@@ -98,7 +98,7 @@
 
                     <div class="card-funcionario-contato-icon">
                         <img src="{{ url_for('static', filename='images/icon-cellphone.svg') }}" alt="telefone">
-                        <p>+55 (11) 4002-8922</p>
+                        <p>{{ funcionario.telefone }}</p>
                     </div>
                 </div>
             </div>
@@ -110,11 +110,16 @@
             <div class="modal-content">
                 <span class="modal-close" onclick="fecharModal()">X</span>
 
-                <h2>TESTE DE EXIBIÇÃO DO MODAL</h2>
-                
-            </div>
+                <div class="modal-content-topo">
+                    <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="TableTrack">
 
-        </div>
+                    <div class="tabletrack-topo">
+                        <h3>Table Track</h3>
+                        <h2>Gerenciamento de Funcionários</h2>
+                        <p>Cadastre seu funcionário</p>
+                    </div>
+
+                </div>
 
 
     </main>
