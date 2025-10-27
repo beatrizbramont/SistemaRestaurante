@@ -6,7 +6,9 @@ def cadastrar_funcionario(funcionario):
         nome=funcionario.nome,
         cargo=funcionario.cargo,
         email=funcionario.email,
-        senha=funcionario.senha
+        senha=funcionario.senha,
+        telefone=getattr(funcionario, 'telefone', '00 00 00000-0000'),
+        imagem=getattr(funcionario, 'imagem', None)
     )
 
     db.session.add(funcionario_bd)
@@ -16,4 +18,3 @@ def cadastrar_funcionario(funcionario):
 
 def listar_usuario_email(email):
     return Funcionario.query.filter_by(email=email).first()
-
