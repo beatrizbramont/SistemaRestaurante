@@ -143,7 +143,7 @@ main {
 .lista-funcionarios {
     display: grid;
     gap: 32px;
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(310px, 320px));
 }
 
 /* =========================
@@ -325,27 +325,38 @@ main {
 
 .modal-content {
     background-color: #fff;
-    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 24px;
     border-radius: 10px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    & .input-group input, .input-group select {
+        border: 1px solid #000;
+    }
 }
 
 .modal-content-topo {
     display: flex;
     align-items: center;
     gap: 32px;
-    margin-bottom: 48px;
+
+    & .tabletrack-topo {
+        margin-bottom: 0px;
+    }
 }
 
 .modal-close {
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 24px;
+    right: 24px;
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
     color: #888;
+
 }
 
 /* =========================
