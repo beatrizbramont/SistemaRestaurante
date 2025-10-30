@@ -9,6 +9,9 @@ load_dotenv()
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'w3nd3r_t3st3_123!@#'
+app.config['UPLOAD_FOLDER'] = 'static/uploads' 
+
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 db_user = os.getenv("DB_USER")
 db_pass = os.getenv("DB_PASSWORD")  
