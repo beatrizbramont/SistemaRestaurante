@@ -6,54 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Funcionário table track</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-    <header>
-        <img class="logo_table" src="{{ url_for('static', filename='images/tabletrack_logopreta.png') }}" alt="Logo Table track">
-    </header>
-
     <main>
 
-        <div class="titulo">
-            <h2>Seja Bem-Vindo!</h2>
-            <h3>Faça seu login para iniciar o serviço :) </h3>
+        <div class="tabletrack-topo login">
+            <h3>Table Track</h3>
+            <h2>Login de Funcionários</h2>
+
         </div>
-        <div class="formulario">
-            <div class="form-top">
-                <h2>Login</h2>
+        <div class="modal-content login-content">
+            <div class="modal-content-topo">
+                <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal" alt="TableTrack">
+                <div class="tabletrack-topo">
+                    <h3>Table Track</h3>
+                    <h2>Login de Funcionário</h2>
+                    <p>Acesse sua conta</p>
+                </div>
             </div>
-            <form action="/login" method="post" class="login-container">
+
+            <form action="{{ url_for('funcionarios.login') }}" method="post" class="forms-padrao">
                 {{ form.hidden_tag() }}
 
-                <div class="input-group">
-                    <img src="{{ url_for('static', filename='images/icon-user.svg') }}" alt="User">
-                    {{form.email( placeholder="Email")}}
+                <div class="formulario-div">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        {{ form.email(placeholder="Email") }}
+                    </div>
+
+                    <div class="input-group">
+                        <label for="senha">Senha</label>
+                        {{ form.senha(placeholder="Senha") }}
+                    </div>
+
+                    <div class="input-group">
+                        {{ form.submit(class="botao-login") }}
+                    </div>
+
                 </div>
-                <div class="input-group">
-                    <img src="{{ url_for('static', filename='images/icon-password.svg') }}" alt="Senha">
-                    {{ form.senha(placeholder="Senha") }}
-                </div>
-
-                {{ form.submit(class="botao-login") }}
-
-
-                <!--                 <div class="input-group">
-                    <img src="../css/icon/icon-user.svg" alt="User">
-                    <input type="text" placeholder="Email" name="email">
-                </div>
-
-                <div class="input-group">
-                    <img src="../css/icon/icon-password.svg" alt="Senha">
-                    <input type="password" placeholder="Senha" name="pwd">
-                </div>
-
-                <button>Entrar</button> -->
             </form>
         </div>
-
-
 
     </main>
 
