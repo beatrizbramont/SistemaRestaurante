@@ -8,50 +8,81 @@
     <link rel="icon" type="image/png" sizes="64x64"
         href="{{ url_for('static', filename='images/tabletrack_logobranca.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-    <header class="cabecalho">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/tabletrack_logopreta.png') }}" alt="Logo TableTrack"
-                width="130">
-        </div>
-    </header>
+<aside>
+        <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="TableTrack">
+
+        <nav>
+            <ul>
+                <li class="active">
+                    <a href="{{ url_for('index.index') }}">
+                        <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('cardapio.cardapio_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('mesa.mesas_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('funcionarios.funcionarios_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <nav class="nav-mobile">
+        <ul>
+            <li class="active">
+                <a href="{{ url_for('index.index') }}">
+                    <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('cardapio.cardapio_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio">
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('mesa.mesas_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('funcionarios.funcionarios_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
+                </a>
+            </li>
+        </ul>
+    </nav>
 
     <main>
-        <section class="menu-opcoes">
-            <div class="opcao">
-                <a href="{{ url_for('cardapio.cardapio_page') }}">
-                    <div class="opcao-header">
-                        <h2>Cardápio</h2>
-                    </div>
-                    <img src="{{ url_for('static', filename='images/icon-cardapio.svg') }} " width="180"
-                        alt="Ícone de cardápio">
-                </a>
-            </div>
 
-            <!-- MESAS -->
-            <div class="opcao">
-                <a href="{{ url_for('mesa.mesas_page') }}">
-                    <div class="opcao-header">
-                        <h2>Mesas</h2>
-                    </div>
-                    <img src=" {{ url_for('static', filename='images/icon-mesas.svg') }}" width="180"
-                        alt="Ícone de mesas">
-                </a>
-            </div>
+         <div class="tabletrack-topo">
+            <h3>Table Track</h3>
+            <h2>Painel de Controle</h2>
+        </div>
 
-            <!-- FUNCIONÁRIOS -->
-            <div class="opcao">
-                <a href="{{ url_for('funcionarios.funcionarios_page') }}">
-                    <div class="opcao-header">
-                        <h2>Funcionários</h2>
-                    </div>
-                    <img src=" {{ url_for('static', filename='images/icon-funcionarios.svg') }}" width="180"
-                        alt="Ícone de funcionários">
-                </a>
-            </div>
+
+        <section class="painel-fundo">
+            <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="table track logo" class="table-track-logo-fundo">
         </section>
+
     </main>
 </body>
 
