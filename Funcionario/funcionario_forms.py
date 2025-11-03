@@ -24,3 +24,10 @@ class LoginForm(FlaskForm):
     email = StringField(label='Email', validators=[DataRequired(), Email()])
     senha = PasswordField(label='Senha', validators=[DataRequired(), Length(min=4)])
     submit = SubmitField('Entrar')
+
+
+
+
+class DeleteForm(FlaskForm):
+    chave = PasswordField(validators=[DataRequired(), Length(min=9)])
+    confirmar = SubmitField('Confirmar')
