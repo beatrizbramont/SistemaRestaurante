@@ -7,6 +7,8 @@ from Mesas.mesas_routes import mesa_bp
 from Comandas.comandas_routes import comandas_bp
 from ComandaProduto.cp_routes import cp_bp
 from index_route import index_bp
+from flask_wtf import CSRFProtect
+
 
 
 app.register_blueprint(index_bp) 
@@ -16,6 +18,9 @@ app.register_blueprint(funcionarios_bp)
 app.register_blueprint(mesa_bp)
 app.register_blueprint(comandas_bp)
 app.register_blueprint(cp_bp)
+
+csrf = CSRFProtect()
+csrf.init_app(app)
 
 
 
