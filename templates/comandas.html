@@ -18,11 +18,24 @@
     </div>
   </header>
 </section>
-    <a href="{{ url_for('static', filename='js/mesa.js') }}" id="voltarBtn">Voltar</a>
-    <div id="comandasContainer">
-        <!-- Comandas vão ser adicionadas aqui via JS -->
-    </div>
 
-    <script src="{{ url_for('static', filename='js/comanda.js') }}"></script>
+<!-- Botão voltar para a página de mesas -->
+<a href="{{ url_for('mesa.mesas_page') }}" id="voltarBtn">Voltar</a>
+
+<div id="comandasContainer">
+    <!-- Comandas serão adicionadas aqui via JS -->
+</div>
+
+<!-- Scripts JS -->
+<script>
+    // Guarda mesa_id e comandas passadas via query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const mesaId = urlParams.get('mesa');
+    const comandaIds = urlParams.get('comandas') ? urlParams.get('comandas').split(',') : [];
+
+    console.log("Mesa ID:", mesaId);
+    console.log("Comandas:", comandaIds);
+</script>
+<script src="{{ url_for('static', filename='js/comanda.js') }}"></script>
 </body>
 </html>

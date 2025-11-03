@@ -7,6 +7,13 @@ from sqlalchemy import text
 
 comandas_bp = Blueprint("comandas", __name__)
 
+from flask import render_template
+
+@comandas_bp.route("/comandas_page")
+def comandas_page():
+    mesa_id = request.args.get("mesa")
+    comandas = request.args.get("comandas")
+    return render_template("comandas.html", mesa_id=mesa_id, comandas=comandas)
 
 @comandas_bp.route("/mesa/<int:mesa_id>/comandas", methods=["GET"])
 def listar_comandas(mesa_id):

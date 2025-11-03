@@ -10,7 +10,7 @@ def mesas_page():
     return render_template("mesapage.html")
 
 # mesas - GET
-@mesa_bp.route("/mesas", methods=["GET"])
+@mesa_bp.route("/api/mesas", methods=["GET"])
 def listar_mesas():
     mesas = Mesas.query.all()
     return jsonify([mesa.to_dict() for mesa in mesas])

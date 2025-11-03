@@ -9,8 +9,6 @@ from ComandaProduto.cp_routes import cp_bp
 from index_route import index_bp
 from flask_wtf import CSRFProtect
 
-
-
 app.register_blueprint(index_bp) 
 
 app.register_blueprint(cardapio_bp) 

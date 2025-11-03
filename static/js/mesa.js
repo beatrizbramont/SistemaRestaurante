@@ -1,4 +1,10 @@
-const apiUrl = "/mesas";
+const apiUrl = "/api/mesas";
+
+// Pega o token CSRF do meta tag
+function getCsrfToken() {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    return meta ? meta.getAttribute('content') : '';
+}
 
 // Busca as mesas da API
 async function fetchMesas(capacidade = null) {
@@ -12,10 +18,10 @@ async function fetchMesas(capacidade = null) {
         const res = await fetch(url);
         const mesas = await res.json();
 
-        console.log("Mesas retornadas:", mesas); // ADICIONE ESTA LINHA
+        console.log("Mesas retornadas:", mesas);
 
         if (!res.ok) throw new Error('Erro ao buscar mesas');
-        return mesas;
+        return mesas.mesas || mesas; // caso a API retorne {mesas: [...]}
     } catch (error) {
         console.error(error);
         alert('Falha ao carregar mesas.');
@@ -28,15 +34,20 @@ async function updateStatus(mesaId, novoStatus, selectElement) {
     try {
         const res = await fetch(`/mesa/${mesaId}/status`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
             body: JSON.stringify({ status: novoStatus })
         });
+
         if (!res.ok) {
             const errorData = await res.json();
             alert(`Erro ao atualizar status: ${errorData.error || 'Desconhecido'}`);
             selectElement.value = selectElement.getAttribute('data-old');
             return;
         }
+
         selectElement.setAttribute('data-old', novoStatus);
         updateSelectClass(selectElement, novoStatus);
     } catch (error) {
@@ -102,43 +113,49 @@ async function renderMesas(capacidade = null) {
     });
 }
 
+// ---------------- Modal Comandas ----------------
+
 function abrirModalComandas(mesaId, capacidade) {
     document.getElementById('mesaIdInput').value = mesaId;
-    document.getElementById('quantidadeComandasInput').value = '';
-    document.getElementById('quantidadeComandasInput').setAttribute('max', capacidade);
+    const qtdInput = document.getElementById('quantidadeComandasInput');
+    qtdInput.value = '';
+    qtdInput.setAttribute('max', capacidade);
     document.getElementById('comandaModal').style.display = 'flex';
 }
 
 function fecharModal() {
-  document.getElementById('comandaModal').style.display = 'none';
+    document.getElementById('comandaModal').style.display = 'none';
 }
 
 // Visualizar comandas já abertas
 document.getElementById('visualizarComandasBtn').addEventListener('click', async () => {
-  const mesaId = parseInt(document.getElementById('mesaIdInput').value);
-  try {
-    const res = await fetch(`/mesa/${mesaId}/comandas`);
-    const data = await res.json();
-    if (!res.ok) {
-      alert(data.error || "Erro ao carregar comandas");
-      return;
+    const mesaId = parseInt(document.getElementById('mesaIdInput').value);
+    try {
+        const res = await fetch(`/mesa/${mesaId}/comandas`);
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error || "Erro ao carregar comandas");
+            return;
+        }
+
+        if (!data.comandas || data.comandas.length === 0) {
+            alert("Não existe nenhuma comanda anexada a esta mesa.");
+            return;
+        }
+
+        fecharModal();
+
+        // Garante que comandaIds é uma lista de IDs puros
+        const comandaIds = data.comandas.map(c => typeof c === 'object' ? c.id : c).join(',');
+        window.location.href = `/comandas_page?mesa=${mesaId}&comandas=${comandaIds}`;
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao buscar comandas existentes.");
     }
-
-    if (!data.comandas || data.comandas.length === 0) {
-      alert("Não existe nenhuma comanda anexada a esta mesa.");
-      return;
-    }
-
-    fecharModal();
-
-    const comandaIds = data.comandas.join(',');
-    window.location.href = `/html/comandas.html?mesa=${mesaId}&comandas=${comandaIds}`;
-  } catch (err) {
-    console.error(err);
-    alert("Erro ao buscar comandas existentes.");
-  }
 });
 
+// Abrir comandas
 document.getElementById('abrirComandaBtn').addEventListener('click', async () => {
     const quantidade = parseInt(document.getElementById('quantidadeComandasInput').value);
     const mesaId = parseInt(document.getElementById('mesaIdInput').value);
@@ -155,10 +172,13 @@ document.getElementById('abrirComandaBtn').addEventListener('click', async () =>
     }
 
     try {
-        // Abre as novas comandas
+        // POST para criar novas comandas
         const res = await fetch(`/mesa/${mesaId}/comandas`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
             body: JSON.stringify({ quantidade })
         });
 
@@ -168,86 +188,72 @@ document.getElementById('abrirComandaBtn').addEventListener('click', async () =>
             return;
         }
 
-        // Busca todas as comandas abertas (novas + antigas)
-        const resTodas = await fetch(`/mesa/${mesaId}/comandas`);
-        const todasComandas = await resTodas.json();
-        if (!resTodas.ok) {
-            alert(todasComandas.error || "Erro ao carregar todas as comandas");
-            return;
-        }
-
+        // Fecha modal e recarrega mesas
         fecharModal();
-
         await renderMesas();
 
-        const comandaIds = todasComandas.comandas.join(',');
-        window.location.href = `/html/comandas.html?mesa=${mesaId}&comandas=${comandaIds}`;
-
+        // Navega para a página das comandas
+        const comandaIds = data.comandas.map(c => typeof c === 'object' ? c.id : c).join(',');
+        window.location.href = `/comandas_page?mesa=${mesaId}&comandas=${comandaIds}`;
     } catch (error) {
         console.error("Erro ao abrir comandas:", error);
         alert("Erro ao abrir comandas.");
     }
 });
 
+// ---------------- Filtros e ações ----------------
+
 // Filtro por capacidade
 document.getElementById('filtroCapacidadeForm').addEventListener('submit', (event) => {
     event.preventDefault();
-    const input = document.getElementById('filtroCapacidadeInput');
-    const capacidade = parseInt(input.value.trim());
-
-    console.log("Capacidade inserida:", capacidade);
-
-    if (!capacidade || isNaN(capacidade) || capacidade < 1) {
-        alert("Digite uma capacidade válida.");
-        return;
-    }
-
+    const capacidade = parseInt(document.getElementById('filtroCapacidadeInput').value.trim());
+    if (!capacidade || capacidade < 1) return alert("Digite uma capacidade válida.");
     renderMesas(capacidade);
 });
 
+// Botão de limpar filtro
+function limparFiltro() {
+    document.getElementById('filtroCapacidadeInput').value = '';
+    renderMesas();
+}
+
+// Fechar todas as comandas
 document.getElementById('fecharComandasBtn').addEventListener('click', async () => {
     const mesaId = parseInt(document.getElementById('mesaIdInput').value);
-
-    if (!mesaId) {
-        alert('Mesa não encontrada ou não selecionada.');
-        return;
-    }
+    if (!mesaId) return alert('Mesa não selecionada.');
 
     if (!confirm('Deseja fechar todas as comandas abertas dessa mesa?')) return;
 
     try {
         const res = await fetch(`/mesa/${mesaId}/comandas`, {
             method: 'DELETE',
+            headers: { 'X-CSRFToken': getCsrfToken() }
         });
 
         const data = await res.json();
-
-        if (!res.ok) {
-            alert(data.error || 'Erro ao fechar comandas.');
-            return;
-        }
+        if (!res.ok) return alert(data.error || 'Erro ao fechar comandas.');
 
         alert(data.msg || 'Comandas fechadas com sucesso!');
-        fecharModal(); 
-        renderMesas(); 
-
+        fecharModal();
+        renderMesas();
     } catch (error) {
         console.error('Erro ao fechar comandas:', error);
         alert('Erro na comunicação com o servidor.');
     }
 });
 
+// Encerrar dia
 document.getElementById('encerrarDiaBtn').addEventListener('click', async () => {
     if (!confirm('Tem certeza que deseja encerrar o dia?')) return;
 
     try {
-        const res = await fetch('/encerrar_dia', { method: 'POST' });
-        const data = await res.json();
+        const res = await fetch('/encerrar_dia', { 
+            method: 'POST',
+            headers: { 'X-CSRFToken': getCsrfToken() }
+        });
 
-        if (!res.ok) {
-            alert(data.error || 'Erro ao encerrar o dia.');
-            return;
-        }
+        const data = await res.json();
+        if (!res.ok) return alert(data.error || 'Erro ao encerrar o dia.');
 
         alert(data.msg);
         location.reload();
@@ -256,12 +262,6 @@ document.getElementById('encerrarDiaBtn').addEventListener('click', async () => 
         alert('Erro ao conectar com o servidor.');
     }
 });
-
-// Botão de limpar filtro
-function limparFiltro() {
-    document.getElementById('filtroCapacidadeInput').value = '';
-    renderMesas(); // Recarrega todas as mesas
-}
 
 // Inicializa a página
 document.addEventListener('DOMContentLoaded', () => renderMesas());

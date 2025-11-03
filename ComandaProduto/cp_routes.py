@@ -5,9 +5,10 @@ from Comandas import Comanda
 from ComandaProduto import ComandaProduto
 from datetime import datetime
 
-cp_bp = Blueprint("Cp", __name__)
+# Registrando com url_prefix em minúsculo
+cp_bp = Blueprint("cp", __name__, url_prefix="/cp")
 
-@cp_bp.route('/Cp/<int:comanda_id>/itens', methods=['GET'])
+@cp_bp.route('/<int:comanda_id>/itens', methods=['GET'])
 def listar_itens_comanda(comanda_id):
     comanda = Comanda.query.get(comanda_id)
     if not comanda:
@@ -21,7 +22,6 @@ def listar_itens_comanda(comanda_id):
         if not item_cardapio:
             continue
         subtotal = cp.quantidade * item_cardapio.preco
-
         itens.append({
             "id": cp.id,
             "produto_id": item_cardapio.id,
@@ -36,7 +36,7 @@ def listar_itens_comanda(comanda_id):
     return jsonify({"itens": itens, "total": total}), 200
 
 
-@cp_bp.route('/Cp/<int:comanda_id>/itens', methods=['POST'])
+@cp_bp.route('/<int:comanda_id>/itens', methods=['POST'])
 def adicionar_item_comanda(comanda_id):
     data = request.json
     produto_id = data.get('produto_id')
@@ -73,23 +73,23 @@ def adicionar_item_comanda(comanda_id):
 
     return jsonify({"msg": "Item adicionado à comanda com sucesso!"}), 200
 
-@cp_bp.route("/Cp/<int:comanda_id>/itens/<int:item_id>", methods=["DELETE"])
+
+@cp_bp.route("/<int:comanda_id>/itens/<int:item_id>", methods=["DELETE"])
 def deletar_item_comanda(comanda_id, item_id):
     try:
         item = ComandaProduto.query.filter_by(comanda_id=comanda_id, id=item_id).first()
-
         if not item:
             return jsonify({"msg": "Item da comanda não encontrado"}), 404
 
         db.session.delete(item)
         db.session.commit()
-
         return jsonify({"msg": "Item excluído com sucesso!"}), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@cp_bp.route("/Cp/<int:comanda_id>/itens/<int:item_id>", methods=["PUT"])
+
+@cp_bp.route("/<int:comanda_id>/itens/<int:item_id>", methods=["PUT"])
 def atualizar_item_comanda(comanda_id, item_id):
     try:
         data = request.get_json()
@@ -109,4 +109,3 @@ def atualizar_item_comanda(comanda_id, item_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
-
