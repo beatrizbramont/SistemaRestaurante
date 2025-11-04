@@ -1,8 +1,10 @@
 from config import app, db
 '''Blueprint - rotas'''
-from index_route import frontend_bp
+from frontendRoutes import frontend_bp
 from QtdMesas.quantidadeMesasRoutes import quantidade_bp
+from Auth.auth_routes import auth_bp
 
+app.register_blueprint(auth_bp)
 app.register_blueprint(frontend_bp)
 app.register_blueprint(quantidade_bp)
 
