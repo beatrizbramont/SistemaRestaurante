@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (resposta.ok) {
         alert(dados.mensagem || "Usuário cadastrado com sucesso!");
-        window.location.href = "../HTML/login.html";
+        window.location.href = "../html/login.html";
       } else {
         alert(dados.erro || "Erro ao cadastrar usuário.");
       }

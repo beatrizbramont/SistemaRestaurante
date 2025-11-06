@@ -24,14 +24,33 @@ header {
   border-bottom: 2px solid #d58a33;
 }
 
-.logo {
+/* ===== Logo e título ===== */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.logo-text {
   font-size: 1.8rem;
   font-weight: 700;
   color: #d58a33;
   letter-spacing: 1px;
 }
 
-/* ===== Navegação ===== */
+h2 i.fa-utensils {
+  font-size: 2rem;
+  color: #d58a33;  
+  margin-left: 10px;
+  vertical-align: middle; 
+}
+
 nav .btn {
   text-decoration: none;
   color: #ffffff;
@@ -103,14 +122,12 @@ main.intro {
 }
 
 .intro .imagem img {
-  max-width: 600px;
-  width: 330%;
-  border-radius: 10px;
-  transform: translateX(-200px);
+  width: 280px; 
+  max-width: 100%;
+  filter: brightness(0) saturate(100%) invert(64%) sepia(72%) saturate(678%) hue-rotate(4deg) brightness(94%) contrast(94%);
+  transform: translateX(-100px);
 }
 
-
-/* ===== Rodapé ===== */
 footer {
   text-align: center;
   padding: 1.2rem;

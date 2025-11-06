@@ -163,6 +163,36 @@ input[type="button"]:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.botao-voltar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-decoration: none;
+  background: #1c1c1c;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.botao-voltar:hover {
+  background: #dddddd;
+  transform: translateX(-4px);
+}
+
+.botao-voltar i {
+  color: #dddddd; 
+  font-size: 20px;
+}
+
+.botao-voltar:hover i {
+  color: #1c1c1c; 
+  font-size: 20px;
+}
+
 /* ===== Responsividade ===== */
 @media (max-width: 900px) {
   .login_container {

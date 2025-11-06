@@ -1,26 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const boasVindas = document.getElementById("boasVindas");
+  // Seleciona os elementos
+  const nomeSpan = document.getElementById("nomeUsuario");
   const btnReserva = document.getElementById("btnReserva");
-  const bntCardapio = document.getElementById("btnCardapio");
-  const reservaContainer = document.getElementById("reservaContainer");
+  const btnCardapio = document.getElementById("btnCardapio");
+  const secaoReserva = document.getElementById("secaoReserva");
   const btnConsultar = document.getElementById("btnConsultar");
   const resultadoDiv = document.getElementById("resultadoReserva");
+  const listaCardapio = document.getElementById("listaCardapio");
 
+  // Pega dados do localStorage
   const token = localStorage.getItem("token");
   const nomeUsuario = localStorage.getItem("usuarioNome");
 
+  // Se não estiver logado, redireciona
   if (!token) {
     alert("Você precisa estar logado para acessar esta página.");
     window.location.href = "../html/login.html";
     return;
   }
 
-  boasVindas.textContent = `Bem-vindo, ${nomeUsuario}!`;
+  // Exibe o nome do usuário
+  if (nomeUsuario && nomeSpan) {
+    nomeSpan.textContent = nomeUsuario;
+  } else {
+    nomeSpan.textContent = "Usuário";
+  }
 
+  // Exibir / esconder seção de reserva
   btnReserva.addEventListener("click", () => {
-    reservaContainer.classList.toggle("oculto");
+    secaoReserva.classList.toggle("oculto");
   });
 
+  // Consultar mesas
   btnConsultar.addEventListener("click", async () => {
     const pessoas = document.getElementById("pessoas").value.trim();
 
@@ -54,23 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
       resultadoDiv.innerHTML = `<p style="color:red;">Erro de conexão com o servidor.</p>`;
     }
   });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btnCardapio = document.getElementById("btnCardapio");
-  const listaCardapio = document.getElementById("listaCardapio");
-
-  if (!btnCardapio) {
-    console.error("❌ Botão de cardápio não encontrado!");
-    return;
-  }
-
+  // Carregar cardápio
   btnCardapio.addEventListener("click", async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8001/cardapio"); // ajuste a URL conforme seu backend Flask
-      if (!response.ok) {
-        throw new Error(`Erro ao buscar cardápio: ${response.status}`);
-      }
+      const response = await fetch("http://127.0.0.1:8001/cardapio");
+      if (!response.ok) throw new Error(`Erro ao buscar cardápio: ${response.status}`);
 
       const dados = await response.json();
 

@@ -31,16 +31,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const dados = await resposta.json();
 
-      // Armazena token e usuário se enviados pelo backend
+      // Armazena token e dados do usuário
       if (dados.token) {
         localStorage.setItem("token", dados.token);
       }
+
       if (dados.usuario) {
         localStorage.setItem("usuario", JSON.stringify(dados.usuario));
+        localStorage.setItem("usuarioNome", dados.usuario.nome || "Usuário");
       }
 
       alert(dados.mensagem || "✅ Login realizado com sucesso!");
-      window.location.href = "../html/home.html"; 
+      window.location.href = "../html/home.html";
 
     } catch (erro) {
       console.error("Erro no login:", erro);
