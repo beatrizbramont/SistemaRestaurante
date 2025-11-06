@@ -1,0 +1,183 @@
+/* ===== Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Instrument Sans", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(160deg, #b36b1a 40%, #b36b1a 70%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Container principal ===== */
+.sign_up_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  width: 65%;
+  height: 75vh;
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Lado esquerdo: texto de boas-vindas ===== */
+.info_wrapper {
+  background-color: #1c1c1c;
+  color: #dddddd;
+  text-align: center;
+  padding: 3rem 2rem;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info_wrapper h2 {
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+  color: #d58a33;
+}
+
+.info_wrapper p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2.2rem;
+  color: #dddddd;
+}
+
+.info_button {
+  background-color: #d58a33;
+  color: #1c1c1c;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.info_button:hover {
+  background-color: orange;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Lado direito: formulário ===== */
+.form_wrapper {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 3rem 2rem;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.form_container h1 {
+  color: #1c1c1c;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.form_container input {
+  width: 80%;
+  height: 42px;
+  padding: 0 15px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #1c1c1c;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form_container input:focus {
+  border-color: #d58a33;
+  box-shadow: 0 0 6px rgba(213, 138, 51, 0.4);
+}
+
+/* ===== Botão principal ===== */
+input[type=button] {
+  background-color: #1c1c1c;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  width: 60%;
+  height: 40px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.4s ease;
+}
+
+input[type=button]:hover {
+  background-color: #d58a33;
+  color: #1c1c1c;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Link para login ===== */
+.botao_login {
+  color: #1c1c1c;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.botao_login strong {
+  color: #d58a33;
+}
+
+.botao_login:hover {
+  transform: translateY(-1px);
+  color: orange;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 900px) {
+  .sign_up_container {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+  }
+
+  .info_wrapper,
+  .form_wrapper {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .info_wrapper {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .form_wrapper {
+    border-radius: 0 0 20px 20px;
+  }
+
+  input[type=button] {
+    width: 80%;
+  }
+}

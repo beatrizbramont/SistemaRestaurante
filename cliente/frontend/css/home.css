@@ -1,0 +1,48 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+}
+
+.botoes button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #2a7a3b;
+  color: white;
+  transition: 0.3s;
+}
+
+.botoes button:hover {
+  background-color: #246633;
+}
+
+#reservaContainer {
+  margin-top: 20px;
+}
+
+.resultado {
+  margin-top: 15px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.oculto {
+  display: none;
+}

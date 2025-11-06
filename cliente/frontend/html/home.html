@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../css/home.css" />
+    <title>Home - Sistema Restaurante</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="boasVindas">Bem-vindo!</h1>
+
+      <div class="botoes">
+        <button id="btnCardapio">Ver Cardápio</button>
+          <div id="listaCardapio"></div>
+        <button id="btnReserva">Realizar Reserva</button>
+      </div>
+
+      <div id="reservaContainer" class="oculto">
+        <h2>Realizar Reserva</h2>
+        <label for="pessoas">Quantidade de pessoas:</label>
+        <input type="number" id="pessoas" min="1" placeholder="Ex: 4" />
+        <button id="btnConsultar">Consultar Mesas</button>
+
+        <div id="resultadoReserva" class="resultado"></div>
+      </div>
+    </div>
+
+    <script src="../js/home.js"></script>
+  </body>
+</html>

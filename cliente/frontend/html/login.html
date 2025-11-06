@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <title>Página de Login</title>
+  </head>
+
+  <body>
+    <div class="login_container">
+      <div class="info-wrapper">
+        <h2>Bem-vindo de volta!</h2>
+        <p>Estamos prontos para agilizar sua reserva.</p>
+        <img class="img_restaurante" src="../css/icon/logo-icon.svg" alt="Logotipo TableTrack" loading="lazy"/>
+      </div>
+
+      <div class="form-wrapper">
+        <form class="form_container" onsubmit="return false;">
+          <h1>LOGIN</h1>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Senha"
+            required
+          />
+          <input type="button" value="Entrar" />
+
+          <a href="../html/cadastro.html" class="botao_login">
+            Não possuo uma conta? <strong>Cadastre-se.</strong>
+          </a>
+        </form>
+      </div>
+    </div>
+
+    <script src="../js/login.js"></script>
+  </body>
+</html>
