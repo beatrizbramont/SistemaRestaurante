@@ -3,7 +3,6 @@ from flask import Blueprint, send_from_directory
 
 frontend_bp = Blueprint('frontend', __name__)
 
-# Caminho absoluto para a pasta "frontend"
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 FRONTEND_DIR = os.path.join(BASE_DIR, 'cliente', 'frontend')
 
@@ -13,7 +12,7 @@ JS_DIR = os.path.join(FRONTEND_DIR, 'js')
 
 @frontend_bp.route('/')
 def index():
-    return send_from_directory(HTML_DIR, 'quantidadeMesas.html')
+    return send_from_directory(HTML_DIR, 'index.html')
 
 @frontend_bp.route('/html/<path:filename>')
 def html_pages(filename):
