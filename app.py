@@ -20,6 +20,11 @@ app.register_blueprint(cp_bp)
 csrf = CSRFProtect()
 csrf.init_app(app)
 
+csrf.exempt(cardapio_bp)
+csrf.exempt(mesa_bp)
+csrf.exempt(comandas_bp)
+csrf.exempt(cp_bp)
+
 
 
 with app.app_context():
