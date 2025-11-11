@@ -7,8 +7,10 @@ class Cardapio(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     ingredientes = db.Column(db.Text, nullable=False)
     preco = db.Column(db.Float, nullable=False)
-    categoria = db.Column(db.String(50), nullable=False)  # prato, bebida, sobremesa
+    categoria = db.Column(db.String(50), nullable=False)
     tempo_preparo = db.Column(db.Integer, nullable=False)
+    imagem = db.Column(db.String(120), nullable=True)
+
 
     def __repr__(self):
         return f"<Item {self.nome} - R${self.preco:.2f}>"
