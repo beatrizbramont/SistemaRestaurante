@@ -8,8 +8,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoriaSelect = document.getElementById('categoria');
   const ingredientesInput = document.getElementById('ingredientes');
   const tempoPreparoInput = document.getElementById('tempo_preparo');
-  atualizarContadoresCategorias();
 
+  // Imagem no forms
+  const inputImagem = document.getElementById("imagem");
+  const fileName = document.getElementById("file-name");
+  const preview = document.getElementById("preview-img");
+
+  if (inputImagem) {
+    inputImagem.addEventListener("change", () => {
+      const file = inputImagem.files[0];
+
+      if (file) {
+        fileName.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (e) => preview.src = e.target.result;
+        reader.readAsDataURL(file);
+      } else {
+        fileName.textContent = "Nenhum arquivo selecionado";
+        preview.src = "https://cdn-icons-png.flaticon.com/512/66/66779.png";
+      }
+    });
+  }
+
+  atualizarContadoresCategorias();
 
   const modalCategoria = document.getElementById('modal-categoria');
   const closeModalCategoriaBtn = document.getElementById('close-modal-categoria');
@@ -17,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalCategoriaLista = document.getElementById('modal-categoria-lista');
   const loadBtn = document.getElementById('load-data');
 
-  // Função genérica de fetch
+  // Fetch reutilizável
   async function apiFetch(url, options = {}) {
     const res = await fetch(url, options);
     if (!res.ok) throw new Error(`Erro ${res.status}`);
@@ -30,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar.classList.toggle('hidden');
   });
 
-  // Abrir modal de categoria com itens
+  // Abrir modal por categoria
   async function abrirModalCategoria(categoria, titulo = null) {
     try {
       const data = await apiFetch('/cardapio');
@@ -45,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
         li.classList.add('empty-item');
         modalCategoriaLista.appendChild(li);
       } else {
-        // Agrupa por categoria se for modal geral
         const agrupados = categoria ? { [categoria]: itens } : itens.reduce((acc, item) => {
           if (!acc[item.categoria]) acc[item.categoria] = [];
           acc[item.categoria].push(item);
@@ -69,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="item-ingredientes">${item.ingredientes} - </span>
                 <span class="item-preco">R$ ${parseFloat(item.preco).toFixed(2)} - </span>
                 <span class="item-tempo">${item.tempo_preparo} min</span>
+                ${item.imagem ? `<br><img src="/static/uploads/${item.imagem}" width="60" style="margin-top:5px;border-radius:6px;">` : ""}
               </div>
               <div class="item-actions">
                 <i class="fas fa-pen-to-square edit-icon" title="Editar"></i>
@@ -76,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             `;
 
-            // Editar item
+            // EDITAR
             li.querySelector('.edit-icon').addEventListener('click', () => {
               nomeInput.value = item.nome;
               ingredientesInput.value = item.ingredientes;
@@ -88,13 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
               modalCategoria.classList.add('hidden');
             });
 
-            // Excluir item
+            // DELETAR
             li.querySelector('.delete-icon').addEventListener('click', async () => {
               if (!confirm(`Deseja excluir "${item.nome}"?`)) return;
               try {
                 await apiFetch(`/cardapio/${item.id}`, { method: 'DELETE' });
-                console.log(`"${item.nome}" excluído.`);
-                abrirModalCategoria(categoria, titulo); // Recarrega lista
+                abrirModalCategoria(categoria, titulo);
                 atualizarContadoresCategorias();
               } catch {
                 alert('Erro ao excluir item.');
@@ -113,90 +133,80 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Fechar modal
-  closeModalCategoriaBtn.addEventListener('click', () => {
-    modalCategoria.classList.add('hidden');
-  });
+  closeModalCategoriaBtn.addEventListener('click', () => modalCategoria.classList.add('hidden'));
+  window.addEventListener('click', e => { if (e.target === modalCategoria) modalCategoria.classList.add('hidden') });
 
-  window.addEventListener('click', e => {
-    if (e.target === modalCategoria) modalCategoria.classList.add('hidden');
-  });
-
-  // Links do sidebar
   sidebar.querySelectorAll('a[data-categoria]').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      const categoria = link.getAttribute('data-categoria');
-      abrirModalCategoria(categoria);
+      abrirModalCategoria(link.getAttribute('data-categoria'));
       sidebar.classList.add('hidden');
     });
   });
 
-  // Botão “Carregar Cardápio” → mostra todos os itens agrupados
   loadBtn.addEventListener('click', () => abrirModalCategoria(null, 'Todos os Itens'));
 
-  // Cadastrar ou atualizar item
+  // POST ou PUT (com imagem!)
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const data = {
-      nome: nomeInput.value.trim(),
-      ingredientes: ingredientesInput.value.trim(),
-      preco: parseFloat(precoInput.value),
-      categoria: categoriaSelect.value,
-      tempo_preparo: parseInt(tempoPreparoInput.value)
-    };
 
-    if (!data.nome || isNaN(data.preco) || !data.categoria || isNaN(data.tempo_preparo)) {
-      alert('Preencha todos os campos corretamente.');
-      return;
+    const formData = new FormData();
+    formData.append("nome", nomeInput.value.trim());
+    formData.append("ingredientes", ingredientesInput.value.trim());
+    formData.append("preco", precoInput.value);
+    formData.append("categoria", categoriaSelect.value);
+    formData.append("tempo_preparo", tempoPreparoInput.value);
+
+    if (inputImagem && inputImagem.files[0]) {
+      formData.append("imagem", inputImagem.files[0]);
     }
 
     try {
       if (form.dataset.editingId) {
-        const res = await apiFetch(`/cardapio/${form.dataset.editingId}`, {
+        const res = await fetch(`/cardapio/${form.dataset.editingId}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          body: formData
         });
-        alert(res.msg || 'Item atualizado com sucesso.');
+        const data = await res.json();
+        alert(data.msg || 'Item atualizado com sucesso.');
         delete form.dataset.editingId;
         form.querySelector('button[type="submit"]').textContent = 'Salvar';
       } else {
-        const res = await apiFetch('/cardapio', {
+        const res = await fetch('/cardapio', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          body: formData
         });
-        alert(res.msg || 'Item cadastrado com sucesso.');
+        const data = await res.json();
+        alert(data.msg || 'Item cadastrado com sucesso.');
       }
+
       form.reset();
+      fileName.textContent = "Nenhum arquivo selecionado";
+      preview.src = "https://cdn-icons-png.flaticon.com/512/66/66779.png";
       atualizarContadoresCategorias();
-    } catch {
+
+    } catch (err) {
+      console.error(err);
       alert('Erro ao salvar item.');
     }
   });
+
 });
 
+// Atualiza contadores do sidebar
 async function atualizarContadoresCategorias() {
   try {
     const data = await fetch('/cardapio').then(res => res.json());
-
-    // Conta os itens por categoria
     const contadores = data.reduce((acc, item) => {
       acc[item.categoria] = (acc[item.categoria] || 0) + 1;
       return acc;
     }, {});
 
-    // Atualiza os links do sidebar
     document.querySelectorAll('#sidebar a[data-categoria]').forEach(link => {
       const cat = link.getAttribute('data-categoria');
       const total = contadores[cat] || 0;
-
-      // Remove contador antigo, se houver
       const oldSpan = link.querySelector('.contador');
       if (oldSpan) oldSpan.remove();
-
-      // Cria novo contador
       const span = document.createElement('span');
       span.classList.add('contador');
       span.textContent = `(${total})`;
