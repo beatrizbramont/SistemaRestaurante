@@ -3,13 +3,11 @@ from flask import Blueprint, request, jsonify, render_template, url_for, current
 from Cardapio.cardapio_model import db, Cardapio
 from werkzeug.utils import secure_filename
 
-
 cardapio_bp = Blueprint("cardapio", __name__)
 
 @cardapio_bp.route("/cardapiopg")
 def cardapio_page():
     return render_template('cardapio.html')
-
 
 @cardapio_bp.route("/cardapio", methods=["POST"])
 def create_item():
@@ -58,12 +56,15 @@ def get_item():
                 "ingredientes": item.ingredientes,
                 "preco": item.preco,
                 "categoria": item.categoria,
-                "tempo_preparo": item.tempo_preparo
+                "tempo_preparo": item.tempo_preparo,
+                "imagem": item.imagem,
+                "imagem_url": f"http://127.0.0.1:8001/static/uploads/{item.imagem}" if item.imagem else None
             }
             for item in itens
         ])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
  
 @cardapio_bp.route("/cardapio/<int:item_id>", methods=["PUT"])
 def update_item(item_id):

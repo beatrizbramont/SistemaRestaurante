@@ -105,7 +105,24 @@ main.intro {
   margin-bottom: 1rem;
 }
 
-.intro .texto .btn.grande {
+.intro .texto .botoes {
+  display: flex;
+  gap: 1rem;
+}
+
+.intro .texto .botoes .btn.grande {
+  display: inline-block;
+  background-color: #d58a33;
+  color: #1c1c1c;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.intro .texto .botoes .btn.medio {
   display: inline-block;
   background-color: #d58a33;
   color: #1c1c1c;
@@ -118,6 +135,10 @@ main.intro {
 }
 
 .intro .texto .btn.grande:hover {
+  background-color: orange;
+}
+
+.intro .texto .btn.medio:hover {
   background-color: orange;
 }
 

@@ -1,0 +1,47 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fffaf5;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+#listaCardapio {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.item-cardapio {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-cardapio:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.item-cardapio h3 {
+  color: #d35400;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.item-cardapio p {
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+#listaCardapio p {
+  text-align: center;
+  color: #999;
+}

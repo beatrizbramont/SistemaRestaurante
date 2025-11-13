@@ -1,0 +1,149 @@
+/* ======== DARK PREMIUM TABLETRACK ======== */
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #0a0a0a; /* Preto profundo */
+  margin: 0;
+  padding: 0;
+  color: #e5e5e5;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  align-items: center;
+  background: #0a0a0a;
+  padding: 1.5rem 3rem;
+  border-bottom: 2px solid #d58a33;
+}
+
+header .logo {
+  margin: 0 auto;
+  font-size: 2rem;
+  color: #d58a33;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Botão voltar */
+.voltar {
+  background: transparent;
+  border: 1px solid #d58a33;
+  color: #d58a33;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.voltar:hover {
+  background: #d58a33;
+  color: #0a0a0a;
+}
+
+/* TÍTULO PRINCIPAL */
+.conteudo-cardapio h2 {
+  text-align: center;
+  color: #d58a33;
+  margin-bottom: 40px;
+  font-size: 2.1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ======== CATEGORIA ======== */
+.titulo-categoria {
+  color: #d58a33;
+  font-size: 1.7rem;
+  margin: 50px 0 18px;
+  padding-left: 18px;
+  border-left: 4px solid #d58a33;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-shadow: 0 0 6px rgba(213, 138, 51, 0.4);
+}
+
+/* ======== BLOCO DE ITENS ======== */
+.categoria-bloco {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 28px;
+}
+
+/* ======== CARD (DARK PREMIUM) ======== */
+.item-cardapio {
+  background: #111; /* Card dark */
+  border: 1px solid #d58a33;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.55);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.item-cardapio:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 8px 18px rgba(255, 187, 155, 0.35);
+  border-color: #d58a33;
+}
+
+/* ======== IMAGEM ======== */
+.img-cardapio {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  filter: brightness(0.85);
+  transition: filter 0.25s;
+}
+
+.item-cardapio:hover .img-cardapio {
+  filter: brightness(1);
+}
+
+.img-cardapio.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2b1c0b;
+  color: #d58a33;
+  font-size: 2.3rem;
+  height: 190px;
+}
+
+/* ======== INFORMAÇÕES ======== */
+.info-cardapio {
+  padding: 18px;
+  color: #e5e5e5;
+}
+
+.info-cardapio h4 {
+  margin: 0 0 12px;
+  color: #d58a33;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.info-cardapio p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.info-cardapio strong {
+  color: #e0a454;
+}
+
+/* ======== FOOTER ======== */
+footer {
+  background-color: #d58a33;
+  color: #0a0a0a;
+  text-align: center;
+  padding: 14px;
+  margin-top: 60px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}

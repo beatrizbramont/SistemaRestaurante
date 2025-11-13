@@ -22,7 +22,6 @@
         }
       }
 
-      // Exibir token salvo localmente (após login)
       document.getElementById("verToken").addEventListener("click", () => {
         const token = localStorage.getItem("token");
         const tokenInfo = document.getElementById("tokenInfo");

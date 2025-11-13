@@ -34,7 +34,6 @@ body {
   overflow: hidden;
 }
 
-/* ===== Áreas internas ===== */
 .form-wrapper,
 .info-wrapper {
   display: flex;

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TableTrack | Home</title>
+    <link rel="icon" type="image/png" href="../css/icon/tabletrack_logobranca.png"/>
     <link rel="stylesheet" href="../css/home.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   </head>
@@ -12,7 +13,7 @@
     <header>
       <h1 class="logo">TableTrack</h1>
       <nav>
-        <a href="../html/login.html" class="btn">Sair</a>
+        <a href="../css/icon/tabletrack_logobranca.png" class="btn">Sair</a>
       </nav>
     </header>
 
@@ -33,18 +34,16 @@
           <i class="fa-solid fa-book-open"></i>
           <h3>Cardápio</h3>
           <p>Confira os pratos e bebidas disponíveis.</p>
-          <button onclick="mostrarCardapio()">Ver cardápio</button>
+          <button id="btnCardapio">Ver cardápio</button>
         </div>
 
         <div class="card">
-          <i class="fa-solid fa-chair"></i> <!-- ou troque por fa-calendar-days -->
+          <i class="fa-solid fa-chair"></i>
           <h3>Reservas</h3>
           <p>Garanta sua mesa de forma rápida e prática.</p>
-          <button onclick="mostrarReserva()">Fazer reserva</button>
+          <button id="btnReserva">Fazer reserva</button>
         </div>
-    </section>
-
-
+      </section>
 
       <section id="secaoCardapio" class="oculto">
         <h2>🍽️ Cardápio</h2>

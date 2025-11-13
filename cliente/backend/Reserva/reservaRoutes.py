@@ -10,10 +10,8 @@ from Reserva.reservaModel import Reserva
 
 reserva_bp = Blueprint('reserva_bp', __name__, url_prefix='/reservas')
 
-API_MESAS = "http://127.0.0.1:8001/mesas"  # Base da API de mesas internas
+API_MESAS = "http://127.0.0.1:8001/mesas"  
 
-
-# 🔍 Consultar mesas disponíveis para reserva
 @reserva_bp.route('/disponiveis', methods=['GET'])
 @jwt_required()
 def listar_mesas_disponiveis():
@@ -38,7 +36,6 @@ def listar_mesas_disponiveis():
         return jsonify({"erro": str(e)}), 500
 
 
-# 🪑 Reservar uma mesa
 @reserva_bp.route('/criar', methods=['POST'])
 @jwt_required()
 def criar_reserva():
@@ -51,7 +48,6 @@ def criar_reserva():
         return jsonify({'erro': 'Número e capacidade da mesa são obrigatórios!'}), 400
 
     try:
-        # Atualiza status da mesa no sistema interno
         atualizar_status = requests.put(
             f"{API_MESAS}/{mesa_numero}/status",
             json={"status": "reservada"}
@@ -60,7 +56,6 @@ def criar_reserva():
         if atualizar_status.status_code != 200:
             return jsonify({'erro': 'Falha ao atualizar status da mesa no sistema interno.'}), 500
 
-        # Cria reserva no banco local
         nova_reserva = Reserva(
             usuario_id=usuario['id'],
             mesa_numero=mesa_numero,

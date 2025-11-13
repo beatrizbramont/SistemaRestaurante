@@ -22,5 +22,6 @@ class Cardapio(db.Model):
             "ingredientes": self.ingredientes,
             "preco": self.preco,
             "categoria": self.categoria,
-            "tempo_preparo": self.tempo_preparo
+            "tempo_preparo": self.tempo_preparo,
+            "imagem": self.imagem
         }
