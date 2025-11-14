@@ -86,7 +86,7 @@ input[type="button"] {
   border: none;
   width: 170px;
   height: 40px;
-  border-radius: 16px;
+  border-radius: 6px;
   font-size: 17px;
   font-weight: 700;
   transition: all 0.3s ease;
@@ -149,7 +149,7 @@ input[type="button"]:hover {
   background-color: #d58a33;
   color: #1c1c1c;
   padding: 10px 20px;
-  border-radius: 16px;
+  border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
   transition: all 0.3s ease;
