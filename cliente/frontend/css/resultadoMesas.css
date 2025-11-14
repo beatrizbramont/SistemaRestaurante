@@ -1,0 +1,53 @@
+body {
+    background: #0d0d0d;
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    color: #fff;
+}
+
+header {
+    padding: 1.5rem 3rem;
+    border-bottom: 2px solid #d58a33;
+    font-size: 1.8rem;
+}
+
+.titulo {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.lista {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.mesa-card {
+    background: #1a1a1a;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #d58a33;
+    text-align: center;
+}
+
+button {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background: #d58a33;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background: #e7a24a;
+}
+
+.erro {
+    text-align: center;
+    margin-top: 2rem;
+    color: #ff6b6b;
+}

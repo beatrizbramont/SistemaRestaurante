@@ -1,0 +1,66 @@
+body {
+    background: #0d0d0d;
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    color: #fff;
+}
+
+header {
+    padding: 1.5rem 3rem;
+    border-bottom: 2px solid #d58a33;
+    font-size: 1.8rem;
+}
+
+.container {
+    max-width: 600px;
+    margin: 4rem auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.4rem;
+}
+
+.descricao {
+    font-size: 1rem;
+    opacity: .8;
+}
+
+.card-input {
+    margin: 2rem 0;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: .5rem;
+    border-radius: 8px;
+    border: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #d58a33;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn:hover {
+    background: #e7a24a;
+}
+
+.erro {
+    color: #ff6b6b;
+    margin-top: 1rem;
+}
