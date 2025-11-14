@@ -7,17 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultadoDiv = document.getElementById("resultadoReserva");
 
   const token = localStorage.getItem("token");
-  const nomeUsuario = localStorage.getItem("usuarioNome");
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const nomeUsuario = usuario?.nome || "Usuário";
 
-  // 🔐 Verifica login
   if (!token) {
     alert("Você precisa estar logado para acessar esta página.");
     window.location.href = "../html/login.html";
     return;
   }
 
-  // 🧍 Mostra nome do usuário
-  nomeSpan.textContent = nomeUsuario || "Usuário";
+  nomeSpan.textContent = nomeUsuario;
 
   btnReserva.addEventListener("click", () => {
   window.location.href = "../html/quantidadePessoas.html"; 

@@ -10,6 +10,7 @@
     <a href="../html/index.html" class="botao-voltar" title="Voltar">
       <i class="fa-solid fa-arrow-left"></i>
     </a>
+
     <div class="sign_up_container">
       <div class="info_wrapper">
         <h2>Bem-vindo ao TableTrack!</h2>
@@ -20,28 +21,37 @@
       </div>
 
       <div class="form_wrapper">
-        <form class="form_container">
+        <form class="form_container" autocomplete="off" onsubmit="return false;">
+
+          <input type="text" name="fakeuser" style="display:none" autocomplete="off">
+          <input type="password" name="fakepass" style="display:none" autocomplete="new-password">
+
           <h1>Cadastro</h1>
 
           <input
             type="text"
             id="nome"
-            name="nome"
+            name="cad_nome"
             placeholder="Nome"
+            autocomplete="off"
             required
           />
+
           <input
             type="email"
             id="email"
-            name="email"
+            name="cad_email"
             placeholder="Email"
+            autocomplete="off"
             required
           />
+
           <input
             type="password"
             id="senha"
-            name="senha"
+            name="cad_senha"
             placeholder="Senha"
+            autocomplete="new-password"
             required
           />
 
