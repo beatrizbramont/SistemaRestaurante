@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // 👉 Agrupar por categoria
     const categorias = {};
     dados.forEach(item => {
       const categoria = item.categoria || "Outros";
@@ -28,7 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       categorias[categoria].push(item);
     });
 
-    // 👉 Gerar HTML de cada categoria separada
     listaCardapio.innerHTML = Object.keys(categorias).map(categoria => `
       <h3 class="titulo-categoria">${categoria}</h3>
       <div class="categoria-bloco">
