@@ -43,6 +43,27 @@ header {
   color: #0a0a0a;
 }
 
+.completo {
+  background: transparent;
+  border: 1px solid #b8752b;
+  color: #b8752b;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.completo:hover {
+  background: #b8752b;
+  color: #0a0a0a;
+}
+
 /* TÍTULO PRINCIPAL NO HEADER */
 .titulo-cardapio {
   position: absolute;

@@ -19,28 +19,37 @@
       </div>
 
       <div class="form-wrapper">
-        <form class="form_container" onsubmit="return false;">
+        <form class="form_container" autocomplete="off" onsubmit="return false;">
+          <input type="text" name="fakeuser" style="display:none" autocomplete="off">
+          <input type="password" name="fakepass" style="display:none" autocomplete="new-password">
           <h1>LOGIN</h1>
           <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            required
+              type="email"
+              id="email"
+              name="login_email"   
+              placeholder="Email"
+              autocomplete="off"   
+              autocorrect="off"
+              autocapitalize="none"
+              required
           />
+
           <input
-            type="password"
-            id="senha"
-            name="senha"
-            placeholder="Senha"
-            required
+              type="password"
+              id="senha"
+              name="login_senha"   
+              placeholder="Senha"
+              autocomplete="new-password"
+              required
           />
+
           <input type="button" value="Entrar" />
 
           <a href="../html/cadastro.html" class="botao_login">
-            Não possuo uma conta? <strong>Cadastre-se.</strong>
+              Não possuo uma conta? <strong>Cadastre-se.</strong>
           </a>
-        </form>
+      </form>
+
       </div>
     </div>
 
