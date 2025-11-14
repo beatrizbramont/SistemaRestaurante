@@ -19,10 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🧍 Mostra nome do usuário
   nomeSpan.textContent = nomeUsuario || "Usuário";
 
-  // 🪑 Alternar exibição da seção de reserva
   btnReserva.addEventListener("click", () => {
-    secaoReserva.classList.toggle("oculto");
-  });
+  window.location.href = "../html/quantidadePessoas.html"; 
+});
+
 
   // 🔍 Consultar mesas disponíveis
   btnConsultar.addEventListener("click", async () => {

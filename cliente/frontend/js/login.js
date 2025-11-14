@@ -1,52 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const btnLogin = document.querySelector('input[type="button"][value="Entrar"]');
+    const btnEntrar = document.querySelector('input[type="button"]');
 
-  if (!btnLogin) {
-    console.error("❌ Botão de login não encontrado no HTML!");
-    return;
-  }
+    btnEntrar.addEventListener("click", async () => {
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value.trim();
 
-  btnLogin.addEventListener("click", async () => {
-    const email = document.getElementById("email")?.value.trim();
-    const senha = document.getElementById("senha")?.value.trim();
+        if (!email || !senha) {
+            alert("Preencha todos os campos!");
+            return;
+        }
 
-    if (!email || !senha) {
-      alert("⚠️ Por favor, preencha todos os campos!");
-      return;
-    }
+        try {
+            const resposta = await fetch("http://127.0.0.1:8002/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, senha })
+            });
 
-    try {
-      const resposta = await fetch("http://127.0.0.1:8002/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, senha })
-      });
+            const data = await resposta.json();
+            console.log("RESPOSTA LOGIN:", data);
 
-      if (!resposta.ok) {
-        const erro = await resposta.json().catch(() => ({}));
-        throw new Error(erro.erro || "E-mail ou senha incorretos!");
-      }
+            if (!resposta.ok) {
+                alert(data.erro || "Erro ao realizar login.");
+                return;
+            }
 
-      const dados = await resposta.json();
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("usuario", JSON.stringify(data.usuario));
 
-      // Armazena token e dados do usuário
-      if (dados.token) {
-        localStorage.setItem("token", dados.token);
-      }
+            alert("Login realizado com sucesso!");
 
-      if (dados.usuario) {
-        localStorage.setItem("usuario", JSON.stringify(dados.usuario));
-        localStorage.setItem("usuarioNome", dados.usuario.nome || "Usuário");
-      }
+            window.location.href = "../html/home.html";
 
-      alert(dados.mensagem || "✅ Login realizado com sucesso!");
-      window.location.href = "../html/home.html";
-
-    } catch (erro) {
-      console.error("Erro no login:", erro);
-      alert(`❌ Erro: ${erro.message || "Falha na conexão com o servidor."}`);
-    }
-  });
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao conectar com o servidor.");
+        }
+    });
 });
