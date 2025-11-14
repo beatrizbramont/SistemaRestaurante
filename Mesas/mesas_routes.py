@@ -1,19 +1,25 @@
 from Mesas import Mesas, Status
 from config import db
 from flask import Blueprint, request, jsonify, render_template
-from datetime import datetime
 
 mesa_bp = Blueprint("mesa", __name__)
 
+# -------------------------------
+# Página interna (8001)
+# -------------------------------
 @mesa_bp.route('/mesas')
 def mesas_page():
     return render_template("mesapage.html")
 
-# mesas - GET
+
+# -------------------------------
+# API: listar todas (usado interno)
+# -------------------------------
 @mesa_bp.route("/api/mesas", methods=["GET"])
 def listar_mesas():
     mesas = Mesas.query.all()
     return jsonify([mesa.to_dict() for mesa in mesas])
+
 
 @mesa_bp.route("/mesas/disponiveis", methods=["GET"])
 def filtrar_mesas_por_capacidade():
@@ -24,8 +30,10 @@ def filtrar_mesas_por_capacidade():
 
         capacidade_necessaria = int(capacidade_str)
 
-        mesas_filtradas = Mesas.query.filter(
-            Mesas.capacidade >= capacidade_necessaria
+        # FILTRA mesas livres e com capacidade suficiente
+        mesas_filtradas = Mesas.query.join(Status).filter(
+            Mesas.capacidade >= capacidade_necessaria,
+            Status.nome == "livre"
         ).all()
 
         resultado = [
@@ -33,7 +41,7 @@ def filtrar_mesas_por_capacidade():
                 "id": mesa.id,
                 "numero": mesa.numero,
                 "capacidade": mesa.capacidade,
-                "status": mesa.status.nome if mesa.status else None
+                "status": mesa.status.nome
             }
             for mesa in mesas_filtradas
         ]
@@ -43,7 +51,7 @@ def filtrar_mesas_por_capacidade():
     except Exception as e:
         return jsonify({"erro": str(e)}), 400
 
-# mesas - PUT
+
 @mesa_bp.route("/mesa/<int:mesa_id>/status", methods=["PUT"])
 def atualizar_status_mesa(mesa_id):
     mesa = Mesas.query.get(mesa_id)
@@ -62,3 +70,24 @@ def atualizar_status_mesa(mesa_id):
 
     return jsonify({"msg": f"Status da mesa {mesa.numero} atualizado para {status_obj.nome}"}), 200
 
+@mesa_bp.route("/mesa/<int:mesa_id>/reservar", methods=["PUT"])
+def reservar_mesa(mesa_id):
+    mesa = Mesas.query.get(mesa_id)
+    if not mesa:
+        return jsonify({"erro": "Mesa não encontrada"}), 404
+
+    # Se a mesa já estiver ocupada ou reservada
+    if mesa.status.nome != "livre":
+        return jsonify({"erro": "Mesa não está disponível para reserva"}), 400
+
+    status_reservada = Status.query.filter_by(nome="reservada").first()
+    if not status_reservada:
+        return jsonify({"erro": "Status 'reservada' não encontrado no banco"}), 500
+
+    mesa.status = status_reservada
+    db.session.commit()
+
+    return jsonify({
+        "msg": f"Mesa {mesa.numero} reservada com sucesso!",
+        "mesa": mesa.id
+    }), 200

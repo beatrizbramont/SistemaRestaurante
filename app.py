@@ -8,6 +8,7 @@ from Comandas.comandas_routes import comandas_bp
 from ComandaProduto.cp_routes import cp_bp
 from index_route import index_bp
 from flask_wtf import CSRFProtect
+from flask_cors import CORS
 
 app.register_blueprint(index_bp) 
 
@@ -25,12 +26,12 @@ csrf.exempt(mesa_bp)
 csrf.exempt(comandas_bp)
 csrf.exempt(cp_bp)
 
-
-
 with app.app_context():
     db.create_all()
     seed_status()
     seed_mesas()
+
+CORS(app, origins=["http://127.0.0.1:8002"])
 
 if __name__ == '__main__':
     app.run(host=app.config["HOST"], port=app.config['PORT'], debug=app.config['DEBUG'])
