@@ -6,19 +6,22 @@
     <title>Mesas Disponíveis - TableTrack</title>
     <link rel="stylesheet" href="../css/resultadoMesas.css">
     <script defer src="../js/resultadoMesas.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 
 <body>
+    <header>
+        <button class="voltar" onclick="window.location.href='quantidadePessoas.html'">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+        <div class="logo">Mesas Disponíveis</div>
+    </header>
 
-<header>
-    <div class="logo">TableTrack</div>
-</header>
+    <main>
+        <div id="listaMesas" class="lista"></div>
 
-<h1 class="titulo">Mesas Disponíveis</h1>
-
-<div id="listaMesas" class="lista"></div>
-
-<p id="erro" class="erro"></p>
-
+        <p id="erro" class="erro"></p>
+    </main>
 </body>
+
 </html>

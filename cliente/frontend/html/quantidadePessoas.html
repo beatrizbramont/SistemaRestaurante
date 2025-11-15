@@ -5,39 +5,49 @@
     <title>TableTrack - Quantidade</title>
     <link rel="stylesheet" href="../css/quantidadePessoas.css">
     <script defer src="../js/quantidadePessoas.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
 <header>
-    <div class="logo">TableTrack</div>
+    <button class="voltar" onclick="window.location.href='home.html'">
+        <i class="fa-solid fa-arrow-left"></i> Voltar
+    </button>
 </header>
 
 <main class="container">
 
-    <h1>Realizar Reserva</h1>
-    <p class="descricao">
-        Informe a quantidade de pessoas para encontrarmos mesas disponíveis.
-        <br>
-        <span class="aviso">
-            • Máximo por mesa: 8 pessoas.  
-            • Se for mais que 8, escolheremos múltiplas mesas.
-        </span>
-    </p>
+    <div class="card">
 
-    <div class="card-input">
-        <label for="inputPessoas">Quantidade de pessoas</label>
-        <input type="number" id="inputPessoas" min="1" placeholder="Ex: 5">
+        <h1>Realizar Reserva</h1>
+        <p class="descricao">
+            Informe quantas pessoas irão participar da reserva.
+        </p>
+
+        <div class="info-box">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>
+                Máximo por mesa: <strong>8 pessoas</strong>.<br>
+                Se exceder, selecionaremos mesas múltiplas automaticamente.
+            </span>
+        </div>
+
+        <div class="card-input">
+            <label for="inputPessoas">Quantidade de pessoas</label>
+            <input type="number" id="inputPessoas" min="1" placeholder="Ex: 5">
+        </div>
+
+        <button id="consultarBtn" class="btn">Consultar Mesas</button>
+
+        <p id="erro" class="erro"></p>
+
     </div>
-
-    <button id="consultarBtn" class="btn">Consultar Mesas</button>
-
-    <p id="erro" class="erro"></p>
 
 </main>
 
 <footer>
-    © 2025 TableTrack. Todos os direitos reservados.
+    © 2025 TableTrack — Sistema de Reservas Inteligente.
 </footer>
 
 </body>
