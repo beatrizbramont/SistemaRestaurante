@@ -6,11 +6,15 @@ class Reserva(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     usuario_id = db.Column(db.Integer, nullable=False)
-    mesa_numero = db.Column(db.Integer, nullable=False)
+    
+    mesas = db.Column(db.String(255), nullable=False)
+
     capacidade = db.Column(db.Integer, nullable=False)
+
     data_reserva = db.Column(db.DateTime, default=datetime.utcnow)
     horario_reserva = db.Column(db.DateTime, default=datetime.utcnow)
+
     status = db.Column(db.String(20), default='reservada')
 
     def __repr__(self):
-        return f"<Reserva Mesa {self.mesa_numero} - Usuário {self.usuario_id}>"
+        return f"<Reserva Mesas {self.mesas} - Usuário {self.usuario_id}>"
