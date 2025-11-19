@@ -13,11 +13,10 @@ API_MESAS = "http://127.0.0.1:8001/mesas/disponiveis"
 # Fila de espera simples (global)
 fila_espera = []
 
-
 @quantidade_bp.route('/consultar_mesa')
-@jwt_required()  # 🔒 Protege a rota — só acessa com token JWT válido
+@jwt_required()  
 def consultar_mesa():
-    usuario = get_jwt_identity()  # Pega os dados do usuário autenticado (id, nome, email)
+    usuario = get_jwt_identity()  
     pessoas = int(request.args.get("pessoas"))
     acao = request.args.get("acao", "entrada")  # 'entrada' ou 'reserva'
 

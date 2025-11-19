@@ -9,10 +9,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-        const res = await fetch(`http://127.0.0.1:8001/mesas/disponiveis?capacidade=${pessoas}`);
+        const res = await fetch(
+            `http://127.0.0.1:8001/mesas/disponiveis?capacidade=${pessoas}`
+        );
+
         const mesas = await res.json();
 
-        if (!mesas.length) {
+        if (!Array.isArray(mesas) || mesas.length === 0) {
             lista.innerHTML = `<p>Nenhuma mesa disponível com capacidade para ${pessoas} pessoas.</p>`;
             return;
         }
@@ -23,55 +26,57 @@ document.addEventListener("DOMContentLoaded", async () => {
             card.innerHTML = `
                 <h3>Mesa ${m.numero}</h3>
                 <p>Capacidade: ${m.capacidade}</p>
-                <button onclick="reservarMesa(${m.id})">Reservar Mesa</button>
+                <button onclick="reservarMesa(${m.id})">Reservar</button>
             `;
             lista.appendChild(card);
         });
 
     } catch (e) {
+        console.error(e);
         erro.textContent = "Erro ao carregar mesas.";
     }
 });
 
+
 async function reservarMesa(idMesa) {
     const pessoas = parseInt(sessionStorage.getItem("pessoas"));
     const erro = document.querySelector("#erro");
+    const token = localStorage.getItem("token");
 
-    if (!pessoas || pessoas < 1) {
-        erro.textContent = "Quantidade inválida de pessoas!";
+    const payload = {
+        pessoas,
+        mesas: [idMesa] // ID REAL da mesa vindo do backend 8001
+    };
+
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+    };
+
+    // Primeira tentativa: rota correta
+    let res = await fetch("http://127.0.0.1:8002/reservas/criar", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload)
+    });
+
+    // Fallback apenas se necessário
+    if (res.status === 404 || res.status === 405) {
+        res = await fetch("http://127.0.0.1:8002/reservas", {
+            method: "POST",
+            headers,
+            body: JSON.stringify(payload)
+        });
+    }
+
+    const dados = await res.json();
+
+    if (!res.ok) {
+        erro.textContent = dados.erro || "Erro ao reservar.";
         return;
     }
 
-    try {
-        const res = await fetch("http://127.0.0.1:8001/reservas", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                mesa_id: idMesa,
-                pessoas: pessoas
-            })
-        });
-
-        const dados = await res.json();
-
-        if (!res.ok) {
-            erro.textContent = dados.mensagem || "Erro ao reservar mesa.";
-            return;
-        }
-
-        // Sucesso!
-        alert("Mesa reservada com sucesso!");
-
-        // Salva ID da reserva para usar depois
-        sessionStorage.setItem("reserva_id", dados.reserva_id);
-
-        // Redireciona para a página de confirmação
-        window.location.href = "confirmacao.html";
-
-    } catch (e) {
-        console.error(e);
-        erro.textContent = "Erro ao conectar ao servidor.";
-    }
+    alert("Mesa reservada com sucesso!");
+    sessionStorage.setItem("reserva_id", dados.reserva.id);
+    window.location.href = "confirmacao.html";
 }

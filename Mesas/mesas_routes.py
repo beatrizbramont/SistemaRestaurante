@@ -12,9 +12,6 @@ def mesas_page():
     return render_template("mesapage.html")
 
 
-# -------------------------------
-# API: listar todas (usado interno)
-# -------------------------------
 @mesa_bp.route("/api/mesas", methods=["GET"])
 def listar_mesas():
     mesas = Mesas.query.all()
@@ -90,4 +87,18 @@ def reservar_mesa(mesa_id):
     return jsonify({
         "msg": f"Mesa {mesa.numero} reservada com sucesso!",
         "mesa": mesa.id
+    }), 200
+
+@mesa_bp.route("/mesa/<int:mesa_id>", methods=["GET"])
+def obter_mesa(mesa_id):
+    mesa = Mesas.query.get(mesa_id)
+
+    if not mesa:
+        return jsonify({"erro": "Mesa não encontrada"}), 404
+
+    return jsonify({
+        "id": mesa.id,
+        "numero": mesa.numero,
+        "capacidade": mesa.capacidade,
+        "status": mesa.status.nome
     }), 200
