@@ -48,6 +48,12 @@ nav li {
     padding: 16px 18px;
     text-align: center;
     border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+
+    &:hover {
+        background-color: #818181;
+    }
 }
 
 nav li a {
@@ -71,7 +77,7 @@ main {
 
 /* ========================= Topo da página ========================= */
 .tabletrack-topo {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 }
 
 .tabletrack-topo h3 {
@@ -332,7 +338,7 @@ main {
     }
 
     #preview-img {
-        width: 80px;
+        width: 50px;
     }
 }
 
