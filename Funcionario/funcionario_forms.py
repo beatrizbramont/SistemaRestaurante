@@ -7,8 +7,7 @@ class CadastroFuncionarioForm(FlaskForm):
     nome = StringField('Nome', validators=[DataRequired(), Length(min=4, max=120)])
     cargo = SelectField('Cargo', choices=[
     ('Garçom', 'Garçom'),
-    ('Balconista', 'Balconista'),
-    ('Cozinheiro', 'Cozinheiro'),
+    ('Recepcionista', 'Recepcionista'),
     ('Gerente', 'Gerente')], 
     validators=[DataRequired()])
     telefone = StringField('Telefone', validators=[DataRequired()])
