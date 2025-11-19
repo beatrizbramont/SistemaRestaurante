@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDelete = document.getElementById('modal-delete');
     const formDelete = document.getElementById('delete-form');
     const mensagemDelete = document.getElementById('mensagem-delete');
-    const botaoFecharDelete = document.getElementById('fechar-modal');
+    const botaoFecharDelete = document.getElementById('fechar-modal-cancel');
 
     document.querySelectorAll('.deletar_funcionario').forEach(botao => {
         botao.addEventListener('click', () => {
