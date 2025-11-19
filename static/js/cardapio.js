@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Referências DOM
   const form = document.getElementById('cardapio-form');
+  const tituloTopoModal = document.getElementById('titulo-topo-modal');
+  const textoTopoModal = document.getElementById('texto-topo-modal');
   const nomeInput = document.getElementById('nome');
   const precoInput = document.getElementById('preco');
   const menuToggle = document.getElementById('menu-toggle');
@@ -8,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoriaSelect = document.getElementById('categoria');
   const ingredientesInput = document.getElementById('ingredientes');
   const tempoPreparoInput = document.getElementById('tempo_preparo');
+
+  const tituloOriginal = tituloTopoModal.textContent;
+  const textoOriginal = textoTopoModal.textContent;
 
   // Imagem no forms
   const inputImagem = document.getElementById("imagem");
@@ -99,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // EDITAR
             li.querySelector('.edit-icon').addEventListener('click', () => {
+              tituloTopoModal.textContent = "Atualizar Prato";
+              textoTopoModal.textContent = "Atualize seu prato";
               nomeInput.value = item.nome;
               ingredientesInput.value = item.ingredientes;
               precoInput.value = item.preco;
@@ -169,8 +176,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const data = await res.json();
         alert(data.msg || 'Item atualizado com sucesso.');
+
         delete form.dataset.editingId;
         form.querySelector('button[type="submit"]').textContent = 'Salvar';
+        tituloTopoModal.textContent = tituloOriginal;
+        textoTopoModal.textContent = textoOriginal;
+
       } else {
         const res = await fetch('/cardapio', {
           method: 'POST',
