@@ -19,6 +19,7 @@
 .funcionarios-infos h2 {
     margin-left: 8px;
     font-size: 32px;
+    font-weight: 500;
 }
 
 .funcionarios-topo-botao {
@@ -29,6 +30,7 @@
 
     background-color: #D58A33;
     color: #fff;
+    cursor: pointer;
 
     font-size: 20px;
     font-weight: 500;
@@ -165,6 +167,11 @@
         color: #ffffff;
         border-radius: 8px;
         font-size: 16px;
+        cursor: pointer;
+
+        &:hover {
+        background-color: #ffae45;
+        }
 
     }
 
@@ -174,6 +181,11 @@
         color: #ffffff;
         border-radius: 8px;
         font-size: 16px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #363636;
+        }
 
     }
 }
