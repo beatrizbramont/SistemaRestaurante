@@ -24,7 +24,7 @@ aside {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     width: 90px;
     padding: 48px 12px;
     background-color: #1C1C1C;
@@ -32,14 +32,14 @@ aside {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 130px;
+    gap: 100px;
     z-index: 100;
 }
 
 nav ul {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
 }
@@ -50,6 +50,11 @@ nav li {
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s ease-in;
+
+    & img {
+        width: 32px;
+        height: 32px;
+    }
 
     &:hover {
         background-color: #818181;
