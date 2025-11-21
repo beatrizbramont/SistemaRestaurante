@@ -12,6 +12,7 @@ header {
     display: flex;
     align-items: center;
     gap: 15px;
+    border-bottom: 2px solid #d58a33;
 }
 
 header h1 {

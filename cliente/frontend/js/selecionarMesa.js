@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     info.innerHTML = `Total de pessoas: <strong>${pessoas}</strong><br>Selecione mesas suficientes.`;
 
-    // 🔎 Buscar todas as mesas disponíveis
     try {
         const res = await fetch("http://127.0.0.1:8001/mesas/disponiveis?capacidade=1");
         const mesas = await res.json();
@@ -25,9 +24,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             lista.appendChild(card);
         });
 
-        document.getElementById("confirmarBtn").addEventListener("click", () => {
+        // Botão fora do modal abre o modal
+        const btnConfirmar = document.getElementById("confirmarBtn");
+        btnConfirmar.addEventListener("click", () => {
             erro.textContent = "";
-
             const selecionadas = [...document.querySelectorAll(".checkMesa:checked")];
 
             if (!selecionadas.length) {
@@ -55,9 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         erro.textContent = "Erro ao buscar mesas.";
     }
 
-    // ============================
-    // Modal de Reserva
-    // ============================
     function abrirModalReserva(mesasSelecionadas) {
         const modal = document.getElementById("modalReserva");
         const btnConfirmar = document.getElementById("btnConfirmarReserva");
@@ -75,12 +72,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnCancelar.onclick = fecharModal;
         btnFechar.onclick = fecharModal;
 
-        btnConfirmar.onclick = async () => {
-            const nomeCliente = document.getElementById("nomeReserva").value;
-            const dataReserva = document.getElementById("dataReserva").value; // ex: "2025-11-21"
-            const horaReserva = document.getElementById("horaReserva").value; // ex: "14:47"
+        // remover listeners antigos antes de adicionar
+        btnConfirmar.replaceWith(btnConfirmar.cloneNode(true));
+        const novoBtnConfirmar = document.getElementById("btnConfirmarReserva");
 
-            // Validações
+        novoBtnConfirmar.onclick = async () => {
+            const nomeCliente = document.getElementById("nomeReserva").value;
+            const dataReserva = document.getElementById("dataReserva").value;
+            const horaReserva = document.getElementById("horaReserva").value;
+
             if (!nomeCliente) {
                 erroModal.textContent = "Digite seu nome.";
                 erroModal.style.display = "block";
@@ -115,14 +115,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
-            // 🔹 Combinar data e hora em ISO 8601 para enviar ao backend
-            // Inclui segundos para compatibilidade com datetime do backend
             const dataHoraReserva = `${dataReserva}T${horaReserva}:00`;
-
             const token = localStorage.getItem("token");
             const payload = {
                 nome_cliente: nomeCliente,
-                data_reserva: dataHoraReserva, // data + hora correta
+                data_reserva: dataHoraReserva,
                 pessoas: pessoas,
                 mesas: mesasSelecionadas
             };

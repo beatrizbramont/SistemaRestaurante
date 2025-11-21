@@ -1,57 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <title>Selecionar Mesas - TableTrack</title>
     <link rel="stylesheet" href="../css/selecionarMesa.css">
     <script defer src="../js/selecionarMesa.js"></script>
 </head>
-
 <body>
 
-<header>
-    <div class="logo">TableTrack</div>
-</header>
+    <header>
+        <button class="voltar" onclick="window.history.back()">Voltar</button>
+        <h1>Selecione Mesas para o Grupo</h1>
+    </header>
 
-    <h1 class="titulo">Selecione Mesas para o Grupo</h1>
+    <main>
+        <div class="info-pessoas" id="infoPessoas">
+            Total de pessoas: 11<br>
+            Selecione mesas suficientes.
+        </div>
 
-    <p id="infoPessoas"></p>
+        <div id="listaMesas" class="lista"></div>
 
-    <div id="listaMesas" class="lista"></div>
+        <div id="erro" class="erro"></div> <!-- aqui -->
 
-    <button id="confirmarBtn" class="btn">Confirmar Reserva</button>
+        <button id="confirmarBtn" class="btn">Confirmar Reserva</button>
+    </main>
 
-    <p id="erro" class="erro"></p>
-        <div id="modalReserva" class="modal">
+
+    <!-- Modal de reserva -->
+    <div id="modalReserva" class="modal">
         <div class="modal-content">
-
-            <button class="close-modal" id="btnFecharModal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
+            <button class="close-modal" id="btnFecharModal">×</button>
             <h2 class="titulo-modal">Preencha os dados para concluir sua reserva</h2>
-
             <div id="erroModal" class="erro-modal"></div>
-
             <label>Nome completo:</label>
             <input type="text" id="nomeReserva" placeholder="Digite seu nome">
-
             <label>Data da reserva:</label>
             <input type="date" id="dataReserva">
-
             <label>Horário (12:30 até 21:00):</label>
             <input type="time" id="horaReserva" min="12:30" max="21:00">
-
-            <p class="aviso-horario">
-                * Reservas apenas entre <strong>12:30</strong> e <strong>21:00</strong>.
-            </p>
-
+            <p class="aviso-horario">* Reservas apenas entre <strong>12:30</strong> e <strong>21:00</strong>.</p>
             <div class="actions">
                 <button id="btnCancelar">Cancelar</button>
                 <button id="btnConfirmarReserva">Confirmar</button>
             </div>
         </div>
     </div>
+
 </body>
 </html>

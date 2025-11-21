@@ -1,112 +1,170 @@
-/* selecionarMesa.css - versão aprimorada */
+/* BODY */
 body {
     background: #0d0d0d;
     margin: 0;
     font-family: "Poppins", sans-serif;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
+/* HEADER */
 header {
-    padding: 1.5rem 3rem;
+    background: #000;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
     border-bottom: 2px solid #d58a33;
-    font-size: 1.8rem;
-    font-weight: 600;
 }
 
-.titulo {
+.voltar {
+    background: none;
+    border: 1px solid #d58a33;
+    color: #d58a33;
+    border-radius: 6px;
+    padding: 7px 1.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.voltar:hover {
+    background: #d58a33;
+    color: #1a1a1a;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #d58a33;
     text-align: center;
-    margin: 2rem 0;
-    font-size: 2rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    flex: 1;
 }
 
+/* MAIN */
+main {
+    width: 90%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+/* Info pessoas destacado */
+.info-pessoas {
+    background-color: #d58a33;
+    color: #fff;
+    padding: 1.2rem 2rem;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+/* Lista de mesas (grid responsivo) */
 .lista {
-    max-width: 900px;
-    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 2rem;
+    width: 100%;
 }
 
+/* Mesa card */
 .mesa-card {
     background: #1a1a1a;
     padding: 1.5rem;
     border-radius: 12px;
-    border: 1px solid #d58a33;
+    border: 2px solid #d58a33;
     text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
 }
 
 .mesa-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(213, 138, 51, 0.5);
+    box-shadow: 0 10px 25px rgba(213, 138, 51, 0.6);
 }
 
+/* Botão selecionar mesa */
 .btn-selecionar {
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     padding: 10px 20px;
     background: #d58a33;
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.2s;
+    font-weight: 600;
+    transition: all 0.2s;
 }
 
 .btn-selecionar:hover {
     background: #e7a24a;
+    transform: scale(1.05);
 }
 
 .btn-selecionar.selecionada {
     background: #ffb347;
     color: #000;
-    font-weight: 600;
+    font-weight: 700;
 }
 
+/* Botão confirmar reserva */
 #confirmarBtn {
-    display: block;
-    margin: 2rem auto;
-    padding: 12px 24px;
+    padding: 14px 32px;
     background: #d58a33;
     border: none;
     color: #fff;
-    border-radius: 8px;
-    font-size: 1.2rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;
 }
 
 #confirmarBtn:hover {
     background: #e7a24a;
+    transform: scale(1.05);
 }
 
+/* Mensagem de erro */
 .erro {
     text-align: center;
     color: #ff6b6b;
-    margin-top: 1rem;
+    font-weight: 500;
 }
 
-/* Modal */
+/* MODAL */
 .modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
+    top:0; left:0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.85);
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
 .modal-content {
-    background: #1a1a1a;
+    background: #2c2c2c;
     padding: 2rem;
-    border-radius: 12px;
-    max-width: 500px;
+    border-radius: 20px;
+    max-width: 480px;
     width: 90%;
     position: relative;
-    box-shadow: 0 0 20px rgba(213,138,51,0.5);
+    box-shadow: 0 10px 30px rgba(213,138,51,0.6);
 }
 
 .close-modal {
@@ -115,13 +173,13 @@ header {
     right: 1rem;
     background: none;
     border: none;
-    color: #fff;
+    color: #f1c40f;
     font-size: 1.5rem;
     cursor: pointer;
 }
 
 .close-modal:hover {
-    color: #d58a33;
+    color: #ffd966;
 }
 
 .modal-content label {
@@ -131,10 +189,10 @@ header {
 
 .modal-content input {
     width: 100%;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 12px;
+    border-radius: 10px;
     border: 1px solid #d58a33;
-    background: #0d0d0d;
+    background: #1f1f1f;
     color: #fff;
 }
 
@@ -142,38 +200,30 @@ header {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
 
 .actions button {
-    padding: 10px 20px;
-    border-radius: 6px;
+    padding: 12px 24px;
+    border-radius: 12px;
     border: none;
     cursor: pointer;
     font-weight: 600;
+    transition: all 0.2s;
 }
 
-#btnCancelar {
-    background: #555;
-    color: #fff;
-    transition: background 0.2s;
-}
+#btnCancelar { background: #555; color: #fff; }
+#btnCancelar:hover { background: #777; }
 
-#btnCancelar:hover {
-    background: #777;
-}
+#btnConfirmarReserva { background: #d58a33; color: #fff; }
+#btnConfirmarReserva:hover { background: #e7a24a; transform: translateY(-2px); }
 
-#btnConfirmarReserva {
-    background: #d58a33;
-    color: #fff;
-    transition: background 0.2s;
-}
+.erro-modal { color: #ff6b6b; margin-top: 0.5rem; font-weight: 500; text-align: center; }
 
-#btnConfirmarReserva:hover {
-    background: #e7a24a;
-}
-
-.erro-modal {
-    color: #ff6b6b;
-    margin-top: 0.5rem;
+/* RESPONSIVO */
+@media(max-width: 600px) {
+    .lista { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem; }
+    header h1 { font-size: 1.4rem; }
+    .info-pessoas { font-size: 1.2rem; padding: 0.8rem 1rem; }
+    #confirmarBtn { font-size: 1.1rem; padding: 12px 24px; }
 }
