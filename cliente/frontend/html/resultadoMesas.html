@@ -26,6 +26,38 @@
 
         <p id="erro" class="erro"></p>
     </main>
+    
+    <div id="modalReserva" class="modal">
+        <div class="modal-content">
+
+            <button class="close-modal" id="btnFecharModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="titulo-modal">Preencha os dados para concluir sua reserva</h2>
+
+            <div id="erroModal" class="erro-modal"></div>
+
+            <label>Nome completo:</label>
+            <input type="text" id="nomeReserva" placeholder="Digite seu nome">
+
+            <label>Data da reserva:</label>
+            <input type="date" id="dataReserva">
+
+            <label>Horário (12:30 até 21:00):</label>
+            <input type="time" id="horaReserva" min="12:30" max="21:00">
+
+            <p class="aviso-horario">
+                * Reservas apenas entre <strong>12:30</strong> e <strong>21:00</strong>.
+            </p>
+
+            <div class="actions">
+                <button id="btnCancelar">Cancelar</button>
+                <button id="btnConfirmarReserva">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

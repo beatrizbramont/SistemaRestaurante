@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #1a1a1a;
+    color: #fff4d1;
+    min-height: 100vh;
+}
+
+header {
+    background: #2c2c2c;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #d58a33;
+}
+
+.voltar {
+    background: none;
+    border: 1px solid #d58a33;
+    color: #d58a33;
+    border-radius: 25px;
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+}
+
+.voltar:hover {
+    background: #d58a33;
+    color: #1a1a1a;
+}
+
+main {
+    padding: 25px;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.reserva-card {
+    background: #2c2c2c;
+    padding: 18px 22px;
+    border-radius: 12px;
+    border-left: 6px solid #d58a33;
+    transition: 0.25s;
+}
+
+.reserva-card:hover {
+    transform: translateY(-3px);
+    border-left-color: #b87f2b;
+}
+
+.reserva-card h2 {
+    margin: 0;
+    color: #d58a33;
+}
+
+.reserva-info {
+    margin-top: 10px;
+    color: #fff4d1;
+    line-height: 1.5rem;
+}
+
+.erro {
+    color: #ff6b6b;
+    margin-top: 20px;
+    text-align: center;
+}

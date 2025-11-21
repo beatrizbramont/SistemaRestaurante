@@ -157,15 +157,12 @@ def criar_reserva():
         return jsonify({"erro": f"Erro inesperado ao criar reserva: {str(e)}"}), 500
 
 
-# --------------------------------------------
-# MINHAS RESERVAS
-# --------------------------------------------
 @reserva_bp.route("/minhas", methods=["GET"])
 @jwt_required()
 def minhas_reservas():
-    usuario = get_jwt_identity()
+    usuario_id = int(get_jwt_identity())
 
-    reservas = Reserva.query.filter_by(usuario_id=usuario["id"]).all()
+    reservas = Reserva.query.filter_by(usuario_id=usuario_id).all()
 
     return jsonify([
         {

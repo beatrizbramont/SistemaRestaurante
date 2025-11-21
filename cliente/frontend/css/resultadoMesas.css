@@ -88,7 +88,6 @@ button:hover {
     box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
 
-/* Botão voltar */
 .voltar {
     background: transparent;
     border: 1px solid #b87f2b;
@@ -117,6 +116,114 @@ button:hover {
     color: #ff6b6b;
     font-weight: bold;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.78);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+/* Container interno */
+.modal-content {
+    background: #1a1a1a; /* cinza escuro */
+    padding: 30px;
+    border-radius: 18px;
+    width: 380px;
+    color: #d58a33; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: popIn 0.25s ease-out;
+}
+
+/* Botão X */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff4d1;
+    transition: 0.2s;
+}
+
+.buttonclose-modal:hover {
+    color: #d58a33;
+}
+
+.titulo-modal {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #fff4d1;
+}
+
+/* Inputs */
+.modal-content input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #1a1a1a;
+    border: 1px solid #b87f2b;
+    color: #fff4d1;
+}
+
+.modal-content input:focus {
+    border-color: #d58a33;
+}
+
+/* Aviso */
+.aviso-horario {
+    font-size: 0.85rem;
+    color: #ffdca2;
+    text-align: center;
+    margin-top: -5px;
+}
+
+/* Botões */
+.actions button {
+    padding: 10px 18px;
+    cursor: pointer;
+    background: #d58a33;
+    border: none;
+    color: #1a1a1a;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.25s;
+}
+
+.actions button:hover {
+    background: #b87f2b;
+}
+
+/* Botão cancelar */
+#btnCancelar {
+    background: #474747;
+    color: #fff4d1;
+}
+
+#btnCancelar:hover {
+    background: #333;
+}
+
+.erro-modal {
+    background: #ffdddd;
+    color: #8a0000;
+    padding: 8px;
+    border-left: 4px solid #ff5c5c;
+    border-radius: 5px;
+    display: none;
+}
+
 
 /* Ajuste mobile */
 @media (max-width: 500px) {

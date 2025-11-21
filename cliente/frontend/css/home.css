@@ -280,3 +280,61 @@ footer {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* CARD — Minhas Reservas (herda tudo dos outros cards) */
+.card i.fa-clipboard-list {
+  font-size: 3.5rem;
+  color: #d58a33;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Hover para deixar igual aos outros */
+.card:hover i.fa-clipboard-list {
+  color: #252525;
+  transform: scale(1.1);
+}
+
+/* Botão */
+#btnMinhasReservas {
+  background: #d58a33;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 180px;
+  margin: 0 auto;
+}
+
+/* Hover do botão igual aos outros */
+#btnMinhasReservas:hover {
+  background: #fff;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.card:hover #btnMinhasReservas {
+  background: #fff;
+  color: #000;
+}
+
+.card {
+  width: 300px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  white-space: nowrap;           
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card button {
+  width: 180px;
+  margin: 0 auto;
+}
