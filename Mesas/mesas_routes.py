@@ -102,3 +102,21 @@ def obter_mesa(mesa_id):
         "capacidade": mesa.capacidade,
         "status": mesa.status.nome
     }), 200
+
+@mesa_bp.route("/encerrar_dia", methods=["POST"])
+def encerrar_dia():
+    try:
+        status_livre = Status.query.filter_by(nome="livre").first()
+        if not status_livre:
+            return jsonify({"erro": "Status 'livre' não encontrado"}), 500
+
+        mesas = Mesas.query.all()
+        for mesa in mesas:
+            mesa.status = status_livre
+
+        db.session.commit()
+        return jsonify({"msg": "Dia encerrado com sucesso! Todas as mesas voltaram a ficar livres."}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"erro": str(e)}), 500
