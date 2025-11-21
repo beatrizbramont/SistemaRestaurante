@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background: #2c2c2c;
+    background: #000;
     padding: 15px 20px;
     display: flex;
     align-items: center;
@@ -18,14 +18,18 @@ header h1 {
     margin: 0;
     font-size: 1.6rem;
     color: #d58a33;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: 600;
+    width: 90%;
 }
 
 .voltar {
     background: none;
     border: 1px solid #d58a33;
     color: #d58a33;
-    border-radius: 25px;
-    padding: 6px 12px;
+    border-radius: 6px;
+    padding: 7px 1.5rem;
     cursor: pointer;
     display: flex;
     align-items: center;

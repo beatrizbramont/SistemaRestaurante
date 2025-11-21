@@ -10,9 +10,6 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(reserva_bp)           
 app.register_blueprint(cardapio_cliente_bp)  
 
-for rule in app.url_map.iter_rules():
-    print(rule.endpoint, rule.rule, rule.methods)
-
 with app.app_context():
     db.create_all()
 
