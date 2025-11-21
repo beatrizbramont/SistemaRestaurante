@@ -4,6 +4,8 @@ from Auth.auth_routes import auth_bp
 from Reserva.reservaRoutes import reserva_bp
 from Cardapio.cardapio_routes import cardapio_cliente_bp
 from flask_cors import CORS
+import os
+from flask import jsonify
 
 app.register_blueprint(frontend_bp)      
 app.register_blueprint(auth_bp)              

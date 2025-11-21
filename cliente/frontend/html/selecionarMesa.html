@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Selecionar Mesas - TableTrack</title>
-    <link rel="stylesheet" href="../css/selecionarMesas.css">
-    <script defer src="../js/selecionarMesas.js"></script>
+    <link rel="stylesheet" href="../css/selecionarMesa.css">
+    <script defer src="../js/selecionarMesa.js"></script>
 </head>
 
 <body>
@@ -14,15 +14,44 @@
     <div class="logo">TableTrack</div>
 </header>
 
-<h1 class="titulo">Selecione Mesas para o Grupo</h1>
+    <h1 class="titulo">Selecione Mesas para o Grupo</h1>
 
-<p id="infoPessoas"></p>
+    <p id="infoPessoas"></p>
 
-<div id="listaMesas" class="lista"></div>
+    <div id="listaMesas" class="lista"></div>
 
-<button id="confirmarBtn" class="btn">Confirmar Reserva</button>
+    <button id="confirmarBtn" class="btn">Confirmar Reserva</button>
 
-<p id="erro" class="erro"></p>
+    <p id="erro" class="erro"></p>
+        <div id="modalReserva" class="modal">
+        <div class="modal-content">
 
+            <button class="close-modal" id="btnFecharModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="titulo-modal">Preencha os dados para concluir sua reserva</h2>
+
+            <div id="erroModal" class="erro-modal"></div>
+
+            <label>Nome completo:</label>
+            <input type="text" id="nomeReserva" placeholder="Digite seu nome">
+
+            <label>Data da reserva:</label>
+            <input type="date" id="dataReserva">
+
+            <label>Horário (12:30 até 21:00):</label>
+            <input type="time" id="horaReserva" min="12:30" max="21:00">
+
+            <p class="aviso-horario">
+                * Reservas apenas entre <strong>12:30</strong> e <strong>21:00</strong>.
+            </p>
+
+            <div class="actions">
+                <button id="btnCancelar">Cancelar</button>
+                <button id="btnConfirmarReserva">Confirmar</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

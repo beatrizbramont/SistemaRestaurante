@@ -25,3 +25,5 @@ def serve_css(filename):
 @frontend_bp.route('/js/<path:filename>')
 def serve_js(filename):
     return send_from_directory(JS_DIR, filename)
+
+

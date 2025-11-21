@@ -1,7 +1,8 @@
+/* selecionarMesa.css - versão aprimorada */
 body {
     background: #0d0d0d;
     margin: 0;
-    font-family: Poppins, sans-serif;
+    font-family: "Poppins", sans-serif;
     color: #fff;
 }
 
@@ -9,11 +10,13 @@ header {
     padding: 1.5rem 3rem;
     border-bottom: 2px solid #d58a33;
     font-size: 1.8rem;
+    font-weight: 600;
 }
 
 .titulo {
     text-align: center;
     margin: 2rem 0;
+    font-size: 2rem;
 }
 
 .lista {
@@ -29,9 +32,37 @@ header {
     padding: 1.5rem;
     border-radius: 12px;
     border: 1px solid #d58a33;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.btn {
+.mesa-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(213, 138, 51, 0.5);
+}
+
+.btn-selecionar {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    background: #d58a33;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-selecionar:hover {
+    background: #e7a24a;
+}
+
+.btn-selecionar.selecionada {
+    background: #ffb347;
+    color: #000;
+    font-weight: 600;
+}
+
+#confirmarBtn {
     display: block;
     margin: 2rem auto;
     padding: 12px 24px;
@@ -41,9 +72,10 @@ header {
     border-radius: 8px;
     font-size: 1.2rem;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-.btn:hover {
+#confirmarBtn:hover {
     background: #e7a24a;
 }
 
@@ -51,4 +83,97 @@ header {
     text-align: center;
     color: #ff6b6b;
     margin-top: 1rem;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 0 20px rgba(213,138,51,0.5);
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #d58a33;
+}
+
+.modal-content label {
+    display: block;
+    margin: 1rem 0 0.3rem;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #d58a33;
+    background: #0d0d0d;
+    color: #fff;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.actions button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#btnCancelar {
+    background: #555;
+    color: #fff;
+    transition: background 0.2s;
+}
+
+#btnCancelar:hover {
+    background: #777;
+}
+
+#btnConfirmarReserva {
+    background: #d58a33;
+    color: #fff;
+    transition: background 0.2s;
+}
+
+#btnConfirmarReserva:hover {
+    background: #e7a24a;
+}
+
+.erro-modal {
+    color: #ff6b6b;
+    margin-top: 0.5rem;
 }

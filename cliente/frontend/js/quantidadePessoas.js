@@ -14,13 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sessionStorage.setItem("pessoas", pessoas);
 
-        // 👉 Até 8 → pode ir direto para resultado
+        // Até 8 → vai direto
         if (pessoas <= 8) {
             window.location.href = "../html/resultadoMesas.html";
         } 
         else {
-            // 👉 Mais de 8 → ir para seleção de múltiplas mesas
-            window.location.href = "../html/selecionarMesas.html";
+            window.location.href = `${window.location.origin}/html/selecionarMesa.html`;
         }
     });
 });

@@ -3,6 +3,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from flask import Blueprint, request, jsonify
+from datetime import datetime
 import requests
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from config import db
@@ -55,108 +56,51 @@ def listar_mesas_disponiveis():
 
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
-
-
 @reserva_bp.route("/criar", methods=["POST"])
 @jwt_required()
 def criar_reserva():
     data = request.get_json()
-    usuario = get_jwt_identity()
-
-    if not usuario:
-        return jsonify({"erro": "Usuário não autenticado!"}), 401
+    usuario_id = get_jwt_identity()
 
     pessoas = data.get("pessoas")
-    mesas = data.get("mesas")  
+    mesas = data.get("mesas")
+    data_hora_str = data.get("data_reserva")  # ex: "2025-11-21T14:47:00"
 
-    if not pessoas or not mesas:
-        return jsonify({"erro": "Campos 'pessoas' e 'mesas' são obrigatórios!"}), 400
+    if not pessoas or not mesas or not data_hora_str:
+        return jsonify({"erro": "Campos 'pessoas', 'mesas' e 'data_reserva' são obrigatórios!"}), 400
 
     if not isinstance(mesas, list):
         return jsonify({"erro": "Campo 'mesas' deve ser uma lista."}), 400
 
-    capacidade_total = 0
-    mesas_info = []
+    try:
+        data_hora_dt = datetime.fromisoformat(data_hora_str)
+    except ValueError:
+        return jsonify({"erro": "Formato de data/hora inválido. Use YYYY-MM-DDTHH:MM:SS"}), 400
 
     try:
-        # -----------------------------
-        # Validar mesas individualmente
-        # -----------------------------
-        for numero in mesas:
-            try:
-                res = requests.get(f"{API_MESAS}/mesa/{numero}", timeout=5)
-            except requests.RequestException as e:
-                return jsonify({"erro": f"Erro ao conectar com a mesa {numero}: {str(e)}"}), 500
-
-            if res.status_code != 200:
-                return jsonify({"erro": f"Mesa {numero} não encontrada. Status {res.status_code}"}), 404
-
-            try:
-                mesa = res.json()
-            except Exception as e:
-                return jsonify({"erro": f"Resposta inválida da mesa {numero}: {str(e)}"}), 500
-
-            if mesa.get("status") != "livre":
-                return jsonify({"erro": f"Mesa {numero} está ocupada."}), 409
-
-            capacidade_total += mesa.get("capacidade", 0)
-            mesas_info.append(mesa)
-
-        # -----------------------------
-        # Verifica capacidade total
-        # -----------------------------
-        if capacidade_total < pessoas:
-            return jsonify({
-                "erro": f"Mesas selecionadas somam {capacidade_total} lugares, mas são necessários {pessoas}."
-            }), 400
-
-        # -----------------------------
-        # Atualizar status das mesas
-        # -----------------------------
-        for numero in mesas:
-            try:
-                upd = requests.put(
-                    f"{API_MESAS}/mesa/{numero}/status",
-                    json={"status": "reservada"},
-                    timeout=5
-                )
-            except requests.RequestException as e:
-                return jsonify({"erro": f"Erro ao atualizar mesa {numero}: {str(e)}"}), 500
-
-            if upd.status_code != 200:
-                resp = upd.json() if upd.content else {}
-                return jsonify({
-                    "erro": f"Falha ao atualizar mesa {numero}.",
-                    "detalhe": resp
-                }), 500
-
-        # -----------------------------
-        # Criar reserva no banco
-        # -----------------------------
-        nova = Reserva(
-            usuario_id=int(usuario),  # converte string para inteiro
+        nova_reserva = Reserva(
+            usuario_id=int(usuario_id),
             mesas=",".join(str(m) for m in mesas),
-            capacidade=pessoas
+            capacidade=pessoas,
+            data_reserva=data_hora_dt
         )
-
-        db.session.add(nova)
+        db.session.add(nova_reserva)
         db.session.commit()
 
         return jsonify({
             "mensagem": "Reserva criada!",
             "reserva": {
-                "id": nova.id,
+                "id": nova_reserva.id,
                 "mesas": mesas,
                 "capacidade": pessoas,
-                "status": nova.status
+                "status": nova_reserva.status,
+                "data_reserva": nova_reserva.data_reserva.strftime("%Y-%m-%dT%H:%M:%S")
             }
         }), 201
 
     except Exception as e:
         db.session.rollback()
         return jsonify({"erro": f"Erro inesperado ao criar reserva: {str(e)}"}), 500
-
-
 @reserva_bp.route("/minhas", methods=["GET"])
 @jwt_required()
 def minhas_reservas():
@@ -176,15 +120,12 @@ def minhas_reservas():
     ])
 
 
-# --------------------------------------------
-# CANCELAR RESERVA
-# --------------------------------------------
 @reserva_bp.route("/cancelar/<int:id>", methods=["PUT"])
 @jwt_required()
 def cancelar_reserva(id):
-    usuario = get_jwt_identity()
+    usuario_id = int(get_jwt_identity())
 
-    reserva = Reserva.query.filter_by(id=id, usuario_id=usuario["id"]).first()
+    reserva = Reserva.query.filter_by(id=id, usuario_id=usuario_id).first()
 
     if not reserva:
         return jsonify({"erro": "Reserva não encontrada."}), 404
@@ -192,18 +133,20 @@ def cancelar_reserva(id):
     try:
         mesas = reserva.mesas.split(",")
 
-        # Libera mesas
+        # Liberar mesas
         for mesa in mesas:
             requests.put(
                 f"{API_MESAS}/mesa/{mesa}/status",
                 json={"status": "livre"}
             )
 
-        reserva.status = "cancelada"
+        # Remove do banco
+        db.session.delete(reserva)
         db.session.commit()
 
-        return jsonify({"mensagem": "Reserva cancelada!"})
+        return jsonify({"mensagem": "Reserva cancelada e removida!"}), 200
 
     except Exception as e:
         db.session.rollback()
         return jsonify({"erro": str(e)}), 500
+
