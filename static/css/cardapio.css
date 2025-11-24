@@ -106,7 +106,7 @@ form.hidden {
 }
 
 form button {
-  padding: 0.8rem;
+  padding: 12px 16px;
   background-color: var(--laranja);
   color: var(--branco);
   border: none;
@@ -169,10 +169,10 @@ form button:hover {
   flex-wrap: wrap;
   gap: 16px;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: .25rem;
 
   & button {
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 
