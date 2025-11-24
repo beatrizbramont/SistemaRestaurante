@@ -57,7 +57,8 @@ async function criarComandaDiv(comanda, index) {
     comandaDiv.innerHTML = `
         <h2>Comanda #${index + 1}</h2>
         <p>ID: ${comanda.id}</p>
-        <p>Nome: <input type="text" class="nomeInput" value="${comanda.nome || ''}"></p>
+    <label for="nome-comanda-${comanda.id}">Nome:</label>
+    <input type="text" id="nome-comanda-${comanda.id}" class="nomeInput" value="${comanda.nome || ''}">
 
         <ul class="lista-itens-comanda"></ul>
 
@@ -100,7 +101,7 @@ async function criarComandaDiv(comanda, index) {
         try {
             const res = await fetch(`/cp/${comanda.id}/itens`, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ produto_id: produtoIdNum, quantidade })
             });
 
@@ -199,12 +200,12 @@ async function carregarItensComanda(comandaId, comandaDiv) {
                 if (novaQtd !== null) {
                     fetch(`/cp/${comandaId}/itens/${item.id}`, {
                         method: 'PUT',
-                        headers: {'Content-Type': 'application/json'},
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ quantidade: novaQtd })
                     })
-                    .then(r => r.json().catch(() => null))
-                    .then(() => carregarItensComanda(comandaId, comandaDiv))
-                    .catch(() => alert('Erro ao atualizar item'));
+                        .then(r => r.json().catch(() => null))
+                        .then(() => carregarItensComanda(comandaId, comandaDiv))
+                        .catch(() => alert('Erro ao atualizar item'));
                 }
             });
 
@@ -212,9 +213,9 @@ async function carregarItensComanda(comandaId, comandaDiv) {
             li.querySelector('.delete-icon').addEventListener('click', () => {
                 if (!confirm(`Deseja excluir "${item.nome}"?`)) return;
                 fetch(`/cp/${comandaId}/itens/${item.id}`, { method: 'DELETE' })
-                  .then(r => r.json().catch(() => null))
-                  .then(() => carregarItensComanda(comandaId, comandaDiv))
-                  .catch(() => alert('Erro ao excluir item'));
+                    .then(r => r.json().catch(() => null))
+                    .then(() => carregarItensComanda(comandaId, comandaDiv))
+                    .catch(() => alert('Erro ao excluir item'));
             });
 
             listaItens.appendChild(li);
@@ -264,7 +265,7 @@ async function atualizarNomeComanda(comandaId, novoNome) {
     try {
         const res = await fetch(`/comanda/${comandaId}/nome`, {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome: novoNome })
         });
 
