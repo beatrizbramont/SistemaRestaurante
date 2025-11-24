@@ -92,6 +92,24 @@ async function renderMesas(capacidade = null) {
         const btnComandas = document.createElement('button');
         btnComandas.textContent = 'Comandas';
         btnComandas.className = 'btn-comanda';
+        function abrirModalComandas(mesaId, capacidadeMesa) {
+            const modal = document.getElementById('comandaModal');
+            const mesaInput = document.getElementById('mesaIdInput');
+            const quantidadeInput = document.getElementById('quantidadeComandasInput');
+
+            if (!modal || !mesaInput || !quantidadeInput) {
+                console.error("Erro: elementos do modal não foram encontrados no DOM.");
+                return;
+            }
+
+            mesaInput.value = mesaId;
+            quantidadeInput.value = "";
+            quantidadeInput.setAttribute("max", capacidadeMesa);
+
+            modal.style.display = "flex";
+            modal.setAttribute("aria-hidden", "false");
+        }
+
         btnComandas.addEventListener('click', () => abrirModalComandas(mesa.id, mesa.capacidade));
         tdComandas.appendChild(btnComandas);
         tr.appendChild(tdComandas);
