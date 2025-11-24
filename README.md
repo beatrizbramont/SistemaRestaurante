@@ -186,12 +186,12 @@ armazenado no backend cliente.
 ------------------------------------------------------------------------
 
 ## 📌 Diagrama de Caso de Uso
-![Diagrama de Caso de Uso](static/images/Captura de tela 2025-11-24 185317.png)
+![Diagrama de Caso de Uso](static/images/Captura%20de%20tela%202025-11-24%20185317.png)
 
 ------------------------------------------------------------------------
 
 ## 📌 Diagrama de Classes
-![Diagrama de Classes](static/images/Captura de tela 2025-11-24 185455.png)
+![Diagrama de Classes](static/images/Captura%20de%20tela%202025-11-24%20185455.png)
 
 ------------------------------------------------------------------------
 
