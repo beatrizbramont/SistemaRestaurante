@@ -67,7 +67,6 @@ main {
     box-shadow: 0 8px 18px rgba(184, 127, 43, 0.35);
 }
 
-/* Botões */
 button {
     background: #b87f2b;
     color: #0a0a0a;
@@ -247,5 +246,96 @@ button:hover {
     button, .voltar {
         width: 100%;
         justify-content: center;
+    }
+}
+
+@media (max-width: 900px) {
+    header {
+        flex-direction: column;
+        gap: 0.8rem;
+        font-size: 1.6rem;
+    }
+
+    .titulo {
+        font-size: 1.7rem;
+    }
+
+    .lista {
+        gap: 1rem;
+    }
+
+    .mesa-card {
+        padding: 1.2rem;
+    }
+
+    button, .voltar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .titulo-modal {
+        font-size: 1.2rem;
+    }
+}
+
+/* Celulares estreitos */
+@media (max-width: 500px) {
+    header {
+        font-size: 1.4rem;
+    }
+
+    .titulo {
+        font-size: 1.4rem;
+    }
+
+    .mesa-card {
+        padding: 1rem;
+    }
+
+    input {
+        font-size: 0.95rem;
+    }
+
+    .actions button {
+        padding: 8px 12px;
+    }
+}
+
+@media (min-width: 1400px) {
+    header {
+        font-size: 2.2rem;
+        padding: 2rem 6rem;
+    }
+
+    .titulo {
+        font-size: 2.5rem;
+    }
+
+    .lista {
+        max-width: 1200px;
+        gap: 2rem;
+    }
+
+    .mesa-card {
+        padding: 2rem;
+    }
+
+    button, .voltar, .actions button {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+
+    .modal-content {
+        width: 500px;
+        padding: 3rem;
+    }
+
+    .titulo-modal {
+        font-size: 1.6rem;
     }
 }

@@ -117,3 +117,51 @@ main {
 .reserva-cancelada strong {
     color: #ff8080 !important;
 }
+
+@media (max-width: 900px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    header h1 {
+        width: 100%;
+        text-align: left;
+        font-size: 1.4rem;
+    }
+
+    main {
+        padding: 20px 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    .voltar {
+        padding: 5px 1rem;
+        font-size: 0.85rem;
+    }
+
+    .reserva-card {
+        padding: 15px 18px;
+    }
+
+    .reserva-info {
+        font-size: 0.95rem;
+        line-height: 1.3rem;
+    }
+
+    .cancelar-btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
+        gap: 4px;
+    }
+
+    .cancelar-btn i {
+        font-size: 1rem;
+    }
+}

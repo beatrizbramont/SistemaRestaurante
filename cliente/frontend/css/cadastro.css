@@ -16,6 +16,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 /* ===== Container principal ===== */
@@ -24,15 +25,16 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: stretch;
-  width: 60%;
-  height: 70vh;
+  width: min(900px, 90%);
+  height: auto;
+  min-height: 60vh;
   background-color: #ffffff;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== Lado esquerdo: texto de boas-vindas ===== */
+/* ===== Lado esquerdo ===== */
 .info_wrapper {
   background-color: #1c1c1c;
   color: #dddddd;
@@ -42,30 +44,31 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 100%;
 }
 
 .info_wrapper h2 {
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
   margin-bottom: 1.2rem;
   color: #d58a33;
 }
 
 .info_wrapper p {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
   line-height: 1.6;
   margin-bottom: 2.2rem;
-  color: #dddddd;
 }
 
 .info_button {
   background-color: #d58a33;
   color: #1c1c1c;
-  padding: 10px 25px;
+  padding: 12px 28px;
   border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   border: 2px solid transparent;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
 }
 
 .info_button:hover {
@@ -74,6 +77,7 @@ body {
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Botão voltar */
 .botao-voltar {
   position: absolute;
   top: 20px;
@@ -86,7 +90,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .botao-voltar:hover {
@@ -95,15 +99,15 @@ body {
 }
 
 .botao-voltar i {
-  color: #dddddd; 
+  color: #dddddd;
   font-size: 20px;
 }
 
 .botao-voltar:hover i {
-  color: #1c1c1c; 
-  font-size: 20px;
+  color: #1c1c1c;
 }
 
+/* ===== Form ===== */
 .form_wrapper {
   width: 50%;
   display: flex;
@@ -124,7 +128,7 @@ body {
 
 .form_container h1 {
   color: #1c1c1c;
-  font-size: 2rem;
+  font-size: clamp(1.7rem, 2.4vw, 2.2rem);
   margin-bottom: 10px;
 }
 
@@ -136,8 +140,8 @@ body {
   border: 1px solid #ccc;
   border-radius: 8px;
   color: #1c1c1c;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  transition: 0.3s;
   outline: none;
 }
 
@@ -153,11 +157,11 @@ input[type=button] {
   cursor: pointer;
   border: none;
   width: 60%;
-  height: 40px;
+  height: 42px;
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   font-weight: 700;
-  transition: all 0.4s ease;
+  transition: 0.4s;
 }
 
 input[type=button]:hover {
@@ -167,12 +171,12 @@ input[type=button]:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== Link para login ===== */
+/* ===== Link login ===== */
 .botao_login {
   color: #1c1c1c;
   text-decoration: none;
   font-size: 0.9rem;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .botao_login strong {
@@ -184,12 +188,10 @@ input[type=button]:hover {
   color: orange;
 }
 
-/* ===== Responsividade ===== */
 @media (max-width: 900px) {
   .sign_up_container {
     flex-direction: column;
-    width: 90%;
-    height: auto;
+    width: 95%;
   }
 
   .info_wrapper,
@@ -202,11 +204,47 @@ input[type=button]:hover {
     border-radius: 20px 20px 0 0;
   }
 
-  .form_wrapper {
-    border-radius: 0 0 20px 20px;
+  input[type=button] {
+    width: 80%;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  .info_wrapper p {
+    margin-bottom: 1.4rem;
+  }
+
+  .form_container input {
+    width: 95%;
   }
 
   input[type=button] {
-    width: 80%;
+    width: 90%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .sign_up_container {
+    width: 70%;
+    max-width: 1200px;
+  }
+
+  .info_wrapper,
+  .form_wrapper {
+    padding: 4rem 3rem;
+  }
+
+  .form_container input {
+    height: 48px;
+    font-size: 1.1rem;
+  }
+
+  input[type=button] {
+    height: 48px;
+    font-size: 1.1rem;
   }
 }

@@ -196,7 +196,6 @@ footer {
   font-size: 0.9rem;
 }
 
-/* Tablets */
 @media (max-width: 1024px) {
   .categoria-bloco {
     grid-template-columns: repeat(2, 1fr);
@@ -209,10 +208,10 @@ footer {
   }
 }
 
-/* Celulares grandes */
 @media (max-width: 768px) {
   header {
     padding: 1rem 1.2rem;
+    flex-direction: column;
   }
 
   .voltar {
@@ -238,7 +237,6 @@ footer {
   }
 }
 
-/* Celulares muito pequenos */
 @media (max-width: 480px) {
   .titulo-cardapio {
     font-size: 1.2rem;
@@ -251,5 +249,80 @@ footer {
 
   .img-cardapio {
     height: 150px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .categoria-bloco {
+    grid-template-columns: repeat(5, 1fr); /* 5 por linha */
+    gap: 32px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .img-cardapio {
+    height: 260px;
+  }
+
+  .info-cardapio h4 {
+    font-size: 1.35rem;
+  }
+
+  .info-cardapio p {
+    font-size: 1.05rem;
+  }
+
+  .titulo-cardapio {
+    font-size: 2.2rem;
+  }
+}
+
+/* Telões 2K / 1440p */
+@media (min-width: 1920px) {
+  .categoria-bloco {
+    grid-template-columns: repeat(6, 1fr); /* 6 itens por linha */
+    gap: 38px;
+  }
+
+  .img-cardapio {
+    height: 300px;
+  }
+
+  .titulo-cardapio {
+    font-size: 2.5rem;
+  }
+
+  .info-cardapio h4 {
+    font-size: 1.5rem;
+  }
+
+  .info-cardapio p {
+    font-size: 1.15rem;
+  }
+}
+
+/* Telões 4K (3840px) */
+@media (min-width: 2560px) {
+  .categoria-bloco {
+    grid-template-columns: repeat(7, 1fr); /* 7 cards */
+    gap: 45px;
+    margin-left: 60px;
+    margin-right: 60px;
+  }
+
+  .img-cardapio {
+    height: 360px;
+  }
+
+  .titulo-cardapio {
+    font-size: 3rem;
+  }
+
+  .info-cardapio h4 {
+    font-size: 1.7rem;
+  }
+
+  .info-cardapio p {
+    font-size: 1.25rem;
   }
 }

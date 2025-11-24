@@ -220,10 +220,115 @@ main {
 
 .erro-modal { color: #ff6b6b; margin-top: 0.5rem; font-weight: 500; text-align: center; }
 
-/* RESPONSIVO */
-@media(max-width: 600px) {
-    .lista { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem; }
-    header h1 { font-size: 1.4rem; }
-    .info-pessoas { font-size: 1.2rem; padding: 0.8rem 1rem; }
-    #confirmarBtn { font-size: 1.1rem; padding: 12px 24px; }
+@media(max-width: 900px) {
+    header {
+        flex-direction: column;
+        gap: 0.8rem;
+        font-size: 1.5rem;
+        align-items: center;
+    }
+
+    .info-pessoas {
+        font-size: 1.2rem;
+        padding: 0.8rem 1rem;
+    }
+
+    .lista {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .mesa-card {
+        padding: 1.2rem;
+    }
+
+    .btn-selecionar,
+    #confirmarBtn,
+    .voltar {
+        width: 100%;
+        justify-content: center;
+        font-size: 1rem;
+        padding: 10px 16px;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    .actions button {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Celulares muito estreitos */
+@media(max-width: 500px) {
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    .info-pessoas {
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .mesa-card {
+        padding: 1rem;
+    }
+
+    .btn-selecionar,
+    #confirmarBtn,
+    .voltar {
+        font-size: 0.95rem;
+        padding: 8px 14px;
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+
+    .actions button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Telas grandes (telão) */
+@media(min-width: 1400px) {
+    header {
+        font-size: 2rem;
+        padding: 2rem 6rem;
+    }
+
+    .info-pessoas {
+        font-size: 1.8rem;
+        padding: 1.5rem 3rem;
+    }
+
+    .lista {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .mesa-card {
+        padding: 2rem;
+    }
+
+    .btn-selecionar,
+    #confirmarBtn,
+    .voltar {
+        font-size: 1.2rem;
+        padding: 14px 28px;
+    }
+
+    .modal-content {
+        max-width: 600px;
+        padding: 3rem;
+    }
+
+    .actions button {
+        padding: 14px 28px;
+        font-size: 1.1rem;
+    }
 }

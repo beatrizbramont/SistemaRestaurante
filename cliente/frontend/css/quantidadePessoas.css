@@ -146,3 +146,99 @@ footer {
     font-size: 0.85rem;
     opacity: .6;
 }
+
+@media (max-width: 900px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 1.4rem;
+        padding: 1rem 2rem;
+    }
+
+    .container {
+        max-width: 90%;
+        padding: 1.5rem 1rem;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .descricao {
+        font-size: 0.95rem;
+    }
+
+    .info-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .voltar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+
+/* Telas muito pequenas (celular estreito) */
+@media (max-width: 500px) {
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    .descricao {
+        font-size: 0.9rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        font-size: 0.95rem;
+        padding: 8px;
+    }
+
+    input {
+        font-size: 0.95rem;
+    }
+}
+
+/* Telas grandes (telão) */
+@media (min-width: 1400px) {
+    header {
+        padding: 2rem 6rem;
+        font-size: 2rem;
+    }
+
+    .container {
+        max-width: 800px;
+        padding: 3rem 4rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .descricao {
+        font-size: 1.3rem;
+    }
+
+    .card {
+        padding: 3rem;
+    }
+
+    .info-box i {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        font-size: 1.3rem;
+        padding: 16px;
+    }
+}
