@@ -21,7 +21,7 @@ CORS(app)
 
 thread_reservas = threading.Thread(
     target=atualizador_status_reservas_background,
-    args=(app,),  # <-- MUITO IMPORTANTE
+    args=(app,),  
     daemon=True
 )
 thread_reservas.start()
@@ -29,7 +29,7 @@ thread_reservas.start()
 # thread de status ocupado
 thread_ocupado = threading.Thread(
     target=atualizador_status_ocupado_background,
-    args=(app,),  # <-- MUITO IMPORTANTE
+    args=(app,), 
     daemon=True
 )
 thread_ocupado.start()
