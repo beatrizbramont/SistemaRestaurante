@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             lista.appendChild(card);
         });
 
-        // Botão fora do modal abre o modal
         const btnConfirmar = document.getElementById("confirmarBtn");
         btnConfirmar.addEventListener("click", () => {
             erro.textContent = "";
+
             const selecionadas = [...document.querySelectorAll(".checkMesa:checked")];
 
             if (!selecionadas.length) {
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         erro.textContent = "Erro ao buscar mesas.";
     }
 
+
     function abrirModalReserva(mesasSelecionadas) {
         const modal = document.getElementById("modalReserva");
         const btnConfirmar = document.getElementById("btnConfirmarReserva");
@@ -72,13 +73,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnCancelar.onclick = fecharModal;
         btnFechar.onclick = fecharModal;
 
-        // remover listeners antigos antes de adicionar
         btnConfirmar.replaceWith(btnConfirmar.cloneNode(true));
         const novoBtnConfirmar = document.getElementById("btnConfirmarReserva");
 
+        function converterParaISO(dataInput) {
+            // Aceita tanto 2025-02-10 quanto 10/02/2025
+            if (dataInput.includes("-")) {
+                return dataInput; // já está no formato certo
+            }
+            const [dia, mes, ano] = dataInput.split("/");
+            return `${ano}-${mes.padStart(2, "0")}-${dia.padStart(2, "0")}`;
+        }
+
         novoBtnConfirmar.onclick = async () => {
             const nomeCliente = document.getElementById("nomeReserva").value;
-            const dataReserva = document.getElementById("dataReserva").value;
+            const dataReserva = document.getElementById("dataReserva").value; // DD/MM/YYYY
             const horaReserva = document.getElementById("horaReserva").value;
 
             if (!nomeCliente) {
@@ -93,13 +102,38 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
+            // 🔥 Converter data do input (DD/MM/YYYY → objeto Date)
+            let ano, mes, dia;
+
+            if (dataReserva.includes("-")) {
+                // formato do input date YYYY-MM-DD
+                [ano, mes, dia] = dataReserva.split("-");
+            } else if (dataReserva.includes("/")) {
+                // formato digitado manualmente DD/MM/YYYY
+                [dia, mes, ano] = dataReserva.split("/");
+            }
+
+            const dataEscolhida = new Date(
+                Number(ano),
+                Number(mes) - 1,
+                Number(dia)
+            );
+
             const hoje = new Date();
-            const dataEscolhida = new Date(dataReserva);
-            if (dataEscolhida < new Date(hoje.toDateString())) {
+            hoje.setHours(0, 0, 0, 0);
+
+            if (isNaN(dataEscolhida.getTime())) {
+                erroModal.textContent = "Data inválida.";
+                erroModal.style.display = "block";
+                return;
+            }
+
+            if (dataEscolhida < hoje) {
                 erroModal.textContent = "Data inválida. Escolha hoje ou datas futuras.";
                 erroModal.style.display = "block";
                 return;
             }
+
 
             if (!horaReserva) {
                 erroModal.textContent = "Escolha um horário.";
@@ -109,13 +143,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const [h, m] = horaReserva.split(":").map(Number);
             const horario = h + m / 60;
+
             if (horario < 12.5 || horario > 21) {
                 erroModal.textContent = "Horário inválido. Escolha entre 12:30 e 21:00.";
                 erroModal.style.display = "block";
                 return;
             }
 
-            const dataHoraReserva = `${dataReserva}T${horaReserva}:00`;
+            // 🔥 Converter para formato ISO para enviar ao backend
+            const dataISO = converterParaISO(dataReserva);
+            const dataHoraReserva = `${dataISO}T${horaReserva}:00`;
+
             const token = localStorage.getItem("token");
             const payload = {
                 nome_cliente: nomeCliente,

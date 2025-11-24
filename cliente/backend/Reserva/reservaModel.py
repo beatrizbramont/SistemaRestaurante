@@ -6,6 +6,7 @@ class Reserva(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     usuario_id = db.Column(db.Integer, nullable=False)
+    nome_cliente = db.Column(db.String(150))
     mesas = db.Column(db.String(255), nullable=False)
     capacidade = db.Column(db.Integer, nullable=False)
     data_reserva = db.Column(db.DateTime, nullable=False)  

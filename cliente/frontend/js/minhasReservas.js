@@ -43,6 +43,7 @@ async function carregarReservas() {
 
             item.innerHTML = `
                 <h3>Reserva</h3>
+                <p><strong>Nome:</strong> ${r.nome_cliente}</p>
                 <p><strong>Mesa:</strong> ${r.mesas.join(", ")}</p>
                 <p><strong>Pessoas:</strong> ${r.capacidade}</p>
                 <p><strong>Status:</strong> ${r.status}</p>

@@ -97,25 +97,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         btnConfirmar.onclick = async () => {
             const nomeCliente = document.getElementById("nomeReserva").value;
-            const dataInput = document.getElementById("dataReserva").value; // ex: "2025-11-21"
-            const horaInput = document.getElementById("horaReserva").value; // ex: "14:47"
+            const dataInput = document.getElementById("dataReserva").value;
+            const horaInput = document.getElementById("horaReserva").value;
 
-            // Validações
             const hoje = new Date();
-            const dataEscolhida = new Date(dataInput);
 
-            if (!nomeCliente) {
-                erroModal.textContent = "Digite seu nome.";
+            // VALIDAR DATA
+            if (!dataInput) {
+                erroModal.textContent = "Selecione uma data.";
                 erroModal.style.display = "block";
                 return;
             }
 
-            if (!dataInput || dataEscolhida < new Date(hoje.toDateString())) {
+            const [ano, mes, dia] = dataInput.split("-").map(Number);
+            const dataEscolhida = new Date(ano, mes - 1, dia);
+
+            const hojeZerado = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+            if (dataEscolhida < hojeZerado) {
                 erroModal.textContent = "Data inválida. Escolha hoje ou datas futuras.";
                 erroModal.style.display = "block";
                 return;
             }
 
+            // VALIDAR HORÁRIO
             if (!horaInput) {
                 erroModal.textContent = "Informe um horário.";
                 erroModal.style.display = "block";
@@ -130,10 +135,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
-            // Combina data e hora em ISO 8601 completo
             const dataHoraReserva = `${dataInput}T${horaInput}:00`;
 
             const payload = {
+                nome_cliente: nomeCliente.trim(),
                 data_reserva: dataHoraReserva,
                 pessoas: Number(pessoas),
                 mesas: [mesaNumero]
@@ -158,6 +163,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 sessionStorage.setItem("reserva_id", resp.reserva?.id ?? "");
                 window.location.href = "minhasReservas.html";
+
             } catch (err) {
                 erroModal.textContent = "Erro de conexão ao criar reserva.";
                 erroModal.style.display = "block";

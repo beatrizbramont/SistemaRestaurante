@@ -1,12 +1,14 @@
 from Mesas import Mesas, Status
 from config import db
 from flask import Blueprint, request, jsonify, render_template
+from datetime import datetime, date
+import requests
 
 mesa_bp = Blueprint("mesa", __name__)
 
-# -------------------------------
-# Página interna (8001)
-# -------------------------------
+API_RESERVAS = "http://127.0.0.1:8002/reservas"
+
+
 @mesa_bp.route('/mesas')
 def mesas_page():
     return render_template("mesapage.html")
@@ -15,8 +17,59 @@ def mesas_page():
 @mesa_bp.route("/api/mesas", methods=["GET"])
 def listar_mesas():
     mesas = Mesas.query.all()
-    return jsonify([mesa.to_dict() for mesa in mesas])
+    resultado = []
+    agora = datetime.now()
 
+    for mesa in mesas:
+        try:
+            r = requests.get(f"{API_RESERVAS}/mesa/{mesa.id}")
+            reservas = r.json() if r.ok else []
+        except:
+            reservas = []
+
+        status_final = mesa.status.nome
+
+        # Separar reservas de hoje e futuras
+        reservas_hoje = [
+            reserva for reserva in reservas
+            if datetime.fromisoformat(reserva["data_reserva"]).date() == agora.date()
+        ]
+        reservas_futuras = [
+            reserva for reserva in reservas
+            if datetime.fromisoformat(reserva["data_reserva"]).date() > agora.date()
+        ]
+
+        if reservas_hoje:
+            reservas_hoje.sort(key=lambda r: r["data_reserva"])
+            proxima = reservas_hoje[0]
+            hora_reserva = datetime.fromisoformat(proxima["data_reserva"])
+
+            if hora_reserva <= agora:
+                status_final = "ocupada"
+            else:
+                status_final = "reservada"
+        else:
+            proxima = None
+
+        resultado.append({
+            "id": mesa.id,
+            "numero": mesa.numero,
+            "capacidade": mesa.capacidade,
+            "status": status_final,
+            "proxima_reserva": proxima,
+            "reservas_futuras": reservas_futuras  # <- importante para o calendário
+        })
+
+    return jsonify(resultado)
+
+def pegar_proxima_reserva(reservas):
+    agora = datetime.now()
+    reservas.sort(key=lambda r: r["data_reserva"])
+    for reserva in reservas:
+        hora_reserva = datetime.fromisoformat(reserva["data_reserva"])
+        if hora_reserva >= agora:
+            return reserva
+    return None
 
 @mesa_bp.route("/mesas/disponiveis", methods=["GET"])
 def filtrar_mesas_por_capacidade():
@@ -26,22 +79,43 @@ def filtrar_mesas_por_capacidade():
             return jsonify({"erro": "Capacidade inválida"}), 400
 
         capacidade_necessaria = int(capacidade_str)
+        mesas = Mesas.query.join(Status).filter(Mesas.capacidade >= capacidade_necessaria).all()
+        resultado = []
+        agora = datetime.now()
 
-        # FILTRA mesas livres e com capacidade suficiente
-        mesas_filtradas = Mesas.query.join(Status).filter(
-            Mesas.capacidade >= capacidade_necessaria,
-            Status.nome == "livre"
-        ).all()
+        for mesa in mesas:
+            try:
+                r = requests.get(f"{API_RESERVAS}/mesa/{mesa.id}")
+                reservas = r.json() if r.ok else []
+            except:
+                reservas = []
 
-        resultado = [
-            {
-                "id": mesa.id,
-                "numero": mesa.numero,
-                "capacidade": mesa.capacidade,
-                "status": mesa.status.nome
-            }
-            for mesa in mesas_filtradas
-        ]
+            status_final = mesa.status.nome
+            reservas_hoje = [
+                reserva for reserva in reservas
+                if datetime.fromisoformat(reserva["data_reserva"]).date() == agora.date()
+            ]
+
+            if reservas_hoje:
+                reservas_hoje.sort(key=lambda r: r["data_reserva"])
+                proxima = reservas_hoje[0]
+                hora_reserva = datetime.fromisoformat(proxima["data_reserva"])
+
+                if hora_reserva <= agora:
+                    status_final = "ocupada"
+                else:
+                    status_final = "reservada"
+            else:
+                proxima = None
+
+            if status_final == "livre":
+                resultado.append({
+                    "id": mesa.id,
+                    "numero": mesa.numero,
+                    "capacidade": mesa.capacidade,
+                    "status": status_final,
+                    "proxima_reserva": proxima
+                })
 
         return jsonify(resultado), 200
 
@@ -57,15 +131,19 @@ def atualizar_status_mesa(mesa_id):
 
     data = request.json
     novo_status_nome = data.get("status")
-
     status_obj = Status.query.filter_by(nome=novo_status_nome).first()
     if not status_obj:
         return jsonify({"error": "Status inválido"}), 400
+
+    # Não permite voltar de ocupada para reservada
+    if mesa.status.nome == "ocupada" and novo_status_nome == "reservada":
+        return jsonify({"msg": f"Mesa {mesa.numero} já está ocupada, não pode voltar para reservada"}), 200
 
     mesa.status = status_obj
     db.session.commit()
 
     return jsonify({"msg": f"Status da mesa {mesa.numero} atualizado para {status_obj.nome}"}), 200
+
 
 @mesa_bp.route("/mesa/<int:mesa_id>/reservar", methods=["PUT"])
 def reservar_mesa(mesa_id):
@@ -73,7 +151,6 @@ def reservar_mesa(mesa_id):
     if not mesa:
         return jsonify({"erro": "Mesa não encontrada"}), 404
 
-    # Se a mesa já estiver ocupada ou reservada
     if mesa.status.nome != "livre":
         return jsonify({"erro": "Mesa não está disponível para reserva"}), 400
 
@@ -89,10 +166,10 @@ def reservar_mesa(mesa_id):
         "mesa": mesa.id
     }), 200
 
+
 @mesa_bp.route("/mesa/<int:mesa_id>", methods=["GET"])
 def obter_mesa(mesa_id):
     mesa = Mesas.query.get(mesa_id)
-
     if not mesa:
         return jsonify({"erro": "Mesa não encontrada"}), 404
 
@@ -102,6 +179,7 @@ def obter_mesa(mesa_id):
         "capacidade": mesa.capacidade,
         "status": mesa.status.nome
     }), 200
+
 
 @mesa_bp.route("/encerrar_dia", methods=["POST"])
 def encerrar_dia():

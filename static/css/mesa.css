@@ -11,6 +11,65 @@
   --preto: #333;
   --azul: #1a253a;
 }
+/* Container para status + ícones */
+.td-status-container {
+    display: flex;
+    justify-content: flex-start; /* conteúdo começa do lado esquerdo */
+    align-items: center;
+    gap: 8px; /* espaçamento entre select e ícones */
+}
+
+/* Container dos ícones (bolinha + calendário) */
+.td-status-icons {
+    display: flex;
+    gap: 4px; /* menor espaçamento entre os ícones */
+    align-items: center;
+}
+
+/* Bolinha de reserva hoje */
+.alerta-reserva {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: red;
+    cursor: default;
+}
+
+/* Ícone de calendário */
+.icone-calendario {
+    color: #d58a33;
+    cursor: pointer;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+
+/* Tooltip para ícones */
+.icone-calendario:hover::after,
+.bolinha-reserva-futura:hover::after,
+.reserva-indicador:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    white-space: pre-line;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    transform: translate(15px, -5px);
+    z-index: 10;
+    max-width: 200px;
+}
+
+/* Bolinha para reservas futuras */
+.bolinha-reserva-futura {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: orange;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 
 .acoes {
   display: flex;
