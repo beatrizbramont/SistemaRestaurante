@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8" />
-    <title>Comandas da Mesa</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/comanda.css') }}" />
+  <meta charset="UTF-8" />
+  <title>Comandas da Mesa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/comanda.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
-<section class="cabecalho">
-  <header>
-    <h1>Comandas</h1>
-
-    <div class="header-actions">
-      <div class="logo">
-        <img src="{{ url_for('static', filename='images/tabletrack_logopreta.png') }}" alt="Logo" />
+    <header class="cabecalho">
+      <a href="{{ url_for('mesa.mesas_page') }}" id="voltarBtn">Voltar</a>
+      <div class="header-actions">
       </div>
-    </div>
-  </header>
-</section>
+    </header>
 
-<!-- Botão voltar para a página de mesas -->
-<a href="{{ url_for('mesa.mesas_page') }}" id="voltarBtn">Voltar</a>
 
-<div id="comandasContainer">
-    <!-- Comandas serão adicionadas aqui via JS -->
-</div>
 
-<!-- Scripts JS -->
-<script>
-    // Guarda mesa_id e comandas passadas via query string
-    const urlParams = new URLSearchParams(window.location.search);
+  <div class="tabletrack-topo">
+    <h3>Table Track</h3>
+    <h2>Gerenciamento de Comandas</h2>
+  </div>
+
+  <div id="comandasContainer">
+
+  </div>
+
+  <script>
+
+const urlParams = new URLSearchParams(window.location.search);
     const mesaId = urlParams.get('mesa');
     const comandaIds = urlParams.get('comandas') ? urlParams.get('comandas').split(',') : [];
 
     console.log("Mesa ID:", mesaId);
     console.log("Comandas:", comandaIds);
-</script>
-<script src="{{ url_for('static', filename='js/comanda.js') }}"></script>
+  </script>
+  <script src="{{ url_for('static', filename='js/comanda.js') }}"></script>
 </body>
+
 </html>
