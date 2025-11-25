@@ -1,0 +1,15 @@
+@import url('./components.css');
+
+.painel-fundo {
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.table-track-logo-fundo {
+    width: 60vw;
+    height: 60vh;
+    opacity: 0.5;
+
+}

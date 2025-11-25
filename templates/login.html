@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Funcionário table track</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <main>
+
+        <div class="tabletrack-topo login">
+            <h3>Table Track</h3>
+            <h2>Login de Funcionários</h2>
+
+        </div>
+        <div class="modal-content login-content">
+            <div class="modal-content-topo">
+                <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal" alt="TableTrack">
+                <div class="tabletrack-topo">
+                    <h3>Table Track</h3>
+                    <h2>Login de Funcionário</h2>
+                    <p>Acesse sua conta</p>
+                </div>
+            </div>
+
+            <form action="{{ url_for('funcionarios.login') }}" method="post" class="forms-padrao">
+                {{ form.hidden_tag() }}
+
+                <div class="formulario-div">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        {{ form.email(placeholder="Email") }}
+                    </div>
+
+                    <div class="input-group">
+                        <label for="senha">Senha</label>
+                        {{ form.senha(placeholder="Senha") }}
+                    </div>
+
+                    <div class="input-group">
+                        {{ form.submit(class="botao-login") }}
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

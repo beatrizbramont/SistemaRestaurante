@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Funcionários</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/funcionarios.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <aside>
+        <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="TableTrack">
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ url_for('index.index') }}">
+                        <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('cardapio.cardapio_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('mesa.mesas_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{ url_for('funcionarios.funcionarios_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <nav class="nav-mobile">
+        <ul>
+            <li>
+                <a href="{{ url_for('index.index') }}">
+                    <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('cardapio.cardapio_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio">
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('mesa.mesas_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
+                </a>
+            </li>
+            <li class="active">
+                <a href="{{ url_for('funcionarios.funcionarios_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="tabletrack-topo">
+            <h3>Table Track</h3>
+            <h2>Gerenciamento de Funcionários</h2>
+        </div>
+
+        <div class="funcionarios-infos">
+            <h2>
+                <span class="funcionario-qnt">{{ funcionarios | length }}</span> Funcionários
+            </h2>
+            <button class="funcionarios-topo-botao">
+                <span class="icon-plus">+</span>
+                <span style="cursor: pointer;">Adicionar</span>
+            </button>
+        </div>
+
+        <div class="lista-funcionarios">
+            {% for funcionario in funcionarios %}
+            <div class="card-funcionario">
+                <div class="card-funcionario-header">
+                    <img src="{{ url_for('static', filename='uploads/' + funcionario.imagem) if funcionario.imagem else 'https://cdn-icons-png.flaticon.com/512/66/66779.png' }}"
+                        alt="{{ funcionario.nome }}" width="55" class="card-funcionario-imagem">
+
+                    <div class="card-funcionario-acoes">
+                        <div class="card-funcionario-acoes-img" style="cursor: pointer;">
+                            <img src="{{ url_for('static', filename='images/icon-edit.svg') }}" alt="Editar"
+                                class="editar_funcionario" data-id="{{ funcionario.id }}"
+                                data-nome="{{ funcionario.nome }}" data-cargo="{{ funcionario.cargo }}"
+                                data-telefone="{{ funcionario.telefone }}" data-email="{{ funcionario.email }}"
+                                data-senha="{{ funcionario.senha }}"
+                                data-imagem_url="{{ url_for('static', filename='uploads/' + funcionario.imagem) if funcionario.imagem else '' }}">
+                        </div>
+
+                        <div class="card-funcionario-acoes-img" style="cursor: pointer;">
+                            <img src="{{ url_for('static', filename='images/icon-delete.svg') }}" alt="Deletar"
+                                class="deletar_funcionario" id="deletar_funcionario_{{ funcionario.id }}"
+                                data-id="{{ funcionario.id }}" data-nome="{{ funcionario.nome }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-funcionario-info">
+                    <h4>{{ funcionario.nome }}</h4>
+                    <h5>{{ funcionario.cargo }}</h5>
+                </div>
+
+                <div class="card-funcionario-contatos">
+                    <div class="card-funcionario-contato-icon">
+                        <img src="{{ url_for('static', filename='images/icon-email.svg') }}" alt="email">
+                        <p>{{ funcionario.email }}</p>
+                    </div>
+
+                    <div class="card-funcionario-contato-icon">
+                        <img src="{{ url_for('static', filename='images/icon-cellphone.svg') }}" alt="telefone">
+                        <p>{{ funcionario.telefone }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Modal de Cadastro -->
+        <div id="modal-cadastro" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <span class="modal-close" onclick="fecharModal('modal-cadastro')">X</span>
+
+                <div class="modal-content-topo" id="teste1234567">
+                    <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal" alt="TableTrack">
+
+                    <div class="tabletrack-topo">
+                        <h3>Table Track</h3>
+                        <h2>Gerenciamento de Funcionários</h2>
+                        <p>Cadastre seu funcionário</p>
+                    </div>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data"
+                    action="{{ url_for('funcionarios.criar_funcionario_form') }}" class="forms-padrao">
+                    {{ form_cadastro.hidden_tag() }}
+
+                    <div class="formulario-div">
+                        <div class="input-group">
+                            <label for="nome">Nome</label>
+                            {{ form_cadastro.nome(placeholder="Nome") }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="cargo">Cargo</label>
+                            {{ form_cadastro.cargo() }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="telefone">Telefone</label>
+                            {{ form_cadastro.telefone(placeholder="Telefone") }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            {{ form_cadastro.email(placeholder="Email") }}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="senha">Senha</label>
+                            {{ form_cadastro.senha(placeholder="Senha") }}
+                        </div>
+
+                        <div class="input-group">
+                            {{ form_cadastro.enviar(class="botao-login") }}
+                        </div>
+                    </div>
+
+                    <div class="upload-container">
+                        <img id="preview-img" src="https://cdn-icons-png.flaticon.com/512/66/66779.png" width="120px"
+                            alt="uploadimg">
+
+                        <label for="imagem" class="upload-label">Carregar imagem</label>
+                        {{ form_cadastro.imagem(class="upload-input", id="imagem") }}
+                        <span id="file-name">Nenhum arquivo selecionado</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de atualizar -->
+
+        <div id="modal-atualizar" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+
+                <span class="modal-close" onclick="fecharModal('modal-atualizar')">X</span>
+
+                <div class="modal-content-topo">
+                    <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal">
+
+                    <div class="tabletrack-topo">
+                        <h3>Table Track</h3>
+                        <h2>Atualizar Funcionário</h2>
+                        <p>Edite as informações</p>
+                    </div>
+                </div>
+
+                <form id="form-atualizar" method="POST" enctype="multipart/form-data" class="forms-padrao">
+                    <div class="formulario-div">
+
+                        <div class="input-group">
+                            <label>Nome</label>
+                            <input type="text" name="nome" id="editar-nome">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Cargo</label>
+                            <select id="cargoInput" name="cargo">
+                                <option value="Gerente">Gerente</option>
+                                <option value="Garçom">Garçom</option>
+                                <option value="Recepcionista">Recepcionista</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Telefone</label>
+                            <input type="text" name="telefone" id="editar-telefone">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" name="email" id="editar-email">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Senha</label>
+                            <input type="text" name="senha" id="editar-senha">
+                        </div>
+
+                        <div class="input-group">
+                            <button class="botao-login" style="padding: 12px 16px;">Atualizar</button>
+                        </div>
+                    </div>
+
+                    <div class="upload-container">
+                        <img id="preview-img-editar" src="https://cdn-icons-png.flaticon.com/512/66/66779.png"
+                            width="120px">
+                        <label for="editar-imagem" class="upload-label">Carregar imagem</label>
+                        <input type="file" id="editar-imagem" name="imagem" class="upload-input">
+                        <span id="file-name-editar">Nenhum arquivo selecionado</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal de deletar-->
+        <div id="modal-delete" class="modal-overlay" style="display: none;">
+            <div class="modal-content" style="gap: 16px; padding: 24px;">
+                <div class="modal-content-topo" style="gap: 16px;">
+                    <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal" alt="TableTrack">
+                    <div class="tabletrack-topo">
+                        <h3 style="font-size: 16px;">Table Track</h3>
+                        <h2 style="font-size: 24px;">Deletar Funcionário</h2>
+                    </div>
+                </div>
+                <p id="mensagem-delete" style="width: 300px; font-size: 14px;"></p>
+
+                <form id="delete-form" method="POST">
+                    {{ form_deletar.hidden_tag() }}
+                    <div class="input-group">
+                        {{ form_deletar.chave }}
+                    </div>
+                    <div class="botao-acao">
+                        {{ form_deletar.confirmar(class="del") }}
+                        <button type="button" id="fechar-modal-cancel" class="fechar-modal cancel">Fechar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/funcionarios.js') }}"></script>
+</body>
+
+</html>

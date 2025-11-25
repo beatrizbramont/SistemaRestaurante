@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cardapio.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Cadastro de cardápio</title>
+</head>
+
+<body>
+
+    <aside>
+        <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="TableTrack">
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ url_for('index.index') }}">
+                        <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{ url_for('cardapio.cardapio_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('mesa.mesas_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('funcionarios.funcionarios_page') }}">
+                        <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <nav class="nav-mobile">
+        <ul>
+            <li>
+                <a href="{{ url_for('index.index') }}">
+                    <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
+                </a>
+            </li>
+            <li class="active">
+                <a href="{{ url_for('cardapio.cardapio_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio">
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('mesa.mesas_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('funcionarios.funcionarios_page') }}">
+                    <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="menu">
+        <a href="#" class="fas fa-bars" id="menu-toggle"></a>
+        <nav id="sidebar" class="hidden">
+            <ul>
+                <li>
+                    <span>🍽️ Comidas</span>
+                    <ul>
+                        <li><a href="#" data-categoria="Entrada / Petisco">Entrada / Petisco</a></li>
+                        <li><a href="#" data-categoria="Prato Principal">Prato Principal</a></li>
+                        <li><a href="#" data-categoria="Acompanhamento / Guarnição">Acompanhamento /
+                                Guarnição</a></li>
+                        <li><a href="#" data-categoria="Sobremesa">Sobremesa</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span>🍹 Bebidas</span>
+                    <ul>
+                        <li><a href="#" data-categoria="Refrigerante">Refrigerante</a></li>
+                        <li><a href="#" data-categoria="Suco Natural">Suco Natural</a></li>
+                        <li><a href="#" data-categoria="Água">Água</a></li>
+                        <li><a href="#" data-categoria="Cervejas">Cervejas</a></li>
+                        <li><a href="#" data-categoria="Vinhos">Vinhos</a></li>
+                        <li><a href="#" data-categoria="Drinks">Drinks</a></li>
+                        <li><a href="#" data-categoria="Outros">Outros</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <main>
+
+        <div class="tabletrack-topo">
+            <h3>Table Track</h3>
+            <h2>Gerenciamento de Cardápio</h2>
+        </div>
+
+        <div class="modal-content">
+            <div class="modal-content-topo" id="teste1234567">
+                <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal" alt="TableTrack">
+
+                <div class="tabletrack-topo">
+                    <h3>Table Track</h3>
+                    <h2 id="titulo-topo-modal">Cadastro de Prato</h2>
+                    <p id="texto-topo-modal">Cadastre um novo Prato para seu restaurante</p>
+                </div>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" id="cardapio-form" class="forms-padrao">
+                <div class="formulario-div">
+                    <div class="input-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" placeholder="Nome do prato" required />
+
+                    </div>
+
+                    <div class="input-group">
+                        <label for="ingredientes">Ingredientes</label>
+                        <input type="text" id="ingredientes" placeholder="Ingredientes (ex: queijo, tomate, manjericão)"
+                            required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" required>
+                            <option value="" disabled selected>Selecione a categoria</option>
+                            <optgroup label="🍽️ Comidas">
+                                <option value="Entrada / Petisco">Entrada / Petisco</option>
+                                <option value="Prato Principal">Prato Principal</option>
+                                <option value="Acompanhamento / Guarnição">Acompanhamento / Guarnição</option>
+                                <option value="Sobremesa">Sobremesa</option>
+                            </optgroup>
+                            <optgroup label="🍹 Bebidas">
+                                <option value="Refrigerante">Refrigerante</option>
+                                <option value="Suco Natural">Suco Natural</option>
+                                <option value="Água">Água</option>
+                                <option value="Cerveja">Cerveja</option>
+                                <option value="Vinho">Vinho</option>
+                                <option value="Drinks / Coquetéis">Drinks / Coquetéis</option>
+                                <option value="Café / Chá">Café / Chá</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="input-group-separador">
+
+                        <div class="input-group">
+                            <label for="preco">Preço</label>
+                            <input type="number" step="0.01" id="preco" placeholder="Preço" required>
+    
+                        </div>
+    
+                        <div class="input-group">
+                            <label for="tempo_preparo">Tempo de Preparo</label>
+                            <input type="number" id="tempo_preparo" placeholder="15" required />
+                        </div>
+                    </div>
+
+
+                    <div class="btn-container">
+                        <button type="submit">Salvar</button>
+                        <button id="load-data" type="button">Carregar Cardápio</button>
+                    </div>
+                </div>
+
+                <div class="upload-container" style="flex-direction: column-reverse; margin-bottom: 4px; gap: 4px;">
+
+                    <input type="file" id="imagem" name="imagem" accept="image/png, image/jpeg" hidden>
+
+                    <label for="imagem" class="upload-label">Carregar imagem</label>
+
+                    <span id="file-name">Nenhum arquivo selecionado</span>
+
+                    <img id="preview-img" src="../static/images/cardapio-upload-icon.svg" width="70px" style="margin-bottom: 8px; margin-top: 8px;">
+                </div>
+
+            </form>
+        </div>
+        </div>
+        <ul id="cardapio-list"></ul>
+    </main>
+
+
+    <div id="modal-cardapio" class="modal hidden">
+        <div class="modal-content-cardapio">
+            <span id="close-modal" class="close">&times;</span>
+            <div id="lista-categorias"></div>
+        </div>
+    </div>
+    <div id="modal-categoria" class="modal hidden">
+        <div class="modal-content-cardapio">
+            <span id="close-modal-categoria" class="close">&times;</span>
+            <h2 id="modal-categoria-titulo"></h2>
+            <ul id="modal-categoria-lista"></ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/cardapio.js') }}"></script>
+</body>
+
+</html>

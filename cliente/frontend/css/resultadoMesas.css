@@ -1,0 +1,341 @@
+/* Reset e corpo */
+body {
+    background: #0d0d0d;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #d58a33;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding: 1.2rem 2rem; 
+    border-bottom: 2px solid #d58a33;
+    font-size: 1.8rem; 
+    color: #d58a33;
+}
+
+header .logo {
+    text-align: center;
+    flex: 1;
+}
+
+/* Main */
+main {
+    flex: 1;
+    padding: 2rem 1rem;
+}
+
+.titulo {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #d58a33;
+}
+
+/* Lista de mesas como grid responsivo */
+.lista {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Card de cada mesa */
+.mesa-card {
+    background: #1a1a1a;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #b87f2b;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(184, 127, 43, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease;
+}
+
+.mesa-card:hover {
+    transform: translateY(-6px);
+    border: 1px solid #fff4d1;
+    background: #2c2c2c;
+    box-shadow: 0 8px 18px rgba(184, 127, 43, 0.35);
+}
+
+button {
+    background: #b87f2b;
+    color: #0a0a0a;
+    border: 2px solid #b87f2b;
+    border-radius: 6px;
+    padding: 0.6rem 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #fff4d1;
+    color: #b87f2b;
+    border: 2px solid #d5a32f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+.voltar {
+    background: transparent;
+    border: 1px solid #b87f2b;
+    color: #b87f2b;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.voltar:hover {
+    background: #b87f2b;
+    color: #0a0a0a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(184, 127, 43, 0.35);
+}
+
+/* Mensagem de erro */
+.erro {
+    text-align: center;
+    margin-top: 2rem;
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.78);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+/* Container interno */
+.modal-content {
+    background: #1a1a1a; /* cinza escuro */
+    padding: 30px;
+    border-radius: 18px;
+    width: 380px;
+    color: #d58a33; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: popIn 0.25s ease-out;
+}
+
+/* Botão X */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff4d1;
+    transition: 0.2s;
+}
+
+.buttonclose-modal:hover {
+    color: #d58a33;
+}
+
+.titulo-modal {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #fff4d1;
+}
+
+/* Inputs */
+.modal-content input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #1a1a1a;
+    border: 1px solid #b87f2b;
+    color: #fff4d1;
+}
+
+.modal-content input:focus {
+    border-color: #d58a33;
+}
+
+/* Aviso */
+.aviso-horario {
+    font-size: 0.85rem;
+    color: #ffdca2;
+    text-align: center;
+    margin-top: -5px;
+}
+
+/* Botões */
+.actions button {
+    padding: 10px 18px;
+    cursor: pointer;
+    background: #d58a33;
+    border: none;
+    color: #1a1a1a;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.25s;
+}
+
+.actions button:hover {
+    background: #b87f2b;
+}
+
+/* Botão cancelar */
+#btnCancelar {
+    background: #474747;
+    color: #fff4d1;
+}
+
+#btnCancelar:hover {
+    background: #333;
+}
+
+.erro-modal {
+    background: #ffdddd;
+    color: #8a0000;
+    padding: 8px;
+    border-left: 4px solid #ff5c5c;
+    border-radius: 5px;
+    display: none;
+}
+
+
+/* Ajuste mobile */
+@media (max-width: 500px) {
+    header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .titulo {
+        font-size: 1.5rem;
+    }
+
+    .lista {
+        gap: 1rem;
+    }
+
+    .mesa-card {
+        padding: 1rem;
+    }
+
+    button, .voltar {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 900px) {
+    header {
+        flex-direction: column;
+        gap: 0.8rem;
+        font-size: 1.6rem;
+    }
+
+    .titulo {
+        font-size: 1.7rem;
+    }
+
+    .lista {
+        gap: 1rem;
+    }
+
+    .mesa-card {
+        padding: 1.2rem;
+    }
+
+    button, .voltar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .titulo-modal {
+        font-size: 1.2rem;
+    }
+}
+
+/* Celulares estreitos */
+@media (max-width: 500px) {
+    header {
+        font-size: 1.4rem;
+    }
+
+    .titulo {
+        font-size: 1.4rem;
+    }
+
+    .mesa-card {
+        padding: 1rem;
+    }
+
+    input {
+        font-size: 0.95rem;
+    }
+
+    .actions button {
+        padding: 8px 12px;
+    }
+}
+
+@media (min-width: 1400px) {
+    header {
+        font-size: 2.2rem;
+        padding: 2rem 6rem;
+    }
+
+    .titulo {
+        font-size: 2.5rem;
+    }
+
+    .lista {
+        max-width: 1200px;
+        gap: 2rem;
+    }
+
+    .mesa-card {
+        padding: 2rem;
+    }
+
+    button, .voltar, .actions button {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+
+    .modal-content {
+        width: 500px;
+        padding: 3rem;
+    }
+
+    .titulo-modal {
+        font-size: 1.6rem;
+    }
+}

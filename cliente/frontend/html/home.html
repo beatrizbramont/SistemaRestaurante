@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TableTrack | Home</title>
+    <link rel="icon" type="image/png" href="../css/icon/tabletrack_logobranca.png"/>
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  </head>
+
+  <body>
+    <header>
+      <h1 class="logo">TableTrack</h1>
+      <nav>
+        <a href="../html/login.html" class="btn">Sair</a>
+      </nav>
+    </header>
+
+    <main class="conteudo">
+      <section class="boas-vindas">
+        <h2>
+          <i class="fa-solid fa-user-circle" style="color: #d58a33; margin-right: 8px;"></i>
+          Bem-vindo de volta, <span id="nomeUsuario"></span>
+        </h2>
+        <p>
+          Escolha o que deseja fazer hoje. Você pode visualizar o cardápio
+          completo ou realizar uma reserva de forma prática e rápida.
+        </p>
+      </section>
+
+      <section class="acoes">
+        <div class="card">
+          <i class="fa-solid fa-book-open"></i>
+          <h3>Cardápio</h3>
+          <p>Confira os pratos e bebidas disponíveis.</p>
+          <button id="btnCardapio">Ver cardápio</button>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-chair"></i>
+          <h3>Reservas</h3>
+          <p>Garanta sua mesa de forma rápida e prática.</p>
+          <button id="btnReserva">Fazer reserva</button>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-clipboard-list"></i>
+          <h3>Minhas Reservas</h3>
+          <p>Veja suas reservas realizadas.</p>
+          <button id="btnMinhasReservas">Visualizar</button>
+        </div>
+      </section>
+
+      <section id="secaoCardapio" class="oculto">
+        <h2>🍽️ Cardápio</h2>
+        <div id="listaCardapio" class="lista"></div>
+      </section>
+
+      <section id="secaoReserva" class="oculto">
+        <h2>🪑 Realizar Reserva</h2>
+        <label for="pessoas">Quantidade de pessoas:</label>
+        <input type="number" id="pessoas" min="1" placeholder="Ex: 4" />
+        <button id="btnConsultar">Consultar Mesas</button>
+        <div id="resultadoReserva" class="resultado"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 TableTrack. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="../js/home.js"></script>
+  </body>
+</html>

@@ -1,0 +1,218 @@
+/* ===== Reset e base ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Instrument Sans", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== Fundo ===== */
+body {
+  background: linear-gradient(160deg, #b36b1a 40%, #b36b1a 70%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Container principal ===== */
+.login_container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: row;
+  width: 60%;
+  height: 70vh;
+  margin: 0 auto;
+  background-color: #f8f4f4;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.form-wrapper,
+.info-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+/* ===== Formulário ===== */
+.form_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.form_container h1 {
+  font-size: 2rem;
+  color: #1c1c1c;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.form_container input {
+  width: 310px;
+  height: 40px;
+  padding: 0 15px;
+  background-color: rgba(213, 202, 202, 0.3);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #000;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form_container input:focus {
+  border-color: #d58a33;
+  box-shadow: 0 0 4px #d58a33;
+}
+
+/* ===== Botão de login ===== */
+input[type="button"] {
+  color: white;
+  background-color: #1c1c1c;
+  cursor: pointer;
+  border: none;
+  width: 170px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+input[type="button"]:hover {
+  background-color: #d58a33;
+  color: #1c1c1c;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Link de cadastro ===== */
+.botao_login {
+  color: #1c1c1c;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.botao_login:hover {
+  color: #d58a33;
+  transform: translateY(-1px);
+}
+
+.info-wrapper {
+  display: flex;
+  background-color: #1c1c1c;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.img_restaurante {
+  max-width: 100px;  
+  width: 60%;          
+  height: auto;        
+  object-fit: contain; 
+  display: block;
+  margin-top: -2;
+  filter: none;        
+}
+
+.info-wrapper h2 {
+  font-size: 2.3rem;
+  margin-bottom: 1rem;
+  color: #d58a33;
+}
+
+.info-wrapper p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #dddddd;
+}
+
+/* ===== Botão lateral ===== */
+.info-button {
+  background-color: #d58a33;
+  color: #1c1c1c;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.info-button:hover {
+  background-color: orange;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.botao-voltar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-decoration: none;
+  background: #1c1c1c;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.botao-voltar:hover {
+  background: #dddddd;
+  transform: translateX(-4px);
+}
+
+.botao-voltar i {
+  color: #dddddd; 
+  font-size: 20px;
+}
+
+.botao-voltar:hover i {
+  color: #1c1c1c; 
+  font-size: 20px;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 900px) {
+  .login_container {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+  }
+
+  .form-wrapper,
+  .info-wrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .form_container input {
+    width: 80%;
+  }
+
+  .img_restaurante {
+    max-width: 140px;
+    width: 45%;
+    margin-top: 0.5rem;
+  }
+}

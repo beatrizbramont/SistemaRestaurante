@@ -1,0 +1,192 @@
+@import url('./components.css');
+
+/* =========================
+   Funcionários Header
+========================= */
+.funcionarios-infos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 400;
+    margin-bottom: 48px;
+}
+
+.funcionarios-infos .funcionario-qnt {
+    margin-right: 8px;
+    color: #D58A33;
+}
+
+.funcionarios-infos h2 {
+    margin-left: 8px;
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.funcionarios-topo-botao {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background-color: #D58A33;
+    color: #fff;
+    cursor: pointer;
+
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 12px;
+    transition: all .3s ease-in-out;
+}
+
+.funcionarios-topo-botao .icon-plus {
+    font-size: 20px;
+}
+
+.funcionarios-topo-botao:hover {
+    background: linear-gradient(45deg, #fc8e10, #ffb347);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(252, 142, 16, 0.3);
+}
+
+/* =========================
+   Lista de Funcionários
+========================= */
+.lista-funcionarios {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 350px));
+}
+
+/* =========================
+   Card de Funcionário
+========================= */
+.card-funcionario {
+    padding: 32px 24px;
+    background-color: #fff;
+    border-radius: 16px;
+}
+
+.card-funcionario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-funcionario-imagem {
+    width: 100px;
+    height: 100px;
+    border-radius: 72px;
+}
+
+.card-funcionario-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.card-funcionario-acoes-img {
+    width: 40px;
+    height: 40px;
+    background-color: #ee9937;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s ease-in-out;
+}
+
+.card-funcionario-acoes-img:hover {
+    background: linear-gradient(45deg, #fc8e10, #ffb347);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(252, 142, 16, 0.3);
+}
+
+.card-funcionario-info {
+    margin-bottom: 24px;
+}
+
+.card-funcionario-info h4 {
+    font-size: 20px;
+    color: #1C1C1C;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.card-funcionario-info h5 {
+    font-size: 16px;
+    color: #818181;
+    font-weight: 400;
+}
+
+.card-funcionario-contatos {
+    height: 120px;
+    padding: 16px 24px;
+    background-color: #EFEFEF;
+    border-radius: 24px;
+}
+
+.card-funcionario-contato-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.card-funcionario-contato-icon p {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+@media (max-width: 838px) {
+    .funcionarios-infos h2 {
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .funcionarios-topo-botao {
+        padding: 8px 16px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 772px) {
+
+    .lista-funcionarios {
+        justify-content: center;
+    }
+}
+
+.botao-acao {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+
+    & .del {
+        padding: 12px 16px;
+        background-color: #D58A33;
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+
+        &:hover {
+        background-color: #ffae45;
+        }
+
+    }
+
+    & .cancel {
+        padding: 12px 16px;
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #363636;
+        }
+
+    }
+}

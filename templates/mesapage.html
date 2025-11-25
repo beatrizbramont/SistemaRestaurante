@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerenciamento de Mesas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+
+<body>
+
+  <aside>
+    <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="TableTrack">
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home"></a></li>
+        <li><a href="{{ url_for('cardapio.cardapio_page') }}"><img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio"></a></li>
+        <li class="active"><a href="{{ url_for('mesa.mesas_page') }}"><img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas"></a></li>
+        <li><a href="{{ url_for('funcionarios.funcionarios_page') }}"><img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários"></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <nav class="nav-mobile">
+    <ul>
+      <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home"></a></li>
+      <li><a href="{{ url_for('cardapio.cardapio_page') }}"><img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio"></a></li>
+      <li class="active"><a href="{{ url_for('mesa.mesas_page') }}"><img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas"></a></li>
+      <li><a href="{{ url_for('funcionarios.funcionarios_page') }}"><img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários"></a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="tabletrack-topo">
+      <h3>Table Track</h3>
+      <h2>Gerenciamento de Mesas</h2>
+    </div>
+
+    <section class="acoes">
+      <div class="acoes-topo">
+        <button id="encerrarDiaBtn">Encerrar o dia</button>
+      </div>
+
+      <form id="filtroCapacidadeForm" class="filtro-capacidade">
+        <label for="filtroCapacidadeInput">Capacidade mínima:</label>
+        <input type="number" id="filtroCapacidadeInput" min="1" placeholder="Ex: 4" />
+        <div style="display: flex; gap: 8px;">
+          <button type="submit" style="background-color: rgb(18, 133, 94);">Filtrar</button>
+          <button type="button" style="background-color: rgb(168, 38, 49);" onclick="limparFiltro()">Limpar</button>
+        </div>
+      </form>
+    </section>
+
+    <table id="mesas-table" aria-label="Lista de mesas">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Capacidade</th>
+          <th>Comandas</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS -->
+      </tbody>
+    </table>
+  </main>
+
+  <!-- Modal Comandas -->
+  <div id="comandaModal" class="modal" aria-hidden="true" role="dialog">
+    <div class="modal-content">
+      <button class="close-btn" onclick="fecharModal('comandaModal')" aria-label="Fechar modal"><i class="fa fa-times"></i></button>
+      <h2>Gerenciar Comandas</h2>
+      <input type="hidden" id="mesaIdInput">
+      <label for="quantidadeComandasInput">Comandas a serem abertas:</label>
+      <input type="number" id="quantidadeComandasInput" min="1" placeholder="Ex: 3" />
+      <div class="modal-buttons">
+        <button id="abrirComandaBtn">Abrir Comanda</button>
+        <button type="button" id="visualizarComandasBtn">Visualizar</button>
+        <button id="fecharComandasBtn">Fechar Comandas</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="reservasFuturasModal" class="modal" aria-hidden="true" role="dialog">
+    <div class="modal-content">
+      <button class="close-btn" onclick="fecharModalReservasFuturas()" aria-label="Fechar modal">
+        <i class="fa fa-times"></i>
+      </button>
+      <h2>Reservas Futuras</h2>
+      <div id="detalhesReservasFuturas"></div>
+    </div>
+  </div>
+
+
+
+  <script defer src="{{ url_for('static', filename='js/mesa.js') }}"></script>
+  <script>
+    function fecharModalReservas() {
+      document.getElementById('reservasFuturasModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

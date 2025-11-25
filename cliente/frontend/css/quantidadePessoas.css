@@ -1,0 +1,244 @@
+body {
+    background: #0d0d0d;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: 1.5rem 3rem;
+    border-bottom: 2px solid #d58a33;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    color: #d58a33;
+    font-weight: 600;
+}
+
+.voltar {
+  background: transparent;
+  border: 1px solid #b8752b;
+  color: #b8752b;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.voltar:hover {
+  background: #b8752b;
+  color: #0a0a0a;
+}
+
+.container {
+    flex: 1; 
+    max-width: 520px;
+    margin: 0 auto; 
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+.card {
+    background: #141414;
+    padding: 2rem;
+    border-radius: 6px;
+    border: 1px solid #242424;
+    box-shadow: 0 0 20px rgba(255, 170, 80, 0.05);
+    backdrop-filter: blur(4px);
+    animation: fadeIn .6s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 1.9rem;
+    margin-bottom: .5rem;
+}
+
+.descricao {
+    font-size: 1rem;
+    opacity: .8;
+    margin-bottom: 1.6rem;
+}
+
+.info-box {
+    display: flex;
+    gap: 0.8rem;
+    background: rgba(213,138,51,0.15);
+    padding: 0.8rem;
+    border-radius: 10px;
+    border-left: 3px solid #d58a33;
+    margin-bottom: 1.8rem;
+}
+
+.info-box i {
+    color: #d58a33;
+    font-size: 1.2rem;
+}
+
+.card-input {
+    margin-bottom: 1.6rem;
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: .4rem;
+    border-radius: 10px;
+    border: none;
+    background: #1e1e1e;
+    color: #fff;
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: 2px solid #d58a33;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #d58a33, #e7a24a);
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn:hover {
+    filter: brightness(1.15);
+}
+
+.erro {
+    color: #ff5252;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: #1c1c1c;
+    border-top: 1px solid #333;
+    color: #dddddd;
+    font-size: 0.85rem;
+    opacity: .6;
+}
+
+@media (max-width: 900px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 1.4rem;
+        padding: 1rem 2rem;
+    }
+
+    .container {
+        max-width: 90%;
+        padding: 1.5rem 1rem;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .descricao {
+        font-size: 0.95rem;
+    }
+
+    .info-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .voltar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+
+/* Telas muito pequenas (celular estreito) */
+@media (max-width: 500px) {
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    .descricao {
+        font-size: 0.9rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        font-size: 0.95rem;
+        padding: 8px;
+    }
+
+    input {
+        font-size: 0.95rem;
+    }
+}
+
+/* Telas grandes (telão) */
+@media (min-width: 1400px) {
+    header {
+        padding: 2rem 6rem;
+        font-size: 2rem;
+    }
+
+    .container {
+        max-width: 800px;
+        padding: 3rem 4rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .descricao {
+        font-size: 1.3rem;
+    }
+
+    .card {
+        padding: 3rem;
+    }
+
+    .info-box i {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        font-size: 1.3rem;
+        padding: 16px;
+    }
+}

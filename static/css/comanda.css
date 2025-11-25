@@ -1,0 +1,285 @@
+/* ===== Cabeçalho Principal ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ddd;
+  color: #000000;
+  font-family: "Instrument Sans", sans-serif;
+}
+
+.cabecalho {
+  display: flex;
+  padding: 16px 32px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid #D58A33;
+
+}
+
+#voltarBtn {
+  background: #D58A33;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.tabletrack-topo {
+  width: fit-content;
+  margin: 16px auto 64px auto;
+}
+
+.tabletrack-topo h3 {
+  font-size: 24px;
+  color: #D58A33;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tabletrack-topo h2 {
+  font-size: 32px;
+  color: #000000;
+  font-weight: 400;
+}
+
+#voltarBtn:hover {
+  background: #f57c00;
+}
+
+/* Botão Fechar Todas (topo à direita) */
+#fecharTodasBtn {
+  position: absolute;
+  top: 17%;
+  right: 20px;
+  background: #D23B47;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#fecharTodasBtn:hover {
+  background: #c62828;
+}
+
+
+
+/* ===== Layout da Comanda ===== */
+#comandasContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.comanda {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff; 
+  color: #000000;
+  border-radius: 10px;
+  box-shadow: 0px 3px 12px rgba(255, 255, 255, 0.4);
+  margin: 20px auto;
+  max-width: 850px;
+  border: 1px solid #262626;
+  overflow: hidden;
+  gap: .75rem;
+}
+
+.comanda h2 {
+  margin: 0;
+  width: 100%;
+  background: #D58A33;
+  color: #fff;
+  padding: 12px 16px;
+  font-size: 1.2rem;
+  border-radius: 8px 8px 0 0;
+}
+
+
+p,
+label {
+  align-self: left;
+  margin-left: 16px;
+}
+
+label {
+  color: #D58A33;
+}
+
+.comanda>.total-comanda {
+  order: 1;
+}
+
+.nomeInput {
+  background-color: transparent;
+  border: 1px solid #D58A33;
+  color: #000000;
+  border-radius: 4px;
+  width: calc(100% - 32px);
+  margin: 0 auto;
+  padding: 8px 12px;
+}
+
+.select-produto,
+.quantidade-item {
+  background-color: transparent;
+  color: #000000;
+  border: 2px solid #D58A33;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.adicionar-item-container {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 auto;
+  margin-top: 12px;
+}
+
+.select-produto {
+  flex: 2;
+}
+
+.quantidade-item {
+  width: 60px;
+  text-align: center;
+}
+
+.adicionar-item-comanda-btn {
+  flex-shrink: 0;
+  background: #D58A33;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.adicionar-item-comanda-btn:hover {
+  background: #fbc02d;
+}
+
+/* ===== Lista de itens ===== */
+.lista-itens-comanda {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.item-comanda {
+  background: #f5f5f5;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Total */
+.total-comanda {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #000000;
+  margin: 7px 0px 16px auto;
+}
+
+/* ===== Botão Fechar Comanda ===== */
+.fecharComandaBtn {
+  align-self: flex-end;
+  background: #D23B47;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  margin: 0px 16px 8px 0px;
+}
+
+.fecharComandaBtn:hover {
+  background: #c62828;
+}
+
+/* Para telas até 768px (tablets e mobiles médios) */
+@media (max-width: 768px) {
+
+  .tabletrack-topo h3 {
+    font-size: 16px;
+  }
+.tabletrack-topo h2 {
+    font-size: 20px;
+}
+
+  #comandasContainer {
+    margin-top: 20px;
+    padding: 0 10px;
+  }
+
+  .comanda {
+    width: 80%;
+    margin: 10px auto;
+  }
+
+
+
+  .quantidade-item {
+    width: 100%;
+    text-align: left;
+  }
+
+
+}
+
+/* Para telas até 480px (celulares pequenos) */
+@media (max-width: 480px) {
+
+  #voltarBtn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+  }
+
+  .comanda h2 {
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
+
+  .nomeInput,
+  .select-produto,
+  .quantidade-item {
+    font-size: 0.9rem;
+    padding: 6px 8px;
+  }
+
+  .adicionar-item-comanda-btn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .item-comanda {
+    font-size: 0.9rem;
+    padding: 5px 8px;
+  }
+
+  .total-comanda {
+    font-size: 0.9rem;
+}
+
+}

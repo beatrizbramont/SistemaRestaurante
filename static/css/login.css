@@ -1,0 +1,35 @@
+@import url('./components.css');
+
+.login {
+    position: absolute;
+    top: 5%;
+    left: 7%;
+}
+
+main {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-topo {
+    gap: 20px;
+}
+
+.formulario-div {
+    width: 100%;
+    align-items: center;
+}
+
+@media (max-width:772px) {
+    .input-group input {
+        width: 320px;
+    }
+}
+
+@media (max-width:520px) {
+    .input-group input {
+        width: 70vw;
+    }
+}
