@@ -25,6 +25,7 @@ csrf.exempt(cardapio_bp)
 csrf.exempt(mesa_bp)
 csrf.exempt(comandas_bp)
 csrf.exempt(cp_bp)
+csrf.exempt(funcionarios_bp)
 
 with app.app_context():
     db.create_all()
