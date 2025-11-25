@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, session, redirect, url_for
+from flask import Blueprint, render_template
+from Auth.forms import LoginForm   
 
 index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/')
 def index():
-    return render_template('splash.html')
+    form = LoginForm()
+    return render_template('login.html', form=form)
 
 @index_bp.route('/dashboard')
 def dashboard():

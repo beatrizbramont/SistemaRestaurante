@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash
 from Funcionario.funcionario_service import listar_usuario_email, listar_funcionario_id
-from .otp_service import gerar_otp, salvar_otp, validar_otp, limpar_otp
 from .email_service import enviar_otp_email
 from .auth_forms import LoginForm, OTPForm
 
