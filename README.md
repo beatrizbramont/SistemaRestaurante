@@ -29,7 +29,8 @@ restaurante, incluindo:
 -   Abertura, fechamento e consulta de comandas;
 -   Cadastro de clientes, funcionários e itens do cardápio;
 -   Interface para cliente visualizar o cardápio e reservar mesa de
-    qualquer lugar.
+    qualquer lugar;
+-   Banco de dados MySQL local.
 
 ------------------------------------------------------------------------
 
