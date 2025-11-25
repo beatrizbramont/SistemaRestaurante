@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const nome = botao.dataset.nome;
 
 
-            alert(id)
             mensagemDelete.textContent = `Ao executar essa ação, você estará deletando completamente do banco o funcionário: ${nome}. Tem certeza disso? Digite a chave de confirmação.`;
             formDelete.action = `/funcionarios/delete/${id}`;
 
@@ -72,3 +71,47 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') fecharModalEscape();
 });
+
+const botoesEditar = document.querySelectorAll('.editar_funcionario');
+const formAtualizar = document.getElementById("form-atualizar");
+
+const inputNome = document.getElementById("editar-nome");
+const inputCargo = document.getElementById("cargoInput");
+const inputEmail = document.getElementById("editar-email");
+const inputTelefone = document.getElementById("editar-telefone");
+const inputSenha = document.getElementById("editar-senha");
+const inputImagemEditar = document.getElementById("editar-imagem");
+const fileNameEditar = document.getElementById("file-name-editar");
+const previewEditar = document.getElementById("preview-img-editar");
+
+botoesEditar.forEach(botao => {
+    botao.addEventListener("click", () => {
+
+        const id = botao.dataset.id;
+
+        inputNome.value = botao.dataset.nome;
+        inputCargo.value = botao.dataset.cargo;
+        inputEmail.value = botao.dataset.email;
+        inputTelefone.value = botao.dataset.telefone;
+        inputSenha.value = botao.dataset.senha;
+
+        previewEditar.src = botao.dataset.imagem_url || "https://cdn-icons-png.flaticon.com/512/66/66779.png";
+
+        formAtualizar.action = `/funcionario/atualizar/${id}`;
+
+        abrirModal("modal-atualizar");
+    });
+});
+
+inputImagemEditar.addEventListener("change", () => {
+    const file = inputImagemEditar.files[0];
+
+    if (file) {
+        fileNameEditar.textContent = file.name;
+
+        const reader = new FileReader();
+        reader.onload = e => previewEditar.src = e.target.result;
+        reader.readAsDataURL(file);
+    }
+});
+
