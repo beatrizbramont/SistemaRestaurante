@@ -11,6 +11,7 @@ email-validator==2.3.0
 filelock==3.20.0
 Flask==3.1.2
 flask-cors==6.0.1
+Flask-JWT-Extended==4.7.1
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.2
 future==1.0.0
@@ -25,6 +26,7 @@ packaging==25.0
 pluggy==1.6.0
 pycparser==2.23
 Pygments==2.19.2
+PyJWT==2.10.1
 PyMySQL==1.1.1
 PySocks==1.7.1
 pytest==8.4.1
