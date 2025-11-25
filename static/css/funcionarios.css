@@ -8,7 +8,7 @@
     justify-content: space-between;
     align-items: center;
     font-weight: 400;
-    margin-bottom: 64px;
+    margin-bottom: 48px;
 }
 
 .funcionarios-infos .funcionario-qnt {
@@ -19,7 +19,7 @@
 .funcionarios-infos h2 {
     margin-left: 8px;
     font-size: 32px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .funcionarios-topo-botao {
@@ -139,7 +139,8 @@
 
 @media (max-width: 838px) {
     .funcionarios-infos h2 {
-        font-size: 24px;
+        margin: 0;
+        font-size: 20px;
     }
 
     .funcionarios-topo-botao {
