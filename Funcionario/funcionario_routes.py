@@ -1,7 +1,7 @@
 import os
 import re
 from flask import Blueprint, request, jsonify, redirect, url_for, render_template, current_app, flash
-from .funcionario_service  import cadastrar_funcionario, listar_usuario_email, verificar_chave, listar_funcionario_id, deletar_funcionario
+from .funcionario_service  import cadastrar_funcionario, listar_usuario_email, verificar_chave, listar_funcionario_id, deletar_funcionario, atualizar_funcionario
 from .funcionario_model  import Funcionario
 from .funcionario_forms  import CadastroFuncionarioForm, LoginForm, DeleteForm
 
@@ -71,6 +71,19 @@ def criar_funcionario_form():
     print(form.errors)
     return redirect(url_for('funcionarios.funcionarios_page'))
 
+
+@funcionarios_bp.route("/funcionario/atualizar/<int:id>", methods=["POST"])
+def atualizar_funcionario_form(id):
+    funcionario = Funcionario.query.get_or_404(id)
+
+    dados = request.form
+    arquivo_imagem = request.files.get("imagem")
+
+    funcionario_atualizado = atualizar_funcionario(funcionario, dados, arquivo_imagem)
+
+    flash(f"Funcionário {funcionario_atualizado.nome} atualizado com sucesso!", "success")
+
+    return redirect(url_for("funcionarios.funcionarios_page"))
 
 @funcionarios_bp.route('/funcionarios/delete/<int:id>', methods=['POST'])
 def deletar_funcionario_route(id):
