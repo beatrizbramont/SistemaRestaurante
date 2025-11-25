@@ -94,8 +94,11 @@
                     <div class="card-funcionario-acoes">
                         <div class="card-funcionario-acoes-img" style="cursor: pointer;">
                             <img src="{{ url_for('static', filename='images/icon-edit.svg') }}" alt="Editar"
-                                class="editar_funcionario"
-                                onclick="modalEditar('{{ funcionario.id }}', '{{ funcionario.nome }}', '{{ funcionario.cargo }}', '{{ funcionario.telefone }}', '{{ funcionario.email }}')">
+                                class="editar_funcionario" data-id="{{ funcionario.id }}"
+                                data-nome="{{ funcionario.nome }}" data-cargo="{{ funcionario.cargo }}"
+                                data-telefone="{{ funcionario.telefone }}" data-email="{{ funcionario.email }}"
+                                data-senha="{{ funcionario.senha }}"
+                                data-imagem_url="{{ url_for('static', filename='uploads/' + funcionario.imagem) if funcionario.imagem else '' }}">
                         </div>
 
                         <div class="card-funcionario-acoes-img" style="cursor: pointer;">
@@ -188,6 +191,70 @@
             </div>
         </div>
 
+        <!-- Modal de atualizar -->
+
+        <div id="modal-atualizar" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+
+                <span class="modal-close" onclick="fecharModal('modal-atualizar')">X</span>
+
+                <div class="modal-content-topo">
+                    <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal">
+
+                    <div class="tabletrack-topo">
+                        <h3>Table Track</h3>
+                        <h2>Atualizar Funcionário</h2>
+                        <p>Edite as informações</p>
+                    </div>
+                </div>
+
+                <form id="form-atualizar" method="POST" enctype="multipart/form-data" class="forms-padrao">
+                    <div class="formulario-div">
+
+                        <div class="input-group">
+                            <label>Nome</label>
+                            <input type="text" name="nome" id="editar-nome">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Cargo</label>
+                            <select id="cargoInput" name="cargo">
+                                <option value="Gerente">Gerente</option>
+                                <option value="Garçom">Garçom</option>
+                                <option value="Recepcionista">Recepcionista</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Telefone</label>
+                            <input type="text" name="telefone" id="editar-telefone">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" name="email" id="editar-email">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Senha</label>
+                            <input type="text" name="senha" id="editar-senha">
+                        </div>
+
+                        <div class="input-group">
+                            <button class="botao-login">Atualizar</button>
+                        </div>
+                    </div>
+
+                    <div class="upload-container">
+                        <img id="preview-img-editar" src="https://cdn-icons-png.flaticon.com/512/66/66779.png"
+                            width="120px">
+                        <label for="editar-imagem" class="upload-label">Carregar imagem</label>
+                        <input type="file" id="editar-imagem" name="imagem" class="upload-input">
+                        <span id="file-name-editar">Nenhum arquivo selecionado</span>
+                    </div>
+                </form>
+            </div>
+        </div>
         <!-- Modal de deletar-->
         <div id="modal-delete" class="modal-overlay" style="display: none;">
             <div class="modal-content" style="gap: 16px; padding: 24px;">
