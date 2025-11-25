@@ -6,7 +6,6 @@ function getCsrfToken() {
     return meta ? meta.getAttribute('content') : '';
 }
 
-// Busca as mesas da API
 async function fetchMesas(capacidade = null) {
     try {
         const url = (capacidade && Number.isInteger(capacidade) && capacidade > 0)
@@ -168,10 +167,10 @@ async function renderMesas(capacidade = null) {
 }
 
 // Atualização automática
-setInterval(() => {
-    const capacidade = parseInt(document.getElementById('filtroCapacidadeInput').value.trim());
-    renderMesas(capacidade && capacidade > 0 ? capacidade : null);
-}, 10000);
+// setInterval(() => {
+//     const capacidade = parseInt(document.getElementById('filtroCapacidadeInput').value.trim());
+//     renderMesas(capacidade && capacidade > 0 ? capacidade : null);
+// });
 
 function abrirModalReservasFuturas(mesa) {
     const modal = document.getElementById('reservasFuturasModal');
@@ -275,6 +274,26 @@ function fecharModalReservasFuturas() {
     const modal = document.getElementById('reservasFuturasModal');
     modal.style.display = 'none';
     modal.setAttribute('aria-hidden', 'true');
+}
+
+document.getElementById("filtroCapacidadeForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const input = document.getElementById("filtroCapacidadeInput");
+    const capacidade = Number(input.value);
+
+    if (!capacidade || capacidade < 1) {
+        alert("Informe uma capacidade válida.");
+        return;
+    }
+
+    renderMesas(capacidade);
+});
+
+function limparFiltro() {
+    document.getElementById("filtroCapacidadeInput").value = "";
+    
+    renderMesas();
 }
 
 
