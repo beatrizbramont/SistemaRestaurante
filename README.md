@@ -211,7 +211,8 @@ armazenado no backend cliente.
 ## Futuras melhorias
 
 -   Dockerização;
--   Atualizar lógica da atualização do status das mesas
+-   Atualizar lógica da atualização do status das mesas;
+-   Migração do banco para servidor online/nuvem.
 
 ------------------------------------------------------------------------
 
