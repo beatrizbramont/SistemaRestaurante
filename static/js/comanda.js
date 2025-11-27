@@ -243,21 +243,11 @@ function adicionarEventosGlobais(container, mesaId) {
 
         await fecharComanda(comandaId, comandaDiv, mesaId);
     });
-
-    let fecharTodasBtn = document.getElementById('fecharTodasBtn');
-    if (!fecharTodasBtn) {
-        fecharTodasBtn = document.createElement('button');
-        fecharTodasBtn.textContent = 'Fechar todas as comandas';
-        fecharTodasBtn.id = 'fecharTodasBtn';
-        fecharTodasBtn.style.marginTop = '20px';
-        container.appendChild(fecharTodasBtn);
-
-        fecharTodasBtn.addEventListener('click', async () => {
-            if (confirm('Tem certeza que deseja fechar TODAS as comandas desta mesa?')) {
-                await fecharTodasAsComandas(mesaId);
-            }
-        });
-    }
+    document.getElementById('fecharTodasBtn').addEventListener('click', async () => {
+    if (confirm('Tem certeza que deseja fechar TODAS as comandas desta mesa?')) {
+        await fecharTodasAsComandas(mesaId);
+        }
+    });
 }
 
 async function atualizarNomeComanda(comandaId, novoNome) {

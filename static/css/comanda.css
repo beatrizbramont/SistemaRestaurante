@@ -1,4 +1,3 @@
-/* ===== Cabeçalho Principal ===== */
 * {
   margin: 0;
   padding: 0;
@@ -13,10 +12,12 @@ body {
 
 .cabecalho {
   display: flex;
-  padding: 16px 32px;
-  border-radius: 8px 8px 0 0;
-  border-bottom: 2px solid #D58A33;
-
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px; 
+  border-bottom: 3px solid #D58A33;
+  background: #ddd;
+  height: 80px; 
 }
 
 #voltarBtn {
@@ -32,9 +33,12 @@ body {
   transition: 0.3s;
 }
 
-.tabletrack-topo {
-  width: fit-content;
-  margin: 16px auto 64px auto;
+.titulo-pagina {
+  font-size: 22px;        
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto;         
+  flex: 1;                
 }
 
 .tabletrack-topo h3 {
@@ -44,38 +48,36 @@ body {
   margin-bottom: 4px;
 }
 
-.tabletrack-topo h2 {
-  font-size: 32px;
-  color: #000000;
-  font-weight: 400;
+.titulo-pagina {
+  font-size: 22px;        
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto;         
+  flex: 1;                
 }
 
 #voltarBtn:hover {
   background: #f57c00;
 }
 
-/* Botão Fechar Todas (topo à direita) */
 #fecharTodasBtn {
-  position: absolute;
-  top: 17%;
-  right: 20px;
   background: #D23B47;
   color: #fff;
   border: none;
-  padding: 8px 16px;
+  padding: 8px 20px;
   border-radius: 6px;
   font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
   transition: 0.2s;
+  margin-left: auto;     
+  position: static;      
 }
 
 #fecharTodasBtn:hover {
   background: #c62828;
 }
 
-
-
-/* ===== Layout da Comanda ===== */
 #comandasContainer {
   display: flex;
   flex-direction: column;
@@ -105,7 +107,6 @@ body {
   font-size: 1.2rem;
   border-radius: 8px 8px 0 0;
 }
-
 
 p,
 label {
@@ -192,7 +193,6 @@ label {
   justify-content: space-between;
 }
 
-/* Total */
 .total-comanda {
   font-weight: bold;
   font-size: 1rem;
@@ -200,7 +200,6 @@ label {
   margin: 7px 0px 16px auto;
 }
 
-/* ===== Botão Fechar Comanda ===== */
 .fecharComandaBtn {
   align-self: flex-end;
   background: #D23B47;
@@ -218,7 +217,6 @@ label {
   background: #c62828;
 }
 
-/* Para telas até 768px (tablets e mobiles médios) */
 @media (max-width: 768px) {
 
   .tabletrack-topo h3 {
