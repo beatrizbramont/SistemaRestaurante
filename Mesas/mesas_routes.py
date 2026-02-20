@@ -12,29 +12,32 @@ API_RESERVAS = "http://127.0.0.1:8002/reservas"
 def mesas_page():
     return render_template("mesapage.html")
 
-
 @mesa_bp.route("/api/mesas", methods=["GET"])
 def listar_mesas():
     mesas = Mesas.query.all()
     resultado = []
     agora = datetime.now()
 
+    # 🔹 UMA ÚNICA CHAMADA AO SISTEMA EXTERNO
+    try:
+        resp = requests.get(f"{API_RESERVAS}/por-mesas", timeout=3)
+        mapa_reservas = resp.json() if resp.ok else {}
+    except:
+        mapa_reservas = {}
+
     for mesa in mesas:
-        try:
-            r = requests.get(f"{API_RESERVAS}/mesa/{mesa.id}")
-            reservas = r.json() if r.ok else []
-        except:
-            reservas = []
+        reservas = mapa_reservas.get(str(mesa.id), [])
 
         status_final = mesa.status.nome
-        
+
         reservas_hoje = [
-            reserva for reserva in reservas
-            if datetime.fromisoformat(reserva["data_reserva"]).date() == agora.date()
+            r for r in reservas
+            if datetime.fromisoformat(r["data_reserva"]).date() == agora.date()
         ]
+
         reservas_futuras = [
-            reserva for reserva in reservas
-            if datetime.fromisoformat(reserva["data_reserva"]).date() > agora.date()
+            r for r in reservas
+            if datetime.fromisoformat(r["data_reserva"]).date() > agora.date()
         ]
 
         if reservas_hoje:
@@ -55,7 +58,7 @@ def listar_mesas():
             "capacidade": mesa.capacidade,
             "status": status_final,
             "proxima_reserva": proxima,
-            "reservas_futuras": reservas_futuras  # <- importante para o calendário
+            "reservas_futuras": reservas_futuras
         })
 
     return jsonify(resultado)

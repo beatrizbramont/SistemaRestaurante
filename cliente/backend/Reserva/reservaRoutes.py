@@ -216,3 +216,18 @@ def atualizador_status_ocupado_background(app):
             except Exception as e:
                 db.session.rollback()
                 print("Erro na thread de status ocupado:", e)
+
+@reserva_bp.route("/por-mesas", methods=["GET"])
+def reservas_por_mesas():
+    reservas = Reserva.query.all()
+    resultado = {}
+
+    for r in reservas:
+        for mesa_id in r.mesas.split(","):
+            resultado.setdefault(mesa_id, []).append({
+                "id": r.id,
+                "data_reserva": r.data_reserva.strftime("%Y-%m-%dT%H:%M:%S"),
+                "status": r.status
+            })
+
+    return jsonify(resultado), 200
