@@ -13,3 +13,27 @@
     opacity: 0.5;
 
 }
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end; /* joga tudo pra direita */
+    align-items: center;
+    padding: 15px 25px;
+}
+
+.usuario-area {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.logout-btn {
+    color: #fff;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    color: #ff4d4d;
+    transform: scale(1.1);
+}

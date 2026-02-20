@@ -7,6 +7,7 @@ from Mesas.mesas_routes import mesa_bp
 from Comandas.comandas_routes import comandas_bp
 from ComandaProduto.cp_routes import cp_bp
 from index_route import index_bp
+from seeds.seed_scrum import seed_scrum
 from flask_wtf import CSRFProtect
 from flask_cors import CORS
 
@@ -29,6 +30,7 @@ csrf.exempt(funcionarios_bp)
 
 with app.app_context():
     db.create_all()
+    seed_scrum()
     seed_status()
     seed_mesas()
 

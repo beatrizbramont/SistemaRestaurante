@@ -1,4 +1,5 @@
 from config import db
+from sqlalchemy import Numeric
 
 class Cardapio(db.Model):
     __tablename__ = "cardapio"
@@ -6,7 +7,7 @@ class Cardapio(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(100), nullable=False)
     ingredientes = db.Column(db.Text, nullable=False)
-    preco = db.Column(db.Float, nullable=False)
+    preco = db.Column(Numeric(10, 2), nullable=False)
     categoria = db.Column(db.String(50), nullable=False)
     tempo_preparo = db.Column(db.Integer, nullable=False)
     imagem = db.Column(db.String(120), nullable=True)

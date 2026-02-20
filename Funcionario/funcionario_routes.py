@@ -1,14 +1,21 @@
 import os
 import re
-from flask import Blueprint, request, jsonify, redirect, url_for, render_template, current_app, flash
-from .funcionario_service  import cadastrar_funcionario, listar_usuario_email, verificar_chave, listar_funcionario_id, deletar_funcionario, atualizar_funcionario
-from .funcionario_model  import Funcionario
-from .funcionario_forms  import CadastroFuncionarioForm, LoginForm, DeleteForm
+from flask import Blueprint, request, jsonify, redirect, url_for, render_template, current_app, flash, session
+from werkzeug.security import check_password_hash
+from .funcionario_service import (
+    cadastrar_funcionario,
+    listar_usuario_email,
+    verificar_chave,
+    listar_funcionario_id,
+    deletar_funcionario,
+    atualizar_funcionario
+)
+from .funcionario_model import Funcionario
+from .funcionario_forms import CadastroFuncionarioForm, LoginForm, DeleteForm
 
-funcionarios_bp = Blueprint('funcionarios', __name__)   
+funcionarios_bp = Blueprint('funcionarios', __name__)
 
-
-@funcionarios_bp.route("/funcionarios/json",  methods=['POST'])
+@funcionarios_bp.route("/funcionarios/json", methods=['POST'])
 def criar_funcionario_json():
     dados = request.json
 
@@ -30,18 +37,31 @@ def criar_funcionario_json():
         'email': funcionario_criado.email
     }), 201
 
-
 @funcionarios_bp.route('/funcionarios', methods=['GET'])
 def funcionarios_page():
+
+    if "usuario_id" not in session:
+        return redirect(url_for("funcionarios.login"))
+
     form_cadastro = CadastroFuncionarioForm()
     funcionarios = Funcionario.query.all()
     form_deletar = DeleteForm()
 
-    return render_template('funcionarios.html', funcionarios=funcionarios, form_cadastro=form_cadastro, form_deletar=form_deletar)
+    return render_template(
+        'funcionarios.html',
+        funcionarios=funcionarios,
+        form_cadastro=form_cadastro,
+        form_deletar=form_deletar
+    )
 
 @funcionarios_bp.route('/funcionarios', methods=['POST'])
 def criar_funcionario_form():
+
+    if "usuario_id" not in session:
+        return redirect(url_for("funcionarios.login"))
+
     form = CadastroFuncionarioForm()
+
     if form.validate_on_submit():
         nome = form.nome.data
         cargo = form.cargo.data
@@ -66,16 +86,19 @@ def criar_funcionario_form():
             telefone=telefone,
             imagem=nome_arquivo
         )
+
         cadastrar_funcionario(funcionario)
         flash(f"Funcionário {nome} cadastrado com sucesso!", "success")
-    print(form.errors)
-    return redirect(url_for('funcionarios.funcionarios_page'))
 
+    return redirect(url_for('funcionarios.funcionarios_page'))
 
 @funcionarios_bp.route("/funcionario/atualizar/<int:id>", methods=["POST"])
 def atualizar_funcionario_form(id):
-    funcionario = Funcionario.query.get_or_404(id)
 
+    if "usuario_id" not in session:
+        return redirect(url_for("funcionarios.login"))
+
+    funcionario = Funcionario.query.get_or_404(id)
     dados = request.form
     arquivo_imagem = request.files.get("imagem")
 
@@ -87,6 +110,10 @@ def atualizar_funcionario_form(id):
 
 @funcionarios_bp.route('/funcionarios/delete/<int:id>', methods=['POST'])
 def deletar_funcionario_route(id):
+
+    if "usuario_id" not in session:
+        return redirect(url_for("funcionarios.login"))
+
     form = DeleteForm()
     funcionario = listar_funcionario_id(id)
 
@@ -100,15 +127,16 @@ def deletar_funcionario_route(id):
             deletar_funcionario(funcionario)
             flash(f"Funcionário {funcionario.nome} deletado com sucesso!", "success")
         else:
-            flash("Chave incorreta. Não foi possível deletar.", "error")
-    else:
-        flash("Formulário inválido.", "error")
+            flash("Chave incorreta.", "error")
 
     return redirect(url_for('funcionarios.funcionarios_page'))
 
-            
 @funcionarios_bp.route("/login", methods=["GET", "POST"])
 def login():
+
+    if "usuario_id" in session:
+        return redirect(url_for("index.dashboard"))
+
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -117,10 +145,22 @@ def login():
 
         funcionario_bd = listar_usuario_email(email)
 
-        if funcionario_bd and funcionario_bd.senha == senha:
-            return redirect(url_for('index.index'))
+        if funcionario_bd and check_password_hash(funcionario_bd.senha, senha):
+
+            session["usuario_id"] = funcionario_bd.id
+            session["usuario_nome"] = funcionario_bd.nome
+            session["usuario_cargo"] = funcionario_bd.cargo
+
+            flash("Login realizado com sucesso!", "success")
+            return redirect(url_for('index.dashboard'))
+
         else:
-            return jsonify({"erro": "Email ou senha inválidos"}), 401
+            flash("Email ou senha inválidos.", "error")
 
     return render_template("login.html", form=form)
 
+@funcionarios_bp.route("/logout")
+def logout():
+    session.clear()
+    flash("Logout realizado com sucesso!", "success")
+    return redirect(url_for("funcionarios.login"))

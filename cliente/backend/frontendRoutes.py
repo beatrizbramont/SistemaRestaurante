@@ -9,10 +9,15 @@ FRONTEND_DIR = os.path.join(BASE_DIR, 'cliente', 'frontend')
 HTML_DIR = os.path.join(FRONTEND_DIR, 'html')
 CSS_DIR = os.path.join(FRONTEND_DIR, 'css')
 JS_DIR = os.path.join(FRONTEND_DIR, 'js')
+IMG_DIR = os.path.join(FRONTEND_DIR, 'img')
 
 @frontend_bp.route('/')
-def index():
-    return send_from_directory(HTML_DIR, 'index.html')
+def splash():
+    return send_from_directory(HTML_DIR, 'splash.html')
+
+@frontend_bp.route('/img/<path:filename>')
+def serve_img(filename):
+    return send_from_directory(IMG_DIR, filename)
 
 @frontend_bp.route('/html/<path:filename>')
 def html_pages(filename):

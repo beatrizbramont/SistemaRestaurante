@@ -7,6 +7,8 @@
     <title>Painel Table Track</title>
     <link rel="icon" type="image/png" sizes="64x64"
         href="{{ url_for('static', filename='images/tabletrack_logobranca.png') }}">
+     <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +25,7 @@
         <nav>
             <ul>
                 <li class="active">
-                    <a href="{{ url_for('index.index') }}">
+                    <a href="{{ url_for('index.dashboard') }}">
                         <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
                     </a>
                 </li>
@@ -49,7 +51,7 @@
     <nav class="nav-mobile">
         <ul>
             <li class="active">
-                <a href="{{ url_for('index.index') }}">
+                <a href="{{ url_for('index.dashboard') }}">
                     <img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home">
                 </a>
             </li>
@@ -72,12 +74,19 @@
     </nav>
 
     <main>
+        <div class="top-bar">
+            <div class="usuario-area">
+                <span>Olá, {{ session['usuario_nome'] }}</span>
 
-         <div class="tabletrack-topo">
+                <a href="{{ url_for('funcionarios.logout') }}" class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </div>
+        </div>
+        <div class="tabletrack-topo">
             <h3>Table Track</h3>
             <h2>Painel de Controle</h2>
         </div>
-
 
         <section class="painel-fundo">
             <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="table track logo" class="table-track-logo-fundo">

@@ -3,20 +3,24 @@ import re
 from flask import current_app
 from config import db
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 from Funcionario.funcionario_model import Funcionario
 
 def cadastrar_funcionario(funcionario):
+
+    senha_hash = generate_password_hash(funcionario.senha)
+
     funcionario_bd = Funcionario(
         nome=funcionario.nome,
         cargo=funcionario.cargo,
         email=funcionario.email,
-        senha=funcionario.senha,
+        senha=senha_hash,
         telefone=getattr(funcionario, 'telefone', '00 00 00000-0000'),
         imagem=getattr(funcionario, 'imagem', None)
     )
 
     db.session.add(funcionario_bd)
-    db.session.commit() 
+    db.session.commit()
 
     return funcionario_bd
 
@@ -29,7 +33,6 @@ def listar_funcionario_id(id):
 def verificar_chave(chave):
     if chave == '123456789':
         return True
-    
 
 def atualizar_funcionario(funcionario, dados, arquivo_imagem):
 
@@ -46,7 +49,7 @@ def atualizar_funcionario(funcionario, dados, arquivo_imagem):
     if email:
         funcionario.email = email
     if senha:
-        funcionario.senha = senha
+        funcionario.senha = generate_password_hash(senha)
     if telefone:
         funcionario.telefone = telefone
 

@@ -26,7 +26,6 @@ thread_reservas = threading.Thread(
 )
 thread_reservas.start()
 
-# thread de status ocupado
 thread_ocupado = threading.Thread(
     target=atualizador_status_ocupado_background,
     args=(app,), 

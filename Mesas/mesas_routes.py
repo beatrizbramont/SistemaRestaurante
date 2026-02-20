@@ -8,7 +8,6 @@ mesa_bp = Blueprint("mesa", __name__)
 
 API_RESERVAS = "http://127.0.0.1:8002/reservas"
 
-
 @mesa_bp.route('/mesas')
 def mesas_page():
     return render_template("mesapage.html")
@@ -28,8 +27,7 @@ def listar_mesas():
             reservas = []
 
         status_final = mesa.status.nome
-
-        # Separar reservas de hoje e futuras
+        
         reservas_hoje = [
             reserva for reserva in reservas
             if datetime.fromisoformat(reserva["data_reserva"]).date() == agora.date()
