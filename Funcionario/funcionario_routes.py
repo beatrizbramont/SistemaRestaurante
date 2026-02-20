@@ -10,7 +10,6 @@ from .funcionario_service import (
     deletar_funcionario,
     atualizar_funcionario
 )
-from Auth.permissoes import permissao_necessaria
 from .funcionario_model import Funcionario
 from .funcionario_forms import CadastroFuncionarioForm, LoginForm, DeleteForm
 
@@ -132,3 +131,36 @@ def deletar_funcionario_route(id):
 
     return redirect(url_for('funcionarios.funcionarios_page'))
 
+@funcionarios_bp.route("/login", methods=["GET", "POST"])
+def login():
+
+    if "usuario_id" in session:
+        return redirect(url_for("index.dashboard"))
+
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        email = form.email.data
+        senha = form.senha.data
+
+        funcionario_bd = listar_usuario_email(email)
+
+        if funcionario_bd and check_password_hash(funcionario_bd.senha, senha):
+
+            session["usuario_id"] = funcionario_bd.id
+            session["usuario_nome"] = funcionario_bd.nome
+            session["usuario_cargo"] = funcionario_bd.cargo
+
+            flash("Login realizado com sucesso!", "success")
+            return redirect(url_for('index.dashboard'))
+
+        else:
+            flash("Email ou senha inválidos.", "error")
+
+    return render_template("login.html", form=form)
+
+@funcionarios_bp.route("/logout")
+def logout():
+    session.clear()
+    flash("Logout realizado com sucesso!", "success")
+    return redirect(url_for("funcionarios.login"))

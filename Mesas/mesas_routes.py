@@ -29,7 +29,7 @@ def listar_mesas():
         reservas = mapa_reservas.get(str(mesa.id), [])
 
         status_final = mesa.status.nome
-
+        
         reservas_hoje = [
             r for r in reservas
             if datetime.fromisoformat(r["data_reserva"]).date() == agora.date()
