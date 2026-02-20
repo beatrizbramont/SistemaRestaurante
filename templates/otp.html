@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificação</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/otp.css') }}">
+</head>
+<body>
+
+<form method="POST">
+    <h2>Digite o código enviado para seu e-mail</h2>
+    {{ form.hidden_tag() }}
+
+    {{ form.codigo.label }}
+    <br>
+    {{ form.codigo }}
+
+    <br><br>
+    {{ form.submit }}
+</form>
+
+</body>
+</html>

@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>TableTrack</title>
-
-    <link rel="stylesheet" href="../static/css/splash.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/splash.css') }}">
 </head>
 <body>
 
@@ -20,6 +19,6 @@
 
 </div>
 
-<script src="../static/js/splash.js"></script>
+<script src="{{ url_for('static', filename='js/splash.js') }}"></script>
 </body>
 </html>

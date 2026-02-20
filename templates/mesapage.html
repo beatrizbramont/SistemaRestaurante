@@ -15,7 +15,7 @@
     <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="TableTrack">
     <nav>
       <ul>
-        <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home"></a></li>
+        <li><a href="{{ url_for('index.dashboard') }}"><img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home"></a></li>
         <li><a href="{{ url_for('cardapio.cardapio_page') }}"><img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio"></a></li>
         <li class="active"><a href="{{ url_for('mesa.mesas_page') }}"><img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas"></a></li>
         <li><a href="{{ url_for('funcionarios.funcionarios_page') }}"><img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários"></a></li>
@@ -25,7 +25,7 @@
 
   <nav class="nav-mobile">
     <ul>
-      <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home"></a></li>
+      <li><a href="{{ url_for('index.dashboard') }}"><img src="{{ url_for('static', filename='images/icon-home.svg') }}" alt="Home"></a></li>
       <li><a href="{{ url_for('cardapio.cardapio_page') }}"><img src="{{ url_for('static', filename='images/icon-cardapio2.svg') }}" alt="Cardápio"></a></li>
       <li class="active"><a href="{{ url_for('mesa.mesas_page') }}"><img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas"></a></li>
       <li><a href="{{ url_for('funcionarios.funcionarios_page') }}"><img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários"></a></li>

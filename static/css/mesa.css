@@ -11,7 +11,7 @@
   --preto: #333;
   --azul: #1a253a;
 }
-/* Container para status + ícones */
+
 .td-status-container {
     display: flex;
     justify-content: flex-start; /* conteúdo começa do lado esquerdo */

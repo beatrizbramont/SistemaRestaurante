@@ -129,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Botão “Carregar Cardápio” → mostra todos os itens agrupados
   loadBtn.addEventListener('click', () => abrirModalCategoria(null, 'Todos os Itens'));
 
   // Cadastrar ou atualizar item

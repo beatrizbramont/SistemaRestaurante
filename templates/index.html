@@ -78,7 +78,7 @@
             <div class="usuario-area">
                 <span>Olá, {{ session['usuario_nome'] }}</span>
 
-                <a href="{{ url_for('funcionarios.logout') }}" class="logout-btn">
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </a>
             </div>
