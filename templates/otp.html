@@ -7,17 +7,21 @@
 </head>
 <body>
 
-<form method="POST">
-    <h2>Digite o código enviado para seu e-mail</h2>
-    {{ form.hidden_tag() }}
+<div class="container">
+    <form method="POST" class="card">
+        {{ form.hidden_tag() }}
 
-    {{ form.codigo.label }}
-    <br>
-    {{ form.codigo }}
+        <h2>Verificação de Segurança</h2>
+        <p>Digite o código enviado para seu e-mail</p>
 
-    <br><br>
-    {{ form.submit }}
-</form>
+        <div class="input-group">
+            {{ form.codigo.label(class="label") }}
+            {{ form.codigo(class="input-field", placeholder="000000") }}
+        </div>
+
+        {{ form.submit(class="btn-submit") }}
+    </form>
+</div>
 
 </body>
 </html>
