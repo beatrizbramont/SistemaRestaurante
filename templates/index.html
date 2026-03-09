@@ -39,10 +39,22 @@
                         <img src="{{ url_for('static', filename='images/icon-mesas2.svg') }}" alt="Mesas">
                     </a>
                 </li>
-                <li>
+                <li class="menu-funcionarios">
+
                     <a href="{{ url_for('funcionarios.funcionarios_page') }}">
                         <img src="{{ url_for('static', filename='images/icon-person.svg') }}" alt="Funcionários">
                     </a>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for categoria, mensagem in messages %}
+                        <span class="flash-sidebar {{ categoria }}">
+                            {{ mensagem }}
+                        </span>
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
                 </li>
             </ul>
         </nav>

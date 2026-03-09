@@ -73,18 +73,21 @@ document.addEventListener('keydown', (event) => {
 });
 
 const botoesEditar = document.querySelectorAll('.editar_funcionario');
+
 const formAtualizar = document.getElementById("form-atualizar");
 
 const inputNome = document.getElementById("editar-nome");
-const inputCargo = document.getElementById("cargoInput");
+const inputCargo = document.getElementById("editar-cargo");
 const inputEmail = document.getElementById("editar-email");
 const inputTelefone = document.getElementById("editar-telefone");
-const inputSenha = document.getElementById("editar-senha");
+const inputPermissao = document.getElementById("editar-permissao");
+
 const inputImagemEditar = document.getElementById("editar-imagem");
 const fileNameEditar = document.getElementById("file-name-editar");
 const previewEditar = document.getElementById("preview-img-editar");
 
 botoesEditar.forEach(botao => {
+
     botao.addEventListener("click", () => {
 
         const id = botao.dataset.id;
@@ -92,15 +95,18 @@ botoesEditar.forEach(botao => {
         inputNome.value = botao.dataset.nome;
         inputCargo.value = botao.dataset.cargo;
         inputEmail.value = botao.dataset.email;
+        inputPermissao.value = botao.dataset.permissao;
         inputTelefone.value = botao.dataset.telefone;
-        inputSenha.value = botao.dataset.senha;
 
-        previewEditar.src = botao.dataset.imagem_url || "https://cdn-icons-png.flaticon.com/512/66/66779.png";
+        const imagemUrl = botao.dataset.imagem_url;
+
+        previewEditar.src = imagemUrl || "https://cdn-icons-png.flaticon.com/512/66/66779.png";
 
         formAtualizar.action = `/funcionario/atualizar/${id}`;
 
         abrirModal("modal-atualizar");
     });
+
 });
 
 inputImagemEditar.addEventListener("change", () => {

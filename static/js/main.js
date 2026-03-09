@@ -16,12 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalCategoriaLista = document.getElementById('modal-categoria-lista');
   const loadBtn = document.getElementById('load-data');
 
-  // Função genérica de fetch
-  async function apiFetch(url, options = {}) {
-    const res = await fetch(url, options);
-    if (!res.ok) throw new Error(`Erro ${res.status}`);
-    return res.json();
+async function apiFetch(url, options = {}) {
+
+  const res = await fetch(url, options);
+
+  if (res.status === 403) {
+    const data = await res.json().catch(() => ({}));
+    alert(data.msg || "🚫 Você não tem permissão para realizar esta ação.");
+    throw new Error("Sem permissão");
   }
+
+  if (!res.ok) {
+    throw new Error(`Erro ${res.status}`);
+  }
+
+  return res.json();
+}
 
   // Sidebar toggle
   menuToggle.addEventListener('click', e => {
@@ -85,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
               modalCategoria.classList.add('hidden');
             });
 
-            // Excluir item
             li.querySelector('.delete-icon').addEventListener('click', async () => {
               if (!confirm(`Deseja excluir "${item.nome}"?`)) return;
               try {
@@ -110,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Fechar modal
   closeModalCategoriaBtn.addEventListener('click', () => {
     modalCategoria.classList.add('hidden');
   });
@@ -119,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === modalCategoria) modalCategoria.classList.add('hidden');
   });
 
-  // Links do sidebar
   sidebar.querySelectorAll('a[data-categoria]').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
