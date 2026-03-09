@@ -19,7 +19,7 @@
     top: 50%;
     transform: translateY(-50%);
 
-    background: #c0392b; /* vermelho elegante */
+    background: #c0392b;
     color: #fff;
 
     padding: 6px 12px;
@@ -36,7 +36,6 @@
     animation: fadeSlide 0.35s ease forwards;
 }
 
-/* setinha apontando para o ícone */
 .flash-sidebar::before{
     content: "";
     position: absolute;
@@ -59,26 +58,30 @@
         transform: translate(0, -50%);
     }
 }
+
 .top-bar {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: space-between;
     align-items: center;
     padding: 15px 25px;
 }
 
-.usuario-area {
-    display: flex;
-    align-items: center;
-    gap: 15px; 
+.tabletrack-topo h3{
+    color: #e07204;
+    font-weight: 600;
+    margin: 0;
 }
 
-.logout-btn {
-    color: #fff;
-    font-size: 20px;
-    transition: 0.3s;
+aside ul{
+    display:flex;
+    flex-direction:column;
+    height:100%;
 }
 
-.logout-btn:hover {
-    color: #ff4d4d;
-    transform: scale(1.1);
+.logout-item{
+    margin-top:auto;
+    font-size: 30px;
+    cursor: pointer;
+    color: #e07204; 
 }
+

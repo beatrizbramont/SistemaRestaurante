@@ -55,6 +55,13 @@
                     {% endif %}
                     {% endwith %}
 
+
+                <li class="logout-item">
+                    <a href="{{ url_for('funcionarios.logout') }}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                </li>
+
                 </li>
             </ul>
         </nav>
@@ -87,18 +94,12 @@
 
     <main>
         <div class="top-bar">
-            <div class="usuario-area">
-                <span>Olá, {{ session['usuario_nome'] }}</span>
 
-                <a href="{{ url_for('funcionarios.logout') }}" class="logout-btn">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </a>
-            </div>
-        </div>
         <div class="tabletrack-topo">
             <h3>Table Track</h3>
             <h2>Painel de Controle</h2>
         </div>
+    </div>
 
         <section class="painel-fundo">
             <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="table track logo" class="table-track-logo-fundo">
