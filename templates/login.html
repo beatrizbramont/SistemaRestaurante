@@ -23,6 +23,17 @@
 
         </div>
         <div class="modal-content login-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
             <div class="modal-content-topo">
                 <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" id="img-modal" alt="TableTrack">
                 <div class="tabletrack-topo">

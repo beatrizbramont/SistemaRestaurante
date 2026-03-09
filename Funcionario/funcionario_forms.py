@@ -13,19 +13,25 @@ class CadastroFuncionarioForm(FlaskForm):
     telefone = StringField('Telefone', validators=[DataRequired()])
     email = StringField(label='Email', validators=[DataRequired(), Email()])
     senha = PasswordField(label='Senha', validators=[DataRequired(), Length(min=4)])
+    permissao = SelectField(
+        'Permissão',
+        choices=[
+            ('ALL', 'Administrador (Acesso total)'),
+            ('RECGAR', 'Recepção/Garçom'),
+            ('SCRUM', 'Scrum Master'),
+            ('GER', 'Gerente')
+        ],
+        validators=[DataRequired()]
+    )
     imagem = FileField('Foto do Funcionário', validators=[
         FileAllowed(['jpg', 'png', 'jpeg'], 'Somente imagens JPG e PNG!')
     ])
     enviar = SubmitField('Cadastrar')
 
-
 class LoginForm(FlaskForm):
     email = StringField(label='Email', validators=[DataRequired(), Email()])
     senha = PasswordField(label='Senha', validators=[DataRequired(), Length(min=4)])
     submit = SubmitField('Entrar')
-
-
-
 
 class DeleteForm(FlaskForm):
     chave = PasswordField(validators=[DataRequired(), Length(min=9)])

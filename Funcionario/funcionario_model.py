@@ -8,6 +8,7 @@ class Funcionario(db.Model):
     telefone = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha = db.Column(db.String(255), nullable=False)
+    permissao = db.Column(db.String(20), nullable=False, default="RECGAR")
     imagem = db.Column(db.String(255))
 
     def to_dict(self):
@@ -18,6 +19,7 @@ class Funcionario(db.Model):
             "telefone": self.telefone,
             "email": self.email,
             "senha": self.senha,
+            "permissao": self.permissao,
             "imagem": self.imagem
 }
     

@@ -10,6 +10,7 @@ from .funcionario_service import (
     deletar_funcionario,
     atualizar_funcionario
 )
+from Auth.permissoes import permissao_necessaria
 from .funcionario_model import Funcionario
 from .funcionario_forms import CadastroFuncionarioForm, LoginForm, DeleteForm
 
@@ -130,3 +131,4 @@ def deletar_funcionario_route(id):
             flash("Chave incorreta.", "error")
 
     return redirect(url_for('funcionarios.funcionarios_page'))
+

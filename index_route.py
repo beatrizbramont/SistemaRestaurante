@@ -9,5 +9,5 @@ def splash():
 @index_bp.route('/dashboard')
 def dashboard():
     if "usuario_id" not in session:
-        return redirect(url_for("funcionarios.login"))
+        return redirect(url_for("auth.login"))
     return render_template('index.html')
