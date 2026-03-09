@@ -17,6 +17,7 @@ def seed_scrum():
         telefone="11999999999",
         email=email,
         senha=generate_password_hash("scrum123"),
+        permissao="ADMIN",
         imagem=None
     )
 

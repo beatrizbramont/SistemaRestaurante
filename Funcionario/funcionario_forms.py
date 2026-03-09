@@ -16,10 +16,8 @@ class CadastroFuncionarioForm(FlaskForm):
     permissao = SelectField(
         'Permissão',
         choices=[
-            ('ALL', 'Administrador (Acesso total)'),
-            ('RECGAR', 'Recepção/Garçom'),
-            ('SCRUM', 'Scrum Master'),
-            ('GER', 'Gerente')
+            ('ADMIN', 'Administrador (Acesso total)'),
+            ('GARCOM', 'Recepção/Garçom'),
         ],
         validators=[DataRequired()]
     )

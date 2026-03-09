@@ -1,47 +1,33 @@
 import os
 import re
 from flask import Blueprint, request, jsonify, redirect, url_for, render_template, current_app, flash, session
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
+
 from .funcionario_service import (
     cadastrar_funcionario,
     listar_usuario_email,
     verificar_chave,
     listar_funcionario_id,
-    deletar_funcionario,
-    atualizar_funcionario
+    deletar_funcionario
 )
+
 from .funcionario_model import Funcionario
 from .funcionario_forms import CadastroFuncionarioForm, LoginForm, DeleteForm
+from config import db
 
 funcionarios_bp = Blueprint('funcionarios', __name__)
 
-@funcionarios_bp.route("/funcionarios/json", methods=['POST'])
-def criar_funcionario_json():
-    dados = request.json
-
-    funcionario = Funcionario(
-        nome=dados['nome'],
-        cargo=dados['cargo'],
-        telefone=dados['telefone'],
-        email=dados['email'],
-        senha=dados['senha']
-    )
-
-    funcionario_criado = cadastrar_funcionario(funcionario)
-
-    return jsonify({
-        'id': funcionario_criado.id,
-        'nome': funcionario_criado.nome,
-        'cargo': funcionario_criado.cargo,
-        'telefone': funcionario_criado.telefone,
-        'email': funcionario_criado.email
-    }), 201
 
 @funcionarios_bp.route('/funcionarios', methods=['GET'])
 def funcionarios_page():
 
     if "usuario_id" not in session:
         return redirect(url_for("funcionarios.login"))
+
+    if session.get("usuario_permissao") != "ADMIN":
+        flash("Acesso restrito.", "error")
+        return redirect(url_for("index.dashboard"))
 
     form_cadastro = CadastroFuncionarioForm()
     funcionarios = Funcionario.query.all()
@@ -54,6 +40,7 @@ def funcionarios_page():
         form_deletar=form_deletar
     )
 
+
 @funcionarios_bp.route('/funcionarios', methods=['POST'])
 def criar_funcionario_form():
 
@@ -63,34 +50,33 @@ def criar_funcionario_form():
     form = CadastroFuncionarioForm()
 
     if form.validate_on_submit():
-        nome = form.nome.data
-        cargo = form.cargo.data
-        email = form.email.data
-        senha = form.senha.data
+
         telefone = re.sub(r'\D', '', form.telefone.data or '')
 
         imagem = form.imagem.data
+        nome_arquivo = None
+
         if imagem:
-            from werkzeug.utils import secure_filename
             nome_arquivo = secure_filename(imagem.filename)
             caminho = os.path.join(current_app.config['UPLOAD_FOLDER'], nome_arquivo)
             imagem.save(caminho)
-        else:
-            nome_arquivo = None
 
         funcionario = Funcionario(
-            nome=nome,
-            cargo=cargo,
-            email=email,
-            senha=senha,
+            nome=form.nome.data,
+            cargo=form.cargo.data,
+            email=form.email.data,
+            senha=generate_password_hash(form.senha.data),
             telefone=telefone,
+            permissao=form.permissao.data,
             imagem=nome_arquivo
         )
 
         cadastrar_funcionario(funcionario)
-        flash(f"Funcionário {nome} cadastrado com sucesso!", "success")
+
+        flash(f"Funcionário {form.nome.data} cadastrado com sucesso!", "success")
 
     return redirect(url_for('funcionarios.funcionarios_page'))
+
 
 @funcionarios_bp.route("/funcionario/atualizar/<int:id>", methods=["POST"])
 def atualizar_funcionario_form(id):
@@ -99,14 +85,34 @@ def atualizar_funcionario_form(id):
         return redirect(url_for("funcionarios.login"))
 
     funcionario = Funcionario.query.get_or_404(id)
-    dados = request.form
+
+    funcionario.nome = request.form.get("nome")
+    funcionario.cargo = request.form.get("cargo")
+    funcionario.email = request.form.get("email")
+    funcionario.telefone = request.form.get("telefone")
+    funcionario.permissao = request.form.get("permissao")
+
+    senha = request.form.get("senha")
+
+    # senha só atualiza se preenchida
+    if senha:
+        funcionario.senha = generate_password_hash(senha)
+
     arquivo_imagem = request.files.get("imagem")
 
-    funcionario_atualizado = atualizar_funcionario(funcionario, dados, arquivo_imagem)
+    if arquivo_imagem and arquivo_imagem.filename != "":
+        nome_arquivo = secure_filename(arquivo_imagem.filename)
+        caminho = os.path.join(current_app.config['UPLOAD_FOLDER'], nome_arquivo)
+        arquivo_imagem.save(caminho)
 
-    flash(f"Funcionário {funcionario_atualizado.nome} atualizado com sucesso!", "success")
+        funcionario.imagem = nome_arquivo
+
+    db.session.commit()
+
+    flash(f"Funcionário {funcionario.nome} atualizado com sucesso!", "success")
 
     return redirect(url_for("funcionarios.funcionarios_page"))
+
 
 @funcionarios_bp.route('/funcionarios/delete/<int:id>', methods=['POST'])
 def deletar_funcionario_route(id):
@@ -123,6 +129,7 @@ def deletar_funcionario_route(id):
 
     if form.validate_on_submit():
         chave = form.chave.data
+
         if verificar_chave(chave):
             deletar_funcionario(funcionario)
             flash(f"Funcionário {funcionario.nome} deletado com sucesso!", "success")
@@ -130,6 +137,7 @@ def deletar_funcionario_route(id):
             flash("Chave incorreta.", "error")
 
     return redirect(url_for('funcionarios.funcionarios_page'))
+
 
 @funcionarios_bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -140,24 +148,25 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        email = form.email.data
-        senha = form.senha.data
 
-        funcionario_bd = listar_usuario_email(email)
+        funcionario_bd = listar_usuario_email(form.email.data)
 
-        if funcionario_bd and check_password_hash(funcionario_bd.senha, senha):
+        if funcionario_bd and check_password_hash(funcionario_bd.senha, form.senha.data):
 
             session["usuario_id"] = funcionario_bd.id
             session["usuario_nome"] = funcionario_bd.nome
             session["usuario_cargo"] = funcionario_bd.cargo
+            session["usuario_permissao"] = funcionario_bd.permissao
 
             flash("Login realizado com sucesso!", "success")
+
             return redirect(url_for('index.dashboard'))
 
         else:
             flash("Email ou senha inválidos.", "error")
 
     return render_template("login.html", form=form)
+
 
 @funcionarios_bp.route("/logout")
 def logout():

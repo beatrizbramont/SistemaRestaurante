@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template
-from Auth.forms import LoginForm   
-
+from Auth.auth_forms import LoginForm
 index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/')
