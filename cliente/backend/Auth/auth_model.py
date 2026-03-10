@@ -1,5 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
+from datetime import datetime
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
@@ -8,6 +9,9 @@ class Usuario(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
+
+    otp_codigo = db.Column(db.String(6))
+    otp_expiracao = db.Column(db.DateTime)
 
     def set_senha(self, senha):
         self.senha_hash = generate_password_hash(senha)
