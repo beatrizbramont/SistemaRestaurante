@@ -40,13 +40,16 @@ def proteger_rotas():
     if request.endpoint is None:
         return
 
+    if request.endpoint.startswith(("cardapio", "mesa", "comandas", "cp")):
+        return
+
     rotas_livres = (
         "auth.login",
         "static",
         "index.index",
     )
 
-    if request.endpoint in rotas_livres:    
+    if request.endpoint in rotas_livres:
         return
     
     if "usuario_id" not in session:
