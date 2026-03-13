@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const nomeSpan = document.getElementById("nomeUsuario");
   const btnReserva = document.getElementById("btnReserva");
   const btnCardapio = document.getElementById("btnCardapio");
   const btnMinhasReservas = document.getElementById("btnMinhasReservas");
@@ -7,19 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultadoDiv = document.getElementById("resultadoReserva");
 
   const token = localStorage.getItem("token");
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
-  const nomeUsuario = usuario?.nome || "Usuário";
 
-  // --- VERIFICA LOGIN ---
   if (!token) {
     alert("Você precisa estar logado para acessar esta página.");
     window.location.href = "../html/login.html";
     return;
   }
 
-  nomeSpan.textContent = nomeUsuario;
-
-  // --- REDIRECIONAR PARA RESERVA ---
   btnReserva.addEventListener("click", () => {
     window.location.href = "../html/quantidadePessoas.html";
   });

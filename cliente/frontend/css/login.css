@@ -78,7 +78,6 @@ body {
   box-shadow: 0 0 4px #d58a33;
 }
 
-/* ===== Botão de login ===== */
 input[type="button"] {
   color: white;
   background-color: #1c1c1c;
@@ -144,7 +143,6 @@ input[type="button"]:hover {
   color: #dddddd;
 }
 
-/* ===== Botão lateral ===== */
 .info-button {
   background-color: #d58a33;
   color: #1c1c1c;
