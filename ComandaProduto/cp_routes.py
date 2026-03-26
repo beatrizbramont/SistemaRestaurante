@@ -15,20 +15,23 @@ def listar_itens_comanda(comanda_id):
         return jsonify({"error": "Comanda não encontrada"}), 404
 
     itens = []
-    total = 0.0
+    total = 0.0  
 
     for cp in comanda.itens_comanda:
         item_cardapio = cp.produto
         if not item_cardapio:
             continue
-        subtotal = cp.quantidade * item_cardapio.preco
+        
+        preco_unitario = float(item_cardapio.preco)
+        subtotal = float(cp.quantidade * preco_unitario)
+        
         itens.append({
             "id": cp.id,
             "produto_id": item_cardapio.id,
             "nome": item_cardapio.nome,
             "ingredientes": item_cardapio.ingredientes,
             "quantidade": cp.quantidade,
-            "preco_unitario": item_cardapio.preco,
+            "preco_unitario": preco_unitario,
             "subtotal": subtotal
         })
         total += subtotal
