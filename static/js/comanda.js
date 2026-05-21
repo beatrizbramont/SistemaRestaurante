@@ -1,5 +1,32 @@
 let comandaAtivaId = null;
 
+// Substituição global do alert para remover o endereço IP do cabeçalho
+window.alert = function(mensagem) {
+    // Cria o fundo escurecido
+    const overlay = document.createElement('div');
+    overlay.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; align-items: center; justify-content: center; font-family: sans-serif;";
+    
+    // Cria a caixa de mensagem
+    const caixa = document.createElement('div');
+    caixa.style = "background: white; padding: 20px; border-radius: 8px; width: 300px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);";
+    
+    // Configura o título com o nome do seu sistema
+    caixa.innerHTML = `
+        <h3 style="margin-top: 0; color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">tabletrack diz...</h3>
+        <p style="color: #666; font-size: 14px; margin: 20px 0; white-space: pre-line;">${mensagem.replace('tabletrack diz:\n\n', '')}</p>
+        <button id="fechar-alert-btn" style="background: #007bff; color: white; border: none; padding: 8px 25px; border-radius: 4px; cursor: pointer; font-weight: bold;">OK</button>
+    `;
+    
+    overlay.appendChild(caixa);
+    document.body.appendChild(overlay);
+    
+    // Remove a janela ao clicar em OK
+    caixa.querySelector('#fechar-alert-btn').focus();
+    caixa.querySelector('#fechar-alert-btn').addEventListener('click', () => {
+        overlay.remove();
+    });
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const mesaId = urlParams.get('mesa');
@@ -56,9 +83,8 @@ async function criarComandaDiv(comanda, index) {
 
     comandaDiv.innerHTML = `
         <h2>Comanda #${index + 1}</h2>
-        <p>ID: ${comanda.id}</p>
-    <label for="nome-comanda-${comanda.id}">Nome:</label>
-    <input type="text" id="nome-comanda-${comanda.id}" class="nomeInput" value="${comanda.nome || ''}">
+        <label for="nome-comanda-${comanda.id}">Nome:</label>
+        <input type="text" id="nome-comanda-${comanda.id}" class="nomeInput" value="${comanda.nome || ''}">
 
         <ul class="lista-itens-comanda"></ul>
 

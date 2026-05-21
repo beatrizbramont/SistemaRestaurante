@@ -12,6 +12,66 @@
         href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <title>Cadastro de cardápio</title>
+    <script>
+        // Trava para os Alertas comuns (Oculta o IP)
+        window.alert = function(mensagem) {
+            const textoLimpo = mensagem.replace('tabletrack diz:\n\n', '').replace('tabletrack diz...', '');
+            
+            const overlay = document.createElement('div');
+            overlay.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;";
+            
+            const caixa = document.createElement('div');
+            caixa.style = "background: white; padding: 24px; border-radius: 12px; width: 320px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;";
+            
+            caixa.innerHTML = `
+                <h3 style="margin: 0 0 12px 0; color: #1a1a1a; font-size: 18px; font-weight: 600; font-family: sans-serif;">tabletrack diz...</h3>
+                <p style="color: #4a4a4a; font-size: 14px; line-height: 1.5; margin: 0 0 20px 0; white-space: pre-line; font-family: sans-serif;">${textoLimpo}</p>
+                <button id="btn-fechar-alerta" style="background: #007bff; color: white; border: none; padding: 10px 32px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px; transition: background 0.2s;">OK</button>
+            `;
+            
+            overlay.appendChild(caixa);
+            document.body.appendChild(overlay);
+            
+            const btn = caixa.querySelector('#btn-fechar-alerta');
+            btn.focus();
+            btn.addEventListener('click', () => overlay.remove());
+        };
+
+        // Trava para as Caixas de Confirmação (Sim/Não) com Promessa assíncrona
+        // Nota: O confirm customizado não bloqueia a execução do código de forma síncrona como o nativo.
+        // Se suas exclusões pararem de funcionar, você pode usar a biblioteca SweetAlert2.
+        window.confirm = function(mensagem) {
+            return new Promise((resolve) => {
+                const overlay = document.createElement('div');
+                overlay.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: sans-serif;";
+                
+                const caixa = document.createElement('div');
+                caixa.style = "background: white; padding: 24px; border-radius: 12px; width: 320px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;";
+                
+                caixa.innerHTML = `
+                    <h3 style="margin: 0 0 12px 0; color: #1a1a1a; font-size: 18px; font-weight: 600;">tabletrack diz...</h3>
+                    <p style="color: #4a4a4a; font-size: 14px; line-height: 1.5; margin: 0 0 20px 0;">${mensagem}</p>
+                    <div style="display: flex; justify-content: center; gap: 10px;">
+                        <button id="btn-confirm-sim" style="background: #d33; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">Sim</button>
+                        <button id="btn-confirm-nao" style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">Não</button>
+                    </div>
+                `;
+                
+                overlay.appendChild(caixa);
+                document.body.appendChild(overlay);
+                
+                caixa.querySelector('#btn-confirm-sim').addEventListener('click', () => {
+                    overlay.remove();
+                    resolve(true);
+                });
+                
+                caixa.querySelector('#btn-confirm-nao').addEventListener('click', () => {
+                    overlay.remove();
+                    resolve(false);
+                });
+            });
+        };
+    </script>
 </head>
 
 <body>
