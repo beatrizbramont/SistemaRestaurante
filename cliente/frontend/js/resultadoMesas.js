@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    // Captura o IP atual do computador automaticamente para o celular funcionar
+    const ipServidor = window.location.hostname;
+
     const params = new URLSearchParams(window.location.search);
     const pessoas = params.get("pessoas") ?? sessionStorage.getItem("pessoas");
 
@@ -25,7 +28,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function tentarBackend8002() {
         try {
-            const r = await fetch(`http://127.0.0.1:8002/reservas/disponiveis?pessoas=${pessoas}`, {
+            // CORREÇÃO 1: Mudado para caminho relativo (Porta 8002)
+            const r = await fetch(`/reservas/disponiveis?pessoas=${pessoas}`, {
                 headers: token ? { "Authorization": `Bearer ${token}` } : {}
             });
             if (r.status === 401) return null;
@@ -39,7 +43,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function tentarBackend8001() {
         try {
-            const r = await fetch(`http://127.0.0.1:8001/mesas/disponiveis?capacidade=${pessoas}`);
+            // CORREÇÃO 2: Mudado para IP dinâmico apontando para a porta 8001
+            const r = await fetch(`http://${ipServidor}:8001/mesas/disponiveis?capacidade=${pessoas}`);
             if (!r.ok) return null;
             return await r.json();
         } catch (e) {
@@ -145,7 +150,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             };
 
             try {
-                const r = await fetch("http://127.0.0.1:8002/reservas/criar", {
+                // CORREÇÃO 3: Mudado para caminho relativo (Porta 8002)
+                const r = await fetch("/reservas/criar", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

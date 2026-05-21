@@ -11,7 +11,28 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
-
+<script>
+        window.alert = function(mensagem) {
+            const overlay = document.createElement('div');
+            overlay.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: sans-serif;";
+            
+            const caixa = document.createElement('div');
+            caixa.style = "background: white; padding: 24px; border-radius: 12px; width: 320px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;";
+            
+            caixa.innerHTML = `
+                <h3 style="margin: 0 0 12px 0; color: #1a1a1a; font-size: 18px; font-weight: 600;">tabletrack diz...</h3>
+                <p style="color: #4a4a4a; font-size: 14px; line-height: 1.5; margin: 0 0 20px 0; white-space: pre-line;">${mensagem}</p>
+                <button id="btn-fechar-alerta" style="background: #007bff; color: white; border: none; padding: 10px 32px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;">OK</button>
+            `;
+            
+            overlay.appendChild(caixa);
+            document.body.appendChild(overlay);
+            
+            const btn = caixa.querySelector('#btn-fechar-alerta');
+            btn.focus();
+            btn.addEventListener('click', () => overlay.remove());
+        };
+</script>
 <body>
 
 <div class="otp-container">

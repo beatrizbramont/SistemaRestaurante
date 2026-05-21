@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const listaCardapio = document.getElementById("listaCardapio");
+  
+  // Captura o IP atual do computador de onde o site foi aberto
+  const ipServidor = window.location.hostname;
 
   try {
-    const response = await fetch("http://127.0.0.1:8002/cardapio/listar", {
+    // CORREÇÃO 1: Removido o IP fixo para permitir acesso do celular
+    const response = await fetch("/cardapio/listar", {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     });
@@ -35,8 +39,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             ${item.imagem 
               ? `<img src="${item.imagem.startsWith('http') 
                   ? item.imagem 
-                  : 'http://127.0.0.1:8001/static/uploads/' + item.imagem}" 
-                  alt="${item.nome}" class="img-cardapio">`
+                  : `http://${ipServidor}:8001/static/uploads/${item.imagem}`}" 
+                  alt="${item.nome}" class="img-cardapio">` 
               : `<div class="img-cardapio placeholder"><i class="fa-solid fa-utensils"></i></div>`}
 
             <div class="info-cardapio">

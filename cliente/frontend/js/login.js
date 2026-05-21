@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-
-            const resposta = await fetch("http://127.0.0.1:8002/auth/login", {
+            // CORREÇÃO: Removido o http://127.0.0.1:8002 para funcionar no celular
+            const resposta = await fetch("/auth/login", {
 
                 method: "POST",
 

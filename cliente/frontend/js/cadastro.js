@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Trava visual opcional caso queira camuflar o IP nos alerts deste arquivo
+  const originalAlert = window.alert;
+  window.alert = function(mensagem) {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({ title: 'tabletrack diz...', text: mensagem, icon: 'info' });
+    } else {
+        originalAlert(`tabletrack diz:\n\n${mensagem}`);
+    }
+  };
+
   const btnCadastrar = document.getElementById("cadastrar");
 
   btnCadastrar.addEventListener("click", async () => {
@@ -12,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const resposta = await fetch("http://127.0.0.1:8002/auth/cadastro", {
+      // CORREÇÃO AQUI: Mudado de http://127.0.0.1:8002/ para caminho relativo
+      const resposta = await fetch("/auth/cadastro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

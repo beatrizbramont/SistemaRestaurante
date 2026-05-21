@@ -5,10 +5,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const info = document.querySelector("#infoPessoas");
     const erro = document.querySelector("#erro");
 
+    // Captura o IP dinamicamente para o celular funcionar
+    const ipServidor = window.location.hostname;
+
     info.innerHTML = `Total de pessoas: <strong>${pessoas}</strong><br>Selecione mesas suficientes.`;
 
     try {
-        const res = await fetch("http://127.0.0.1:8001/mesas/disponiveis?capacidade=1");
+        // CORREÇÃO 1: Ajustado o IP para dinâmico apontando para a porta 8001
+        const res = await fetch(`http://${ipServidor}:8001/mesas/disponiveis?capacidade=1`);
         const mesas = await res.json();
 
         mesas.forEach(m => {
@@ -77,9 +81,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const novoBtnConfirmar = document.getElementById("btnConfirmarReserva");
 
         function converterParaISO(dataInput) {
-            // Aceita tanto 2025-02-10 quanto 10/02/2025
             if (dataInput.includes("-")) {
-                return dataInput; // já está no formato certo
+                return dataInput; 
             }
             const [dia, mes, ano] = dataInput.split("/");
             return `${ano}-${mes.padStart(2, "0")}-${dia.padStart(2, "0")}`;
@@ -87,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         novoBtnConfirmar.onclick = async () => {
             const nomeCliente = document.getElementById("nomeReserva").value;
-            const dataReserva = document.getElementById("dataReserva").value; // DD/MM/YYYY
+            const dataReserva = document.getElementById("dataReserva").value; 
             const horaReserva = document.getElementById("horaReserva").value;
 
             if (!nomeCliente) {
@@ -102,14 +105,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
-            // 🔥 Converter data do input (DD/MM/YYYY → objeto Date)
             let ano, mes, dia;
 
             if (dataReserva.includes("-")) {
-                // formato do input date YYYY-MM-DD
                 [ano, mes, dia] = dataReserva.split("-");
             } else if (dataReserva.includes("/")) {
-                // formato digitado manualmente DD/MM/YYYY
                 [dia, mes, ano] = dataReserva.split("/");
             }
 
@@ -150,7 +150,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
-            // 🔥 Converter para formato ISO para enviar ao backend
             const dataISO = converterParaISO(dataReserva);
             const dataHoraReserva = `${dataISO}T${horaReserva}:00`;
 
@@ -163,7 +162,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             };
 
             try {
-                const r = await fetch("http://127.0.0.1:8002/reservas/criar", {
+                // CORREÇÃO 2: Mudado para caminho relativo, pois a rota está na mesma porta do cliente (:8002)
+                const r = await fetch("/reservas/criar", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

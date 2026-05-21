@@ -190,27 +190,92 @@ input[type="button"]:hover {
   font-size: 20px;
 }
 
-/* ===== Responsividade ===== */
 @media (max-width: 900px) {
-  .login_container {
-    flex-direction: column;
-    width: 90%;
-    height: auto;
+  body {
+    padding: 10px; 
+    align-items: center; /* Centraliza verticalmente se a tela do celular for alta */
   }
 
-  .form-wrapper,
+  .login_container {
+    flex-direction: column;
+    width: 100%;
+    max-width: 340px; /* Reduzido de 450px para 340px para ficar bem compacto */
+    height: auto;
+    min-height: 480px; /* Altura menor para não esticar o fundo */
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Bloco do topo (Preto) */
   .info-wrapper {
     width: 100%;
     height: auto;
+    padding: 20px 15px; /* Menos espaço interno */
+    order: -1; 
+    gap: 0.3rem;
   }
 
+  /* Bloco do formulário (Branco) */
+  .form-wrapper {
+    width: 100%;
+    height: auto;
+    padding: 25px 15px; /* Reduzido para aproximar os elementos */
+  }
+
+  .form_container {
+    gap: 12px; /* Inputs mais colados */
+  }
+
+  .form_container h1 {
+    font-size: 1.4rem; /* Texto menor */
+    margin-bottom: 0.2rem;
+  }
+
+  /* Campos de preenchimento compactos */
   .form_container input {
-    width: 80%;
+    width: 100%;
+    max-width: 260px; /* Reduzido de 310px para 260px */
+    height: 36px; /* Mais fino */
+    font-size: 0.9rem;
+  }
+
+  input[type="button"] {
+    width: 100%;
+    max-width: 140px;
+    height: 36px;
+    font-size: 15px;
   }
 
   .img_restaurante {
-    max-width: 140px;
-    width: 45%;
-    margin-top: 0.5rem;
+    max-width: 60px; /* Logotipo menor */
+    width: 25%;
+  }
+
+  .info-wrapper h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .info-wrapper p {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
+  }
+
+  .info-button {
+    padding: 6px 15px;
+    font-size: 0.85rem;
+  }
+
+  /* Botão flutuante de voltar */
+  .botao-voltar {
+    top: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .botao-voltar i {
+    font-size: 14px;
   }
 }

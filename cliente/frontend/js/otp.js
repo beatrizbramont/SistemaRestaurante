@@ -50,7 +50,8 @@ const email = localStorage.getItem("email_otp")
 
 try{
 
-const resposta = await fetch("http://localhost:8002/auth/verificar-otp",{
+// CORREÇÃO 1: Removido o http://localhost:8002 para funcionar no celular
+const resposta = await fetch("/auth/verificar-otp",{
 
 method:"POST",
 
@@ -118,7 +119,8 @@ const email = localStorage.getItem("email_otp")
 
 try{
 
-const resposta = await fetch("http://localhost:8002/auth/reenviar-otp",{
+// CORREÇÃO 2: Removido o http://localhost:8002 para funcionar no celular
+const resposta = await fetch("/auth/reenviar-otp",{
 
 method:"POST",
 

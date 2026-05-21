@@ -16,7 +16,8 @@ async function carregarReservas() {
     }
 
     try {
-        const res = await fetch("http://127.0.0.1:8002/reservas/minhas", {
+        // CORREÇÃO 1: Alterado para caminho relativo
+        const res = await fetch("/reservas/minhas", {
             headers: {
                 "Authorization": "Bearer " + token
             }
@@ -49,12 +50,19 @@ async function carregarReservas() {
                 <p><strong>Status:</strong> ${r.status}</p>
                 <p><strong>Data:</strong> ${r.data}</p>
 
-                <button class="cancelar-btn" onclick="cancelarReserva(${r.id})">
+                <button class="cancelar-btn" data-id="${r.id}">
                      Cancelar Reserva
                 </button>
             `;
 
             lista.appendChild(item);
+        });
+
+        // Adiciona evento de clique de forma segura para todos os botões de cancelar
+        lista.querySelectorAll(".cancelar-btn").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                await cancelarReserva(btn.dataset.id);
+            });
         });
 
     } catch (e) {
@@ -66,11 +74,13 @@ async function carregarReservas() {
 async function cancelarReserva(idReserva) {
     const token = localStorage.getItem("token");
 
-    const confirmar = confirm("Tem certeza que deseja cancelar esta reserva?");
+    // Torna a verificação compatível caso use caixas de diálogo assíncronas
+    const confirmar = await confirm("Tem certeza que deseja cancelar esta reserva?");
     if (!confirmar) return;
 
     try {
-        const res = await fetch(`http://127.0.0.1:8002/reservas/cancelar/${idReserva}`, {
+        // CORREÇÃO 2: Alterado para caminho relativo
+        const res = await fetch(`/reservas/cancelar/${idReserva}`, {
             method: "PUT",
             headers: {
                 "Authorization": "Bearer " + token,
@@ -102,4 +112,3 @@ async function cancelarReserva(idReserva) {
         alert("Erro ao conectar com o servidor.");
     }
 }
-
