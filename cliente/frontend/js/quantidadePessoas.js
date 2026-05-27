@@ -7,19 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", async () => {
         const pessoas = parseInt(input.value);
 
-        if (!pessoas || pessoas < 1) {
-            erro.textContent = "Informe uma quantidade válida!";
+        // 🔹 Valida se o campo está vazio, menor que 1 ou acima do novo limite de 20
+        if (!pessoas || pessoas < 1 || pessoas > 20) {
+            erro.textContent = "A capacidade máxima por reserva é de até 20 pessoas.";
             return;
         }
 
         sessionStorage.setItem("pessoas", pessoas);
 
-        // Até 8 → vai direto
-        if (pessoas <= 8) {
-            window.location.href = "../html/resultadoMesas.html";
-        } 
-        else {
-            window.location.href = `${window.location.origin}/html/selecionarMesa.html`;
-        }
+        // 🟢 Agora todos os grupos de até 20 pessoas vão para a mesma tela de resultado
+        window.location.href = "../html/resultadoMesas.html";
     });
 });

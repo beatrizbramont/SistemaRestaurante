@@ -145,7 +145,7 @@ async function renderMesas(capacidade = null) {
                 const alerta = document.createElement('span');
                 alerta.className = 'alerta-reserva';
                 alerta.title = 
-                    `Reserva HOJE:\nCliente: ${mesa.proxima_reserva.nome_cliente}\nMesa: ${mesa.numero}\nHorário: ${mesa.proxima_reserva.data_reserva}`;
+                    `Reserva HOJE:\nCliente: ${mesa.proxima_reserva.nome_cliente}\nHorário: ${mesa.proxima_reserva.data_reserva}`;
                 statusContainer.appendChild(alerta);
             }
         }
@@ -180,7 +180,7 @@ function abrirModalReservasFuturas(mesa) {
     if (mesa.proxima_reserva) {
         const r = mesa.proxima_reserva;
         const div = document.createElement('div');
-        div.textContent = `Cliente: ${r.nome_cliente} | Mesa: ${mesa.numero} | Data/Horário: ${r.data_reserva}`;
+        div.textContent = `Cliente: ${r.nome_cliente} | Data/Horário: ${r.data_reserva}`;
         detalhesDiv.appendChild(div);
     }
 
@@ -259,7 +259,7 @@ function abrirModalReservasFuturas(mesa) {
     if (mesa.reservas_futuras && mesa.reservas_futuras.length > 0) {
         mesa.reservas_futuras.forEach(r => {
             const div = document.createElement('div');
-            div.textContent = `Cliente: ${r.nome_cliente} | Mesa: ${mesa.numero} | Data/Horário: ${r.data_reserva}`;
+            div.textContent = `Cliente: ${r.nome_cliente} | Data/Horário: ${r.data_reserva}`;
             detalhesDiv.appendChild(div);
         });
     } else {

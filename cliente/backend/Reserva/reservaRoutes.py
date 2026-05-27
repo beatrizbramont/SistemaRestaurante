@@ -52,8 +52,10 @@ def listar_mesas_disponiveis():
 @reserva_bp.route("/criar", methods=["POST"])
 def criar_reserva():
     data = request.get_json()
-    usuario_id = data.get("usuario_id", 0)  # agora passado no payload
+    if not data:
+        return jsonify({"erro": "Payload JSON ausente ou inválido"}), 400
 
+    usuario_id = data.get("usuario_id", 0)
     pessoas = data.get("pessoas")
     mesas = data.get("mesas")
     data_hora_str = data.get("data_reserva")
@@ -80,24 +82,35 @@ def criar_reserva():
         db.session.add(nova_reserva)
         db.session.commit()
 
-        # 🔹 Atualiza status apenas se a reserva for para hoje
+        # Atualiza status apenas se a reserva for para hoje
         if data_hora_dt.date() == date.today():
             for mesa_id in mesas:
-                requests.put(
-                    f"{API_MESAS}/mesa/{mesa_id}/status",
-                    json={"status": "reservada"}
-                )
+                try:
+                    requests.put(
+                        f"{API_MESAS}/mesa/{mesa_id}/status",
+                        json={"status": "reservada"},
+                        timeout=2
+                    )
+                except requests.exceptions.RequestException as e:
+                    print(f"Aviso: Não foi possível atualizar status da mesa {mesa_id}: {e}")
 
+        # O retorno DEVE estar aqui, alinhado dentro do bloco TRY principal
         return jsonify({
             "mensagem": "Reserva criada!",
             "reserva": {
                 "id": nova_reserva.id,
+                "nome_cliente": nova_reserva.nome_cliente,
                 "mesas": mesas,
                 "capacidade": pessoas,
                 "status": nova_reserva.status,
                 "data_reserva": nova_reserva.data_reserva.strftime("%Y-%m-%dT%H:%M:%S")
             }
         }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"erro": f"Erro inesperado ao criar reserva: {str(e)}"}), 500
+
 
     except Exception as e:
         db.session.rollback()
@@ -226,6 +239,7 @@ def reservas_por_mesas():
         for mesa_id in r.mesas.split(","):
             resultado.setdefault(mesa_id, []).append({
                 "id": r.id,
+                "nome_cliente": r.nome_cliente,  
                 "data_reserva": r.data_reserva.strftime("%Y-%m-%dT%H:%M:%S"),
                 "status": r.status
             })

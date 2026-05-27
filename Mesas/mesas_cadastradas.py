@@ -22,6 +22,12 @@ mesas_cadastradas = [
     {"numero": 18, "capacidade": 4},
     {"numero": 19, "capacidade": 8},
     {"numero": 20, "capacidade": 2},
+    {"numero": 21, "capacidade": 10},
+    {"numero": 22, "capacidade": 12},
+    {"numero": 23, "capacidade": 14},
+    {"numero": 24, "capacidade": 16},
+    {"numero": 25, "capacidade": 18},
+    {"numero": 26, "capacidade": 20},
 ]
 
 def seed_status():
